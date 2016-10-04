@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using AdvancedWPFDemo.ViewModel;
-using AdvancedWPFDemo.ViewModel.Lines;
+using WindowsProject.ViewModel;
+using WindowsProject.ViewModel.Lines;
 
-namespace AdvancedWPFDemo.UndoRedo.Commands
+namespace WindowsProject.UndoRedo.Commands
 {
     public class AddLineCommand : IUndoRedoCommand
     {

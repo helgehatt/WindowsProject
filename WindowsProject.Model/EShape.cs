@@ -1,4 +1,4 @@
-﻿namespace AdvancedWPFDemo.Model
+﻿namespace WindowsProject.Model
 {
     public enum EShape
     {

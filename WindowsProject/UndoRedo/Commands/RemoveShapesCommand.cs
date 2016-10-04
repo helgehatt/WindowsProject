@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using AdvancedWPFDemo.ViewModel;
-using AdvancedWPFDemo.ViewModel.Lines;
-using AdvancedWPFDemo.ViewModel.Shapes;
+using WindowsProject.ViewModel;
+using WindowsProject.ViewModel.Lines;
+using WindowsProject.ViewModel.Shapes;
 
-namespace AdvancedWPFDemo.UndoRedo.Commands
+namespace WindowsProject.UndoRedo.Commands
 {
     public class RemoveShapesCommand : IUndoRedoCommand
     {

@@ -1,7 +1,7 @@
-﻿using AdvancedWPFDemo.Model;
-using AdvancedWPFDemo.ViewModel.Shapes;
+﻿using WindowsProject.Model;
+using WindowsProject.ViewModel.Shapes;
 
-namespace AdvancedWPFDemo.ViewModel.Lines
+namespace WindowsProject.ViewModel.Lines
 {
     public abstract class LineViewModel :BaseViewModel, ILine
     {

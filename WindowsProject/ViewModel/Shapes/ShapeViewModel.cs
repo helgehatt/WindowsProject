@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using AdvancedWPFDemo.Model;
-using AdvancedWPFDemo.UndoRedo;
-using AdvancedWPFDemo.UndoRedo.Commands;
+using WindowsProject.Model;
+using WindowsProject.UndoRedo;
+using WindowsProject.UndoRedo.Commands;
 using GalaSoft.MvvmLight.Command;
 
-namespace AdvancedWPFDemo.ViewModel.Shapes
+namespace WindowsProject.ViewModel.Shapes
 {
     public abstract class ShapeViewModel : BaseViewModel, IShape,IEquatable<ShapeViewModel>,IEqualityComparer<ShapeViewModel>,IGlobalShapeStatusChanged
     {

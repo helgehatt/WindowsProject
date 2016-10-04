@@ -11,33 +11,6 @@
              CornerRadius="1000000000"
              mc:Ignorable="d"   
              d:DesignHeight="100" d:DesignWidth="100" >
-    <Border.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/FontStyleResourceDictionary.xaml"/>
-                <ResourceDictionary Source="../Resources/ShapesStyleDictionary.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Border.Resources>
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseLeftButtonDown">
-            <cmd:EventToCommand Command="{Binding OnMouseLeftBtnDownCommand}" PassEventArgsToCommand="True" />
-
-        </i:EventTrigger>
-
-        <i:EventTrigger EventName="MouseLeftButtonUp">
-            <cmd:EventToCommand Command="{Binding OnMouseLeftBtnUpCommand}" PassEventArgsToCommand="True" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-    <i:Interaction.Behaviors>
-        <!--Next version will use a custom RoutedCommand aproach instead of find ancestor-->
-        <b:ClickableOverlayBehavior  Command="{Binding DataContext.AddLineBetweenShapesCommand,       
-            RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ec:ShapesListBox}}}" 
-                            CommandParameter="{Binding DataContext, ElementName=circleUc, Mode=OneWay}"
-        >
-            <Ellipse Style="{StaticResource AddlineAdornerStyle}"/>
-        </b:ClickableOverlayBehavior>
-    </i:Interaction.Behaviors>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -49,7 +22,6 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="1" Text="Choose" TextAlignment="Center" FontWeight="Bold"/>
         <TextBlock Grid.Row="3" Text="by clicking" TextAlignment="Center" FontWeight="Bold"/>
-        <TextBlock  Grid.Row="2" IsHitTestVisible="False" FontSize="20" Style="{StaticResource TextBlockHeader}" Text="{Binding Number}" />
     </Grid>
 
 

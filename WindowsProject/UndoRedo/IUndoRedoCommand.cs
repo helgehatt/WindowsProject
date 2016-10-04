@@ -1,4 +1,4 @@
-﻿namespace AdvancedWPFDemo.UndoRedo
+﻿namespace WindowsProject.UndoRedo
 {
     public interface IUndoRedoCommand
     {

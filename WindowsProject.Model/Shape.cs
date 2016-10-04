@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AdvancedWPFDemo.Model
+namespace WindowsProject.Model
 {
     public class Shape : IShape
     {

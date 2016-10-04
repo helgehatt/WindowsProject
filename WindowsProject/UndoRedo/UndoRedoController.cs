@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
-using AdvancedWPFDemo.GenericComponents;
 using GalaSoft.MvvmLight.CommandWpf;
 
-namespace AdvancedWPFDemo.UndoRedo
+namespace WindowsProject.UndoRedo
 {
     public class UndoRedoController
     {

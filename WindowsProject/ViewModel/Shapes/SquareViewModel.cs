@@ -1,7 +1,7 @@
 ﻿using System;
-using AdvancedWPFDemo.Model;
+using WindowsProject.Model;
 
-namespace AdvancedWPFDemo.ViewModel.Shapes
+namespace WindowsProject.ViewModel.Shapes
 {
     public class SquareViewModel: ShapeViewModel
     {

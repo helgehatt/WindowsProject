@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
-using AdvancedWPFDemo.ViewModel;
-using AdvancedWPFDemo.ViewModel.Shapes;
+using WindowsProject.ViewModel;
+using WindowsProject.ViewModel.Shapes;
 
-namespace AdvancedWPFDemo.UndoRedo.Commands
+namespace WindowsProject.UndoRedo.Commands
 {
     public class AddShapeCommand : IUndoRedoCommand
     {

@@ -6,17 +6,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using AdvancedWPFDemo.Model;
-using AdvancedWPFDemo.UndoRedo;
-using AdvancedWPFDemo.UndoRedo.Commands;
-using AdvancedWPFDemo.View.ExtendedComponents;
-using AdvancedWPFDemo.ViewModel.Lines;
-using AdvancedWPFDemo.ViewModel.Shapes;
+using WindowsProject.Model;
+using WindowsProject.UndoRedo;
+using WindowsProject.UndoRedo.Commands;
+using WindowsProject.ViewModel.Lines;
+using WindowsProject.ViewModel.Shapes;
 using GalaSoft.MvvmLight.CommandWpf;
-using MvvmCommandBindings;
-using _02350AdvancedDemo.ViewModel;
 
-namespace AdvancedWPFDemo.ViewModel
+namespace WindowsProject.ViewModel
 {
     public class MainViewModel : BaseViewModel
     {

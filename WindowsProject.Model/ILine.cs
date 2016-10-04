@@ -1,6 +1,6 @@
 ﻿
 
-namespace AdvancedWPFDemo.Model
+namespace WindowsProject.Model
 {
     public interface ILine
     {
