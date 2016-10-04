@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
-             xmlns:uc="clr-namespace:AdvancedWPFDemo.View.UserControls"
-             x:Name="SquareUc" x:Class="AdvancedWPFDemo.View.UserControls.SquareUserControl"
+             xmlns:uc="clr-namespace:WindowsProject.View.UserControls"
+             x:Name="ShapeUc" x:Class="WindowsProject.View.UserControls.ShapeUserControl"
              mc:Ignorable="d" 
              Background="LightBlue"
              
@@ -16,7 +16,7 @@
              d:DesignHeight="100" d:DesignWidth="100" >
 
     <Border.InputBindings>
-        <KeyBinding Command="Copy" CommandParameter="{Binding DataContext, ElementName=SquareUc}"/>
+        <KeyBinding Command="Copy" CommandParameter="{Binding DataContext, ElementName=ShapeUc}"/>
     </Border.InputBindings>
 
     <Grid Margin="10,5,10,10" >

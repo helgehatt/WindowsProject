@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AdvancedWPFDemo.View.UserControls
+namespace WindowsProject.View
 {
     /// <summary>
-    /// Interaction logic for AddLineUserControl.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class AddLineUserControl : UserControl
+    public partial class MainWindow : Window
     {
-        public AddLineUserControl()
+        public MainWindow()
         {
             InitializeComponent();
         }

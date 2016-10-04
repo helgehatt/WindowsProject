@@ -123,7 +123,7 @@ namespace WindowsProject.ViewModel
                 {
                     UndoRedoController.AddAndExecute(
                         new AddLineCommand(Lines,
-                            new SolidLineViewModel(_firstShapeToConnect, shapeViewModel))
+                            new AssociationLineViewModel(_firstShapeToConnect, shapeViewModel))
                     );
                     IsAddingLineBtnPressed = false;
                 }
@@ -143,11 +143,11 @@ namespace WindowsProject.ViewModel
             var pos = e.MouseDevice.GetPosition(e.Source as IInputElement);
             if (IsAddingCirclePressed)
             {
-                shape = new CircleViewModel() { Width = 80, Height = 80, X = pos.X, Y = pos.Y };
+                //shape = new CircleViewModel() { Width = 80, Height = 80, X = pos.X, Y = pos.Y };
                 IsAddingCirclePressed = false;
             } else if (IsAddingSquarePressed)
             {
-                shape = new SquareViewModel() { Width = 200, Height = 150, X = pos.X, Y = pos.Y };
+                shape = new ClassViewModel() { Width = 200, Height = 150, X = pos.X, Y = pos.Y };
                 IsAddingSquarePressed = false;
             }
             if (shape != null)
@@ -168,12 +168,13 @@ namespace WindowsProject.ViewModel
         public MainViewModel() : base()
         {
             Shapes = new ObservableShapesCollection() {
-                new CircleViewModel(){  X = 30, Y = 40, Width = 80, Height = 80, Data = new List<string> { "text1", "text2", "text3" } },
-                new SquareViewModel() { X = 140, Y = 230, Width = 200, Height = 100, Data = new List<string> { "text1", "text2", "text3" } }
+                //new CircleViewModel(){  X = 30, Y = 40, Width = 80, Height = 80, Data = new List<string> { "text1", "text2", "text3" } },
+                new ClassViewModel() { X = 140, Y = 230, Width = 200, Height = 100, Data = new List<string> { "text1", "text2", "text3" } },
+                new ClassViewModel() { X = 140, Y = 230, Width = 200, Height = 100, Data = new List<string> { "text1", "text2", "text3" } }
             };
 
             Lines = new ObservableCollection<LineViewModel>() {
-                new SolidLineViewModel(Shapes[0],Shapes[1]) {Label="lineText"}
+                new AssociationLineViewModel(Shapes[0],Shapes[1]) {Label="lineText"}
             };
         }
         //the following section is not fully used at this version. do ignore

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace AdvancedWPFDemo.View.UserControls
+namespace WindowsProject.View.UserControls
 {
     /// <summary>
     /// Interaction logic for EdgeUserControl.xaml

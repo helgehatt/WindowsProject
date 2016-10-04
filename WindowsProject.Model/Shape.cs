@@ -16,11 +16,6 @@ namespace WindowsProject.Model
 
         public List<string> Data { get; set; }
 
-        //public void NewNumber()
-        //{
-        //    Number = ++counter;
-        //}
-
         public override string ToString() => $"{GetType().Name} ({Number})";
 
      

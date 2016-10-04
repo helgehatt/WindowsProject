@@ -1,13 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace AdvancedWPFDemo.View.UserControls
+namespace WindowsProject.View.UserControls
 {
     /// <summary>
     /// Interaction logic for SidePanelUserControl.xaml
     /// </summary>
-    public partial class SidePanelUserControl : UserControl
+    public partial class SidePanel : UserControl
     {
-        public SidePanelUserControl()
+        public SidePanel()
         {
             InitializeComponent();
         }

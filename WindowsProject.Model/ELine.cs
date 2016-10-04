@@ -2,7 +2,14 @@
 {
     public enum ELine
     {
-        Solid,
-        DashedLine
+        Aggregation,
+        Association,
+        Composition,
+        Dependency,
+        DirectedAssociation,
+        Inheritance,
+        InterfaceRealization
     }
+
+
 }

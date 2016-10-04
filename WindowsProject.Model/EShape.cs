@@ -2,7 +2,8 @@
 {
     public enum EShape
     {
-        Circle,
-        Square
+        Class,
+        Interface,
+        Enumeration
     }
 }
