@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="TestApplication.MyShape"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestApplication"
+             mc:Ignorable="d"
+             d:DesignHeight="100" d:DesignWidth="200"
+             MouseLeftButtonDown="Shape_MouseLeftButtonDown" MouseLeftButtonUp="Shape_MouseLeftButtonUp" MouseMove="Shape_MouseMove">
+    <Grid>
+        <Grid.Resources>
+            <Style x:Key="separator" TargetType="Line">
+                <Setter Property="Stroke" Value="Black" />
+                <Setter Property="Stretch" Value="Fill" />
+                <Setter Property="Grid.ZIndex" Value="100" />
+                <Setter Property="X2" Value="1" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Grid.ColumnSpan" 
+                    Value="{Binding   
+                                Path=ColumnDefinitions.Count,  
+                                RelativeSource={RelativeSource AncestorType=Grid}}"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" x:Name="label" Content="This Is My Class" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1" />
+        <Line Grid.Row="0" Style="{StaticResource separator}"/>
+        <Label Grid.Row="1" x:Name="label2" Content="Here is some class like stuff" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="1" />
+
+        <Rectangle Fill="DeepPink" HorizontalAlignment="Left" Stroke="Black" VerticalAlignment="Top"
+                   Grid.RowSpan="{Binding   
+                                Path=RowDefinitions.Count,  
+                                RelativeSource={RelativeSource AncestorType=Grid}}"
+                   Grid.ColumnSpan="{Binding   
+                                Path=ColumnDefinitions.Count,  
+                                RelativeSource={RelativeSource AncestorType=Grid}}"
+                   Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
+                   Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" />
+    </Grid>
+</UserControl>
