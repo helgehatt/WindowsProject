@@ -1,0 +1,27 @@
+﻿<Window x:Class="ClassDiagramTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:userControls="clr-namespace:ClassDiagramTool.View.UserControls"
+        xmlns:local="clr-namespace:ClassDiagramTool"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <DockPanel LastChildFill="True">
+        <userControls:Menu DockPanel.Dock="Top"/>
+
+        <StatusBar Height="20" DockPanel.Dock="Bottom">
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Status"/>
+            <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="-"/>
+            <Slider x:Name="slider" Width="100" />
+            <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="+"/>
+        </StatusBar>
+        <userControls:SidePanel DockPanel.Dock="Left"/>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+
+            <Canvas Name="MyCanvas" MouseLeftButtonDown="MyMouseClickEvent" Background="Transparent"></Canvas>
+
+        </ScrollViewer>
+    </DockPanel>
+</Window>
