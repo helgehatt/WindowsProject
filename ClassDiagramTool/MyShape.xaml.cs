@@ -31,12 +31,6 @@ namespace ClassDiagramTool
             InitializeComponent();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            button.Content = "I Got Pressed";
-        }
-
         private void Shape_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             drag = true;
@@ -76,6 +70,39 @@ namespace ClassDiagramTool
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            BindingExpression titleHeight = titleText.GetBindingExpression(TextBox.HeightProperty);
+            BindingExpression titleWidth = titleText.GetBindingExpression(TextBox.WidthProperty);
+            BindingExpression mainHeight = mainText.GetBindingExpression(TextBox.HeightProperty);
+            BindingExpression mainWidth = mainText.GetBindingExpression(TextBox.WidthProperty);
+            titleHeight.UpdateTarget();
+            titleWidth.UpdateTarget();
+            mainHeight.UpdateTarget();
+            mainWidth.UpdateTarget();
+        }
+
+        private void text_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            TextBox text = (TextBox) sender;
+            text.Focusable = true;
+            text.IsReadOnly = false;
+            text.SelectAll();
+            text.Focus();
+        }
+
+        private void text_KeyDown(object sender, KeyEventArgs e) {
+            if (e.Key == Key.Enter)
+            {
+                TextBox text = (TextBox)sender;
+                text.Select(0, 0);
+                text.IsReadOnly = true;
+                text.Focusable = false;
+                text.IsEnabled = false;
+                text.IsEnabled = true;
             }
         }
     }

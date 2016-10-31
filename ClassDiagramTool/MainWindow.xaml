@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:userControls="clr-namespace:ClassDiagramTool.View.UserControls"
         xmlns:local="clr-namespace:ClassDiagramTool"
+        xmlns:viewModel="clr-namespace:ClassDiagramTool.ViewModel"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.DataContext>
+        <viewModel:MainViewModel></viewModel:MainViewModel>
+    </Window.DataContext>
     <DockPanel LastChildFill="True">
         <userControls:Menu DockPanel.Dock="Top"/>
 
@@ -20,7 +26,13 @@
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
-            <Canvas Name="MyCanvas" MouseLeftButtonDown="MyMouseClickEvent" Background="Transparent"></Canvas>
+            <Canvas Name="MyCanvas" Background="Transparent">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <cmd:EventToCommand Command="{Binding helloCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Canvas>
 
         </ScrollViewer>
     </DockPanel>

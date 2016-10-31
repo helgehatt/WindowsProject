@@ -3,12 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:commands="clr-namespace:ClassDiagramTool.Commands"
              mc:Ignorable="d" 
              MaxWidth="240"
              d:DesignHeight="500" d:DesignWidth="260">
     <Expander ExpandDirection="Left" >
       <StackPanel>
-          <Button Height="20">
+            <StackPanel.Resources>
+                <commands:HelleWorld x:Key="hwc"/>
+            </StackPanel.Resources>
+          <Button Height="20" CommandParameter="Hello" Command="{StaticResource hwc}">
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
               <Image Source="/ClassDiagramTool;component/Images/New.png"/>
               <TextBlock Margin="5,0,0,0">Class</TextBlock>
