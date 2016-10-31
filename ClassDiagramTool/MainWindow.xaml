@@ -26,10 +26,10 @@
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
 
-            <Canvas Name="MyCanvas" Background="Transparent">
+            <Canvas Background="Transparent">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <cmd:EventToCommand Command="{Binding helloCommand}" PassEventArgsToCommand="True"/>
+                        <cmd:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Canvas>

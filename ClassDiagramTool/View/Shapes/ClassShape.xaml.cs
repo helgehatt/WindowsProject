@@ -1,32 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ClassDiagramTool
 {
     /// <summary>
-    /// Interaction logic for MyShape.xaml
+    /// Interaction logic for ClassShape.xaml
     /// </summary>
-    public partial class MyShape : UserControl
+    public partial class ClassShape : UserControl
     {
         private bool drag = false;
         private Point startPt;
-        private int wid;
-        private int hei;
         private Point lastLoc;
 
-        public MyShape()
+        public ClassShape()
         {
             InitializeComponent();
         }
@@ -36,8 +25,6 @@ namespace ClassDiagramTool
             drag = true;
             Cursor = Cursors.Hand;
             startPt = e.GetPosition(this.Parent as Canvas);
-            wid = (int)this.Width;
-            hei = (int)this.Height;
             lastLoc = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
             Mouse.Capture((IInputElement)sender);
 
