@@ -166,12 +166,6 @@
     <Folder Include="Serialization\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WindowsProject.Model\WindowsProject.Model.csproj">
-      <Project>{1b3abcee-4dd3-40bc-a838-1157011e0ef0}</Project>
-      <Name>WindowsProject.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Add.png" />
     <Resource Include="Images\Cancel.png" />
     <Resource Include="Images\Check.png" />
