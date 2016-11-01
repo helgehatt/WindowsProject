@@ -19,10 +19,12 @@ namespace ClassDiagramTool
             InitializeComponent();
         }
 
-        private void StartMoveShape(object sender, MouseButtonEventArgs e)
-        {
-            new MoveShape(this).StartMoveShape(sender, e);
-        }
+        //private void StartMoveShape(object sender, MouseButtonEventArgs e)
+        //{
+        //    new MoveShape(this, e);
+        //}
+
+        
 
         private void grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {

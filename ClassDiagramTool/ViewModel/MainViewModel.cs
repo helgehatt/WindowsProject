@@ -10,7 +10,7 @@ namespace ClassDiagramTool.ViewModel
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(ClickAddShape.Execute, ClickAddShape.CanExecute);
         public ClickAddShape ClickAddShape = new ClickAddShape();
 
-        
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(e));
     }
 
     
