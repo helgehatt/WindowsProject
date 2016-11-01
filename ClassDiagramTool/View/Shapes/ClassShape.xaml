@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="ClassDiagramTool.ClassShape"
+             x:Name="UserControl0"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,19 +9,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              Height="100" Width="200"
-             MouseLeftButtonDown="Shape_MouseLeftButtonDown" MouseLeftButtonUp="Shape_MouseLeftButtonUp" MouseMove="Shape_MouseMove">
-    <!--<i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseLeftButtonDown">
-            <cmd:EventToCommand Command="{Binding StartMoveShapeCommand}" PassEventArgsToCommand="True"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="MouseMove">
-            <cmd:EventToCommand Command="{Binding ProgressMoveShapeCommand}" PassEventArgsToCommand="True"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="MouseLeftButtonUp">
-            <cmd:EventToCommand Command="{Binding EndMoveShapeCommand}" PassEventArgsToCommand="True"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>-->
-    
+             MouseLeftButtonDown="StartMoveShape">
     <Grid>
         <Grid.Resources>
             <Style x:Key="separator" TargetType="Line">

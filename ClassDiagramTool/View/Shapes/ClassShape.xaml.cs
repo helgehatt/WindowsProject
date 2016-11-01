@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ClassDiagramTool.Commands;
+using GalaSoft.MvvmLight.CommandWpf;
+using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,53 +14,14 @@ namespace ClassDiagramTool
     /// </summary>
     public partial class ClassShape : UserControl
     {
-        private bool drag = false;
-        private Point startPt;
-        private Point lastLoc;
-
         public ClassShape()
         {
             InitializeComponent();
         }
 
-        private void Shape_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void StartMoveShape(object sender, MouseButtonEventArgs e)
         {
-            drag = true;
-            Cursor = Cursors.Hand;
-            startPt = e.GetPosition(this.Parent as Canvas);
-            lastLoc = new Point(Canvas.GetLeft(this), Canvas.GetTop(this));
-            Mouse.Capture((IInputElement)sender);
-
-            e.Handled = true;
-        }
-
-        private void Shape_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            drag = false;
-            Cursor = Cursors.Arrow;
-            Mouse.Capture(null);
-        }
-
-        private void Shape_MouseMove(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                if (drag)
-                {
-                    var newX = (startPt.X + (e.GetPosition(this.Parent as Canvas).X - startPt.X));
-                    var newY = (startPt.Y + (e.GetPosition(this.Parent as Canvas).Y - startPt.Y));
-                    Point offset = new Point((startPt.X - lastLoc.X), (startPt.Y - lastLoc.Y));
-                    var CanvasTop = newY - offset.Y;
-                    var CanvasLeft = newX - offset.X;
-                    this.SetValue(Canvas.TopProperty, CanvasTop);
-                    this.SetValue(Canvas.LeftProperty, CanvasLeft);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            new MoveShape(this).StartMoveShape(sender, e);
         }
 
         private void grid_SizeChanged(object sender, SizeChangedEventArgs e)
