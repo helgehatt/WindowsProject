@@ -1,9 +1,4 @@
-﻿using GalaSoft.MvvmLight.CommandWpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,7 +8,6 @@ namespace ClassDiagramTool.Commands
     class ClickAddShape : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        
 
         public bool CanExecute(object parameter)
         {
@@ -23,18 +17,16 @@ namespace ClassDiagramTool.Commands
         public void Execute(object parameter)
         {
             MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
-            MyMouseClickEvent(e.Source, e);
-        }
-        public void MyMouseClickEvent(object sender, MouseButtonEventArgs e)
-        {
+            Canvas mainCanvas = e.Source as Canvas;
 
-            Point position = Mouse.GetPosition(sender as Canvas);
+            Point position = Mouse.GetPosition(mainCanvas);
 
-            MyShape rectangle = new MyShape();
+            ClassShape newShape = new ClassShape();
 
-            Canvas.SetTop(rectangle, position.Y);
-            Canvas.SetLeft(rectangle, position.X);
-            (sender as Canvas).Children.Add(rectangle);
+            Canvas.SetTop(newShape, position.Y);
+            Canvas.SetLeft(newShape, position.X);
+
+            mainCanvas.Children.Add(newShape);
         }
     }
 }

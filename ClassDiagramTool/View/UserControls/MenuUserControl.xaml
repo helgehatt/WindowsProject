@@ -33,7 +33,7 @@
                 <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Copy.png"/>
             </Button.Background>
         </Button>
-        <Button Command="{Binding PrintHelloWorldCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
+        <Button Command="{Binding AddShapeCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
             <Button.Background>
                 <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Paste.png"/>
             </Button.Background>

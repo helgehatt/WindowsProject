@@ -77,10 +77,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\ClickAddShape.cs" />
     <Compile Include="Commands\AddShapeCommand.cs" />
-    <Compile Include="MyShape.xaml.cs">
-      <DependentUpon>MyShape.xaml</DependentUpon>
+    <Compile Include="Commands\ClickAddShape.cs" />
+    <Compile Include="Commands\MoveShape.cs" />
+    <Compile Include="View\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Shapes\ClassShape.xaml.cs">
+      <DependentUpon>ClassShape.xaml</DependentUpon>
     </Compile>
     <Compile Include="UndoRedo\IUndoRedoCommand.cs" />
     <Compile Include="UndoRedo\UndoRedoController.cs" />
@@ -99,18 +104,15 @@
     <Compile Include="View\UserControls\SidePanelUserControl.xaml.cs">
       <DependentUpon>SidePanelUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\SquareUserControl.xaml.cs">
-      <DependentUpon>SquareUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="View\MainWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyShape.xaml">
+    <Page Include="View\Shapes\ClassShape.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -125,10 +127,6 @@
     <Page Include="View\UserControls\SidePanelUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\UserControls\SquareUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

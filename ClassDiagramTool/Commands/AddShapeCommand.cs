@@ -21,16 +21,15 @@ namespace ClassDiagramTool.Commands
             shapes = _shapes;
             shape = _shape;
         }
+
         public void Execute()
         {
             shapes.Add(shape);
-            Debug.WriteLine("Added shape nr " + shape.Number);
         }
 
         public void UnExecute()
         {
             shapes.Remove(shape);
-            Debug.WriteLine("Removed shape nr " + shape.Number);
         }
     }
 }

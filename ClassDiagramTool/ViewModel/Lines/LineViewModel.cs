@@ -5,47 +5,47 @@ namespace ClassDiagramTool.ViewModel.Lines
 {
     public abstract class LineViewModel : BaseViewModel, ILine
     {
-        #region Fields
-        private readonly Line _line;
-        private ShapeViewModel _to;
-        private ShapeViewModel _from;
-
-        public int FromNumber => _from.Number;
-        public int ToNumber => _to.Number;
-        public string Label { get; set; }
-        public ELine Type { get; set; }
-        #endregion
+        private readonly Line line;
+        private ShapeViewModel to;
+        private ShapeViewModel from;
         
         protected LineViewModel(Line line)
         {
-            _line = line;
-        }
-        protected LineViewModel(Line line,ShapeViewModel from, ShapeViewModel to) : this(line)
-        {
-            To = to;
-            From = from;
+            this.line = line;
         }
 
-        public ShapeViewModel To
+        protected LineViewModel(Line _line, ShapeViewModel _from, ShapeViewModel _to) 
+            : this(_line)
         {
-            get { return _to; }
-            set {
-                _to = value;
-                _line.ToNumber = value.Number;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(ToNumber));
-            }
+            to = _to;
+            from = _from;
         }
 
-        public ShapeViewModel From
-        {
-            get { return _from; }
-            set {
-                _from = value;
-                _line.FromNumber = value.Number;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(FromNumber));
-            }
-        }
+        public int FromNumber => from.Number;
+        public int ToNumber => to.Number;
+        public string Label { get; set; }
+        public ELine Type { get; set; }
+
+        //public ShapeViewModel To
+        //{
+        //    get { return to; }
+        //    set {
+        //        to = value;
+        //        line.ToNumber = value.Number;
+        //        OnPropertyChanged();
+        //        OnPropertyChanged(nameof(ToNumber));
+        //    }
+        //}
+        //
+        //public ShapeViewModel From
+        //{
+        //    get { return from; }
+        //    set {
+        //        from = value;
+        //        line.FromNumber = value.Number;
+        //        OnPropertyChanged();
+        //        OnPropertyChanged(nameof(FromNumber));
+        //    }
+        //}
     }
 }

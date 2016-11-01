@@ -8,45 +8,43 @@ namespace ClassDiagramTool.UndoRedo
 {
     public class UndoRedoController
     {
-        private static readonly UndoRedoController _self = new UndoRedoController();
-        private readonly Stack<IUndoRedoCommand> _undoStack = new Stack<IUndoRedoCommand>();
-        private readonly Stack<IUndoRedoCommand> _redoStack = new Stack<IUndoRedoCommand>();
+        private static readonly UndoRedoController self = new UndoRedoController();
+        private readonly Stack<IUndoRedoCommand> undoStack = new Stack<IUndoRedoCommand>();
+        private readonly Stack<IUndoRedoCommand> redoStack = new Stack<IUndoRedoCommand>();
        
-        
         private UndoRedoController():base()
         {
         }
 
-        public static UndoRedoController Instance => _self;
+        public static UndoRedoController Instance => self;
 
         public RelayCommand UndoCommand => new RelayCommand(Undo, CanUndo);
         public RelayCommand RedoCommand => new RelayCommand(Redo, CanRedo);
 
         public void AddAndExecute(IUndoRedoCommand command)
         {
-            _undoStack.Push(command);
-            _redoStack.Clear();
+            undoStack.Push(command);
+            redoStack.Clear();
             command.Execute();
             UpdateCommandStatus();
         }
 
-        public bool CanUndo() => _undoStack.Any();
+        public bool CanUndo() => undoStack.Any();
         public void Undo()
         {
-            IUndoRedoCommand command = _undoStack.Pop();
-            _redoStack.Push(command);
+            IUndoRedoCommand command = undoStack.Pop();
+            redoStack.Push(command);
             command.UnExecute();
             UpdateCommandStatus();
         }
 
-        public bool CanRedo() => _redoStack.Any();
+        public bool CanRedo() => redoStack.Any();
         public void Redo()
         {
-            IUndoRedoCommand command = _redoStack.Pop();
-            _undoStack.Push(command);
+            IUndoRedoCommand command = redoStack.Pop();
+            undoStack.Push(command);
             command.Execute();
             UpdateCommandStatus();
-
         }
 
         private void UpdateCommandStatus()

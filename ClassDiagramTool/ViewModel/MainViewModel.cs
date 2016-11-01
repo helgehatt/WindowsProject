@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -25,36 +26,42 @@ namespace ClassDiagramTool.ViewModel
         public ObservableCollection<LineViewModel> Lines { get; }
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
-        // Test fields
+        public ClickAddShape ClickAddShape = new ClickAddShape();
+
         private Random rand = new Random();
-        private List<int> numbers = new List<int>();
         #endregion
 
         #region Commands
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
 
-        public RelayCommand PrintHelloWorldCommand => new RelayCommand(OnHelloWorldCommand, () => true);
+        //public RelayCommand PrintHelloWorldCommand => new RelayCommand(OnAddShapeCommand, () => true);
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, b => true);
         #endregion
 
         #region CommandMethods
-        private void OnHelloWorldCommand()
+        private void OnAddShapeCommand(object parameter)
         {
-            var Shape = new SquareViewModel() { X = rand.Next(1, 500), Y = rand.Next(1, 500), Width = 80, Height = 80, Data = new List<string> { "text1", "text2", "text3" } };
+            SquareViewModel Shape;
+            if (parameter != null)
+            {
+                MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
+                Canvas mainCanvas = e.Source as Canvas;
+
+                Point position = Mouse.GetPosition(mainCanvas);
+
+                Shape = new SquareViewModel() { Width = 200, Height = 100, CenterX = position.X, CenterY = position.Y, Data = new List<string> { "text1", "text2", "text3" } };
+            } else {
+                Shape = new SquareViewModel() { X = rand.Next(1, 200), Y = rand.Next(1, 100), Width = 200, Height = 100, Data = new List<string> { "text1", "text2", "text3" } };
+            }
             UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
         }
         #endregion
 
         public MainViewModel() : base()
         {
-            Shapes = new ObservableCollection<ShapeViewModel>() {
-                new SquareViewModel(){ X =  30, Y =  40, Width =  80, Height =  80, Data = new List<string> { "text1", "text2", "text3" } },
-                new SquareViewModel(){ X = 140, Y = 230, Width = 200, Height = 100, Data = new List<string> { "text1", "text2", "text3" } }
-            };
-
-            Lines = new ObservableCollection<LineViewModel>() {
-                new SolidLineViewModel(Shapes[0],Shapes[1]) {Label="lineText"}
-            };
+            Shapes = new ObservableCollection<ShapeViewModel>();
+            Lines = new ObservableCollection<LineViewModel>();
         }
     }
 
