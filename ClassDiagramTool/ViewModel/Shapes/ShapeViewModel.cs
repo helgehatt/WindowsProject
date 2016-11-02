@@ -14,75 +14,50 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         protected Shape shape { get; }
 
-        protected ShapeViewModel(Shape _shape)
-        {
-            shape = _shape;
+        protected ShapeViewModel(Shape shape) {
+            this.shape = shape;
         }
 
         public int Number => shape.Number;
 
-        public double X
-        {
+        public double X {
             get { return shape.X; }
-            set {
-                shape.X = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterX));
-            }
+            set { shape.X = value; }
         }
-        public double Y
-        {
+
+        public double Y {
             get { return shape.Y; }
-            set {
-                shape.Y = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterY));
-            }
+            set { shape.Y = value; }
         }
 
-        public double Width
-        {
+        public double Width {
             get { return shape.Width; }
-            set {
-                shape.Width = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterX));
-            }
+            set { shape.Width = value; }
         }
 
-        public double Height
-        {
+        public double Height {
             get { return shape.Height; }
-            set {
-                shape.Height = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterY));
-            }
+            set { shape.Height = value; }
         }
 
-        public double CenterX
-        {
+        public double CenterX {
             get { return X + Width / 2; }
-            set {
-                shape.X = value - Width / 2;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterX));
-            }
+            set { shape.X = value - Width / 2; }
         }
 
-        public double CenterY
-        {
+        public double CenterY {
             get { return Y + Height / 2; }
-            set {
-                shape.Y = value - (Height / 2);
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(CenterY));
-            }
+            set { shape.Y = value - Height / 2; }
         }
 
         public EShape Type => shape.Type;
 
-        public List<string> Data { get; set; }
+        public string Title {
+            get { return shape.Title; }
+            set { shape.Title = value; }
+        }
+
+        public List<string> Text { get; set; }
 
         public override string ToString() => shape.ToString();
     }

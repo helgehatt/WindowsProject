@@ -7,8 +7,9 @@
              xmlns:local="clr-namespace:ClassDiagramTool"
              xmlns:viewModel="clr-namespace:ClassDiagramTool.ViewModel"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
-             Height="100" Width="200"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform" 
+             Width="{Binding Width}"
+             Height="{Binding Height}"
              MouseLeftButtonDown="StartMoveShape">
     <Grid>
         <Grid.Resources>
@@ -32,13 +33,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Class" HorizontalAlignment="Right" Margin="0,-5,0,0" VerticalAlignment="Top" FontSize="8"/>
+        <Label Content="{Binding Type}" HorizontalAlignment="Right" Margin="0,-5,0,0" VerticalAlignment="Top" FontSize="8"/>
 
         <TextBox Height="{Binding Path=RowDefinitions[0].ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" Width="{Binding Path=ColumnDefinitions[0].ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
-                 Grid.Row="0" x:Name="titleText" HorizontalAlignment="Left" Text="This Is My Class" Background="{x:Null}" BorderBrush="{x:Null}" MaxLines="1" IsReadOnly="True" MouseDoubleClick="text_MouseDoubleClick" KeyDown="text_KeyDown" Cursor="Arrow" Focusable="False" IsTabStop="False" AllowDrop="False"/>
+                 Grid.Row="0" x:Name="titleText" HorizontalAlignment="Left" Text="{Binding Title}" Background="{x:Null}" BorderBrush="{x:Null}" MaxLines="1" IsReadOnly="True" MouseDoubleClick="text_MouseDoubleClick" KeyDown="text_KeyDown" Cursor="Arrow" Focusable="False" IsTabStop="False" AllowDrop="False"/>
         <Line Grid.Row="0" Style="{StaticResource separator}"/>
         <TextBox Height="{Binding Path=RowDefinitions[1].ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" Width="{Binding Path=ColumnDefinitions[0].ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"
-            Grid.Row="1" x:Name="mainText" VerticalAlignment="Top" Text="These are my methods, interfaces and stuff..." Background="{x:Null}" BorderBrush="{x:Null}" TextWrapping="Wrap" HorizontalAlignment="Left" IsReadOnly="True" MouseDoubleClick="text_MouseDoubleClick" Cursor="Arrow" KeyDown="text_KeyDown" Focusable="False" AllowDrop="False" IsTabStop="False"/>
+            Grid.Row="1" x:Name="mainText" VerticalAlignment="Top" Text="{Binding Text}" Background="{x:Null}" BorderBrush="{x:Null}" TextWrapping="Wrap" HorizontalAlignment="Left" IsReadOnly="True" MouseDoubleClick="text_MouseDoubleClick" Cursor="Arrow" KeyDown="text_KeyDown" Focusable="False" AllowDrop="False" IsTabStop="False"/>
 
         <Rectangle Fill="LightGray" HorizontalAlignment="Left" Stroke="Black" VerticalAlignment="Top" Panel.ZIndex="-99999999"
                    Grid.RowSpan="{Binding Path=RowDefinitions.Count, RelativeSource={RelativeSource AncestorType=Grid}}"

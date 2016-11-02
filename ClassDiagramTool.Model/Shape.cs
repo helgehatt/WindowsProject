@@ -12,8 +12,8 @@ namespace ClassDiagramTool.Model
         public double Width { get; set; }
         public double Height { get; set; }
         public EShape Type { get; set; }
-
+        
         public string Title { get; set; }
-        public List<string> Data { get; set; }
+        public List<string> Text { get; set; }
     }
 }

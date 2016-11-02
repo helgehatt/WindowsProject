@@ -10,5 +10,8 @@ namespace ClassDiagramTool.Model
         double Width { get; }
         double Height { get; set; }
         EShape Type { get; }
+
+        string Title { get; }
+        List<string> Text { get; }
     }
 }

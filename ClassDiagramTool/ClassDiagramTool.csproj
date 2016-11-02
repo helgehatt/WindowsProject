@@ -95,9 +95,6 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Shapes\ShapeViewModel.cs" />
     <Compile Include="ViewModel\Shapes\SquareViewModel.cs" />
-    <Compile Include="View\UserControls\LineUserControl.xaml.cs">
-      <DependentUpon>LineUserControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\UserControls\MenuUserControl.xaml.cs">
       <DependentUpon>MenuUserControl.xaml</DependentUpon>
     </Compile>
@@ -115,10 +112,6 @@
     <Page Include="View\Shapes\ClassShape.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\UserControls\LineUserControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\MenuUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

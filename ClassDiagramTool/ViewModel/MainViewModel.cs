@@ -34,26 +34,23 @@ namespace ClassDiagramTool.ViewModel
         #region Commands
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
-
-        //public RelayCommand PrintHelloWorldCommand => new RelayCommand(OnAddShapeCommand, () => true);
+        
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, b => true);
         #endregion
 
         #region CommandMethods
         private void OnAddShapeCommand(object parameter)
         {
-            SquareViewModel Shape;
-            if (parameter != null)
-            {
-                MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
-                Canvas mainCanvas = e.Source as Canvas;
+            if (parameter == null)
+                throw new InvalidOperationException();
 
-                Point position = Mouse.GetPosition(mainCanvas);
+            MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
+            Canvas mainCanvas = e.Source as Canvas;
 
-                Shape = new SquareViewModel() { Width = 200, Height = 100, CenterX = position.X, CenterY = position.Y, Data = new List<string> { "text1", "text2", "text3" } };
-            } else {
-                Shape = new SquareViewModel() { X = rand.Next(1, 200), Y = rand.Next(1, 100), Width = 200, Height = 100, Data = new List<string> { "text1", "text2", "text3" } };
-            }
+            Point position = Mouse.GetPosition(mainCanvas);
+
+            ShapeViewModel Shape = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
+            
             UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
         }
         #endregion

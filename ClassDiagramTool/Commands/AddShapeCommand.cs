@@ -16,10 +16,10 @@ namespace ClassDiagramTool.Commands
         private ObservableCollection<ShapeViewModel> shapes;
         private ShapeViewModel shape;
 
-        public AddShapeCommand(ObservableCollection<ShapeViewModel> _shapes, ShapeViewModel _shape)
+        public AddShapeCommand(ObservableCollection<ShapeViewModel> shapes, ShapeViewModel shape)
         {
-            shapes = _shapes;
-            shape = _shape;
+            this.shapes = shapes;
+            this.shape = shape;
         }
 
         public void Execute()

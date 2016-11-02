@@ -14,38 +14,16 @@ namespace ClassDiagramTool.ViewModel.Lines
             this.line = line;
         }
 
-        protected LineViewModel(Line _line, ShapeViewModel _from, ShapeViewModel _to) 
-            : this(_line)
+        protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to) 
+            : this(line)
         {
-            to = _to;
-            from = _from;
+            this.to = to;
+            this.from = from;
         }
 
         public int FromNumber => from.Number;
         public int ToNumber => to.Number;
         public string Label { get; set; }
         public ELine Type { get; set; }
-
-        //public ShapeViewModel To
-        //{
-        //    get { return to; }
-        //    set {
-        //        to = value;
-        //        line.ToNumber = value.Number;
-        //        OnPropertyChanged();
-        //        OnPropertyChanged(nameof(ToNumber));
-        //    }
-        //}
-        //
-        //public ShapeViewModel From
-        //{
-        //    get { return from; }
-        //    set {
-        //        from = value;
-        //        line.FromNumber = value.Number;
-        //        OnPropertyChanged();
-        //        OnPropertyChanged(nameof(FromNumber));
-        //    }
-        //}
     }
 }
