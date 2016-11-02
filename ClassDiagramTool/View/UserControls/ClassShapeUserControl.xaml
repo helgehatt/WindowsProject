@@ -40,11 +40,23 @@
 
         <TextBox Height="25"
                  Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-                 Grid.Row="0" x:Name="titleText" HorizontalAlignment="Left" Text="This Is My Class" Background="{x:Null}" BorderBrush="{x:Null}" MaxLines="1" IsReadOnly="True" MouseDoubleClick="text_MouseDoubleClick" KeyDown="text_KeyDown" Cursor="Arrow" Focusable="False" IsTabStop="False" AllowDrop="False"/>
+                 Grid.Row="0" x:Name="titleText" HorizontalAlignment="Left" Text="This Is My Class" Background="{x:Null}" BorderBrush="{x:Null}" MaxLines="1" IsReadOnly="True" Cursor="Arrow" Focusable="False" IsTabStop="False" AllowDrop="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <cmd:EventToCommand Command="{Binding EditTextCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
         <Line Grid.Row="0" Style="{StaticResource separator}"/>
         <TextBox Height="75"
                  Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"
-            Grid.Row="1" x:Name="mainText" VerticalAlignment="Top" Text="These are my methods, interfaces and stuff..." Background="{x:Null}" BorderBrush="{x:Null}" TextWrapping="Wrap" HorizontalAlignment="Left" IsReadOnly="True" MouseDoubleClick="text_MouseDoubleClick" Cursor="Arrow" KeyDown="text_KeyDown" Focusable="False" AllowDrop="False" IsTabStop="False"/>
+            Grid.Row="1" x:Name="mainText" VerticalAlignment="Top" Text="These are my methods, interfaces and stuff..." Background="{x:Null}" BorderBrush="{x:Null}" TextWrapping="Wrap" HorizontalAlignment="Left" IsReadOnly="True" Cursor="Arrow" Focusable="False" AllowDrop="False" IsTabStop="False">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <cmd:EventToCommand Command="{Binding EditTextCommand}" PassEventArgsToCommand="True"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </TextBox>
 
         <Rectangle Fill="LightGray" HorizontalAlignment="Left" Stroke="Black" VerticalAlignment="Top" Panel.ZIndex="-99999999"
                    Grid.RowSpan="{Binding Path=RowDefinitions.Count, RelativeSource={RelativeSource AncestorType=Grid}}"

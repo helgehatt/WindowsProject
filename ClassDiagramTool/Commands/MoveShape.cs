@@ -1,33 +1,38 @@
-﻿using System;
-using System.Diagnostics;
+﻿using ClassDiagramTool.UndoRedo;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ClassDiagramTool.Commands
 {
-    class MoveShape : ICommand
+    class MoveShape : IUndoRedoCommand
     {
         public event EventHandler CanExecuteChanged;
 
-        private ClassShape element;
-        private Point start;
-        private Point end;
-        private double offsetX = 0.0;
-        private double offsetY = 0.0;
+        private ClassShape MovedElement;
+        private Point OriginalPosition;
+        private Point FinalPosition;
+        private Point CursorOffset;
 
         public MoveShape(MouseButtonEventArgs e)
         {
-            this.element = (ClassShape)e.Source;
+            this.MovedElement = (ClassShape)e.Source;
             //Setup move command.
-            StartMoveShape(e);
+            SetupMoveShape(e);
+
             //Create Event Handlers to perform move command.
-            MouseEventHandler mousemove = new MouseEventHandler(ProgressMoveShape);
-            MouseButtonEventHandler mouseup = null;
-            mouseup = new MouseButtonEventHandler((object sender, MouseButtonEventArgs e1) => { EndMoveShape(sender, e1); element.MouseMove -= mousemove; element.MouseLeftButtonUp -= mouseup; });
+            MouseEventHandler MouseMove = new MouseEventHandler(
+                (object sender, MouseEventArgs e1) => { UpdateMoveShape(e1); }
+                );
+            MouseButtonEventHandler MouseUp = null;
+            MouseUp = new MouseButtonEventHandler( //Delegate ends the move command and removes event handlers from element.
+                (object sender, MouseButtonEventArgs e2) => { FinalizeMoveShape(e2); MovedElement.MouseMove -= MouseMove; MovedElement.MouseLeftButtonUp -= MouseUp; }
+                );
+
             //Add these to the element to be moved.
-            element.MouseMove += mousemove;
-            element.MouseLeftButtonUp += mouseup;
+            MovedElement.MouseMove += MouseMove;
+            MovedElement.MouseLeftButtonUp += MouseUp;
         }
 
         public bool CanExecute(object parameter)
@@ -39,39 +44,44 @@ namespace ClassDiagramTool.Commands
         public void Execute(object parameter)
         {
             // Moves the element.
-            element.SetValue(Canvas.LeftProperty, end.X);
-            element.SetValue(Canvas.TopProperty, end.Y);
+            MovedElement.SetValue(Canvas.LeftProperty, FinalPosition.X);
+            MovedElement.SetValue(Canvas.TopProperty, FinalPosition.Y);
         }
 
-        private void StartMoveShape(MouseButtonEventArgs e)
+        public void UnExecute()
         {
-            element.Cursor = Cursors.Hand;
-            Mouse.Capture((IInputElement)element);
+            MovedElement.SetValue(Canvas.LeftProperty, OriginalPosition.X);
+            MovedElement.SetValue(Canvas.TopProperty, OriginalPosition.Y);
+        }
+
+        private void SetupMoveShape(MouseButtonEventArgs e)
+        {
+            MovedElement.Cursor = Cursors.Hand;
+            Mouse.Capture((IInputElement)MovedElement);
             //Get current position.
-            start = new Point(Canvas.GetLeft(element), Canvas.GetTop(element));
-            end = start;
+            OriginalPosition = new Point(Canvas.GetLeft(MovedElement), Canvas.GetTop(MovedElement));
+            FinalPosition = OriginalPosition;
             //Calculate cursor offset from element origin.
-            var cursorPos = e.GetPosition(element.Parent as Canvas);
-            this.offsetX = start.X - cursorPos.X;
-            this.offsetY = start.Y - cursorPos.Y;
+            Point CursorPos = e.GetPosition(MovedElement.Parent as Canvas);
+            CursorOffset = new Point(OriginalPosition.X - CursorPos.X, OriginalPosition.Y - CursorPos.Y);
             e.Handled = true;
         }
 
-        private void EndMoveShape(object sender, MouseButtonEventArgs e)
+        private void FinalizeMoveShape(MouseButtonEventArgs e)
         {
             Mouse.Capture(null);
-            element.Cursor = Cursors.Arrow;
+            MovedElement.Cursor = Cursors.Arrow;
             e.Handled = true;
         }
 
-        private void ProgressMoveShape(object sender, MouseEventArgs e)
+        private void UpdateMoveShape(MouseEventArgs e)
         {
             //Get new position.
-            var moveTo = e.GetPosition(element.Parent as Canvas);
-            moveTo.Offset(offsetX, offsetY);
-            element.SetValue(Canvas.TopProperty, moveTo.Y);
-            element.SetValue(Canvas.LeftProperty, moveTo.X);
-            end = new Point(moveTo.X, moveTo.Y);
+            Point MoveToPosition = e.GetPosition(MovedElement.Parent as Canvas);
+            MoveToPosition.Offset(CursorOffset.X, CursorOffset.Y);
+            MovedElement.SetValue(Canvas.TopProperty, MoveToPosition.Y);
+            MovedElement.SetValue(Canvas.LeftProperty, MoveToPosition.X);
+            FinalPosition = new Point(MoveToPosition.X, MoveToPosition.Y);
             e.Handled = true;
         }
     }

@@ -56,11 +56,6 @@ namespace ClassDiagramTool.ViewModel
                 new SolidLineViewModel(Shapes[0],Shapes[1]) {Label="lineText"}
             };
         }
-
-        // MouseClick Add Shape Command
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(ClickAddShape.Execute, ClickAddShape.CanExecute);
-        public ClickAddShape ClickAddShape = new ClickAddShape();
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(e));
     }
 
 
