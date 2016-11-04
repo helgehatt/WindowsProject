@@ -77,6 +77,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddLineCommand.cs" />
     <Compile Include="Commands\AddShapeCommand.cs" />
     <Compile Include="Commands\EditText.cs" />
     <Compile Include="Commands\MoveShape.cs" />
@@ -95,6 +96,9 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\Shapes\ShapeViewModel.cs" />
     <Compile Include="ViewModel\Shapes\SquareViewModel.cs" />
+    <Compile Include="View\UserControls\LineUserControl.xaml.cs">
+      <DependentUpon>LineUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\UserControls\MenuUserControl.xaml.cs">
       <DependentUpon>MenuUserControl.xaml</DependentUpon>
     </Compile>
@@ -112,6 +116,10 @@
     <Page Include="View\UserControls\ClassShapeUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UserControls\LineUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UserControls\MenuUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>

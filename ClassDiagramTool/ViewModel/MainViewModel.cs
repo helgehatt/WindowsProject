@@ -33,8 +33,9 @@ namespace ClassDiagramTool.ViewModel
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
         
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, b => true);
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(e));
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand   => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand);
+        public RelayCommand<MouseButtonEventArgs> AddLineCommand    => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand);
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand  => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(e));
         #endregion
 
         #region CommandMethods
@@ -49,8 +50,23 @@ namespace ClassDiagramTool.ViewModel
             Point position = Mouse.GetPosition(mainCanvas);
 
             ShapeViewModel Shape = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
-            
+
             UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
+        }
+
+        private void OnAddLineCommand(object parameter)
+        {
+            if (parameter == null)
+                throw new InvalidOperationException();
+
+            MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
+            Canvas mainCanvas = e.Source as Canvas;
+
+            Point position = Mouse.GetPosition(mainCanvas);
+
+            LineViewModel Line = new SolidLineViewModel() { };
+
+            UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
         }
         #endregion
 

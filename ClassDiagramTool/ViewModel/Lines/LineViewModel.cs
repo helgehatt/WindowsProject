@@ -24,6 +24,9 @@ namespace ClassDiagramTool.ViewModel.Lines
         public int FromNumber => from.Number;
         public int ToNumber => to.Number;
         public string Label { get; set; }
-        public ELine Type { get; set; }
+        public ELine Type { get; set; } 
+
+        public ShapeViewModel From => from;
+        public ShapeViewModel To => to;
     }
 }
