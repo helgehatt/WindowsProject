@@ -26,8 +26,6 @@ namespace ClassDiagramTool.ViewModel
         public ObservableCollection<LineViewModel> Lines { get; }
         public ObservableCollection<ShapeViewModel> Shapes { get; }
 
-        public ClickAddShape ClickAddShape = new ClickAddShape();
-
         private Random rand = new Random();
         #endregion
 

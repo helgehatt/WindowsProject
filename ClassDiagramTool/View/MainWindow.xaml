@@ -45,7 +45,7 @@
                 </ItemsControl.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:ClassShape/>
+                      <local:ClassShape/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

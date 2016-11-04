@@ -13,8 +13,6 @@ namespace ClassDiagramTool.ViewModel.Shapes
         public SquareViewModel(Shape shape) 
             : base(shape)
         {
-            Width = 250;
-            Height = 100;
         }
     }
 }

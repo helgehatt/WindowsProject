@@ -16,6 +16,8 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         protected ShapeViewModel(Shape shape) {
             this.shape = shape;
+            Width = 250;
+            Height = 100;
         }
 
         public int Number => shape.Number;

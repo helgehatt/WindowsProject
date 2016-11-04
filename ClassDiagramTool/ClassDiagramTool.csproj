@@ -78,14 +78,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\AddShapeCommand.cs" />
-    <Compile Include="Commands\ClickAddShape.cs" />
+    <Compile Include="Commands\EditText.cs" />
     <Compile Include="Commands\MoveShape.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Shapes\ClassShape.xaml.cs">
-      <DependentUpon>ClassShape.xaml</DependentUpon>
+    <Compile Include="View\UserControls\ClassShapeUserControl.xaml.cs">
+      <DependentUpon>ClassShapeUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UndoRedo\IUndoRedoCommand.cs" />
     <Compile Include="UndoRedo\UndoRedoController.cs" />
@@ -109,7 +109,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Shapes\ClassShape.xaml">
+    <Page Include="View\UserControls\ClassShapeUserControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
