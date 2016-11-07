@@ -22,9 +22,10 @@ namespace ClassDiagramTool.ViewModel
     {
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
+        
+        public ObservableCollection<BaseViewModel> Objects { get; }
 
-        public ObservableCollection<LineViewModel> Lines { get; }
-        public ObservableCollection<ShapeViewModel> Shapes { get; }
+        public SquareViewModel shape1, shape2;
 
         private Random rand = new Random();
         #endregion
@@ -33,46 +34,33 @@ namespace ClassDiagramTool.ViewModel
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
         
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand   => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand);
-        public RelayCommand<MouseButtonEventArgs> AddLineCommand    => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand);
+        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand);
+        public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
         #endregion
 
         #region CommandMethods
-        private void OnAddShapeCommand(object parameter)
-        {
-            if (parameter == null)
-                throw new InvalidOperationException();
-
-            MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
+        private void OnAddObjectCommand(MouseButtonEventArgs e)
+        {            
             Canvas mainCanvas = e.Source as Canvas;
 
             Point position = Mouse.GetPosition(mainCanvas);
 
-            ShapeViewModel Shape = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
+            BaseViewModel Object = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
 
-            UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
+            UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
         }
 
-        private void OnAddLineCommand(object parameter)
+        private void OnConnectShapesCommand(object parameter)
         {
-            if (parameter == null)
-                throw new InvalidOperationException();
 
-            MouseButtonEventArgs e = parameter as MouseButtonEventArgs;
-            Canvas mainCanvas = e.Source as Canvas;
-
-            Point position = Mouse.GetPosition(mainCanvas);
-
-            LineViewModel Line = new SolidLineViewModel() { };
-
-            UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
         }
         #endregion
 
         public MainViewModel() : base()
         {
-            Shapes = new ObservableCollection<ShapeViewModel>();
-            Lines = new ObservableCollection<LineViewModel>();
+            Objects = new ObservableCollection<BaseViewModel>();
+            BaseViewModel Object = new SquareViewModel() { CenterX = 300, CenterY = 200, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
+            Objects.Add(Object);
         }
     }
 

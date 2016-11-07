@@ -25,13 +25,13 @@
         <userControls:SidePanel DockPanel.Dock="Left"/>
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Shapes}">
+            <ItemsControl ItemsSource="{Binding Objects}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="Transparent">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <cmd:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
+                                    <cmd:EventToCommand Command="{Binding ConnectShapesCommand}" PassEventArgsToCommand="True"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Canvas>

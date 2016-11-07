@@ -6,7 +6,6 @@
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d">
     <Grid>
-        <Line Stroke="Black" X1="10" Y1="10" X2="50" Y2="50" StrokeThickness="5"/>
-
+        <Line Stroke="Black" X1="{Binding From.CenterX}" Y1="{Binding From.CenterY}" X2="{Binding To.CenterX}" Y2="{Binding To.CenterY}" StrokeThickness="5"/>
     </Grid>
 </UserControl>

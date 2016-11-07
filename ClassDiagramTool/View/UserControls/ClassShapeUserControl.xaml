@@ -58,7 +58,7 @@
             </i:Interaction.Triggers>
         </TextBox>
 
-            <Rectangle Fill="LightGray" HorizontalAlignment="Left" Stroke="Black" VerticalAlignment="Top" Panel.ZIndex="-99999999"
+            <Rectangle Fill="LightGray" HorizontalAlignment="Left" Stroke="Black" VerticalAlignment="Top" Panel.ZIndex="-1"
                    Grid.RowSpan="{Binding Path=RowDefinitions.Count, RelativeSource={RelativeSource AncestorType=Grid}}"
                    Grid.ColumnSpan="{Binding Path=ColumnDefinitions.Count, RelativeSource={RelativeSource AncestorType=Grid}}"
                    Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}"

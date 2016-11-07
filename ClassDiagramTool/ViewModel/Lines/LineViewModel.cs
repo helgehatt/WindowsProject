@@ -6,9 +6,18 @@ namespace ClassDiagramTool.ViewModel.Lines
     public abstract class LineViewModel : BaseViewModel, ILine
     {
         private readonly Line Line;
-        protected ShapeViewModel To;
-        protected ShapeViewModel From;
-        
+
+        public ShapeViewModel To { get; set; }
+        public ShapeViewModel From { get; set; }
+
+        public double X { get; } // Unused
+        public double Y { get; } // Unused
+
+        public int FromNumber => From.Number;
+        public int ToNumber => To.Number;
+        public string Label { get; set; }
+        public ELine Type { get; set; }
+
         protected LineViewModel(Line line)
         {
             Line = line;
@@ -20,10 +29,5 @@ namespace ClassDiagramTool.ViewModel.Lines
             To = to;
             From = from;
         }
-
-        public int FromNumber => From.Number;
-        public int ToNumber => To.Number;
-        public string Label { get; set; }
-        public ELine Type { get; set; }
     }
 }
