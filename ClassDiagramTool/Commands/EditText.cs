@@ -12,32 +12,26 @@ namespace ClassDiagramTool.Commands
         private string OriginalText;
         private string NewText;
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
+        public event EventHandler CanExecuteChanged;
 
-        public void Execute()
+        public EditText(MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-        public void Execute(object parameter)
-        {
-            EditedTextBox = (TextBox)parameter;
+            EditedTextBox = (TextBox)e.Source;
             OriginalText = EditedTextBox.Text;
 
             KeyEventHandler enter = null;
             RoutedEventHandler lostfocus = null;
             enter = new KeyEventHandler(
-                (object sender, KeyEventArgs e) => {
-                    if (e.Key == Key.Enter) {
+                (object sender, KeyEventArgs e1) => {
+                    if (e1.Key == Key.Enter)
+                    {
                         lockText();
                         EditedTextBox.KeyDown -= enter;
                         EditedTextBox.LostFocus -= lostfocus;
                     }
                 });
             lostfocus = new RoutedEventHandler(
-                (object sender, RoutedEventArgs e) => {
+                (object sender, RoutedEventArgs e2) => {
                     lockText();
                     EditedTextBox.KeyDown -= enter;
                     EditedTextBox.LostFocus -= lostfocus;
@@ -50,7 +44,17 @@ namespace ClassDiagramTool.Commands
             EditedTextBox.IsReadOnly = false;
             EditedTextBox.SelectAll();
             EditedTextBox.Focus();
+        }
 
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute() => Execute(null);
+        public void Execute(object parameter)
+        {
+            EditedTextBox.Text = NewText;
         }
 
         public void UnExecute()
