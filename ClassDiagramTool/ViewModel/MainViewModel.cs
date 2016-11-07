@@ -35,7 +35,7 @@ namespace ClassDiagramTool.ViewModel
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
         
         public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand);
-        public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
+        //public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
         #endregion
 
         #region CommandMethods
