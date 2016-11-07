@@ -1,4 +1,5 @@
 ﻿using ClassDiagramTool.UndoRedo;
+using ClassDiagramTool.View.UserControls;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,16 +9,14 @@ namespace ClassDiagramTool.Commands
 {
     class MoveShape : IUndoRedoCommand
     {
-        public event EventHandler CanExecuteChanged;
-
-        private ClassShape MovedElement;
+        private ClassShapeUserControl MovedElement;
         private Point OriginalPosition;
         private Point FinalPosition;
         private Point CursorOffset;
 
         public MoveShape(MouseButtonEventArgs e)
         {
-            this.MovedElement = (ClassShape)e.Source;
+            MovedElement = (ClassShapeUserControl)e.Source;
             //Setup move command.
             SetupMoveShape(e);
 

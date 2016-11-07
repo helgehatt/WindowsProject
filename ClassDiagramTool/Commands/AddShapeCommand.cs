@@ -10,23 +10,23 @@ namespace ClassDiagramTool.Commands
 {
     class AddShapeCommand : IUndoRedoCommand
     {
-        private ObservableCollection<ShapeViewModel> shapes;
-        private ShapeViewModel shape;
+        private ObservableCollection<ShapeViewModel> Shapes;
+        private ShapeViewModel Shape;
 
         public AddShapeCommand(ObservableCollection<ShapeViewModel> shapes, ShapeViewModel shape)
         {
-            this.shapes = shapes;
-            this.shape = shape;
+            Shapes = shapes;
+            Shape = shape;
         }
 
         public void Execute()
         {
-            shapes.Add(shape);
+            Shapes.Add(Shape);
         }
 
         public void UnExecute()
         {
-            shapes.Remove(shape);
+            Shapes.Remove(Shape);
         }
     }
 }

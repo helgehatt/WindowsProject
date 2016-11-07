@@ -10,23 +10,23 @@ namespace ClassDiagramTool.Commands
 {
     class AddLineCommand : IUndoRedoCommand
     {
-        private ObservableCollection<LineViewModel> lines;
-        private LineViewModel line;
+        private ObservableCollection<LineViewModel> Lines;
+        private LineViewModel Line;
 
         public AddLineCommand(ObservableCollection<LineViewModel> lines, LineViewModel line)
         {
-            this.lines = lines;
-            this.line = line;
+            Lines = lines;
+            Line = line;
         }
 
         public void Execute()
         {
-            lines.Add(line);
+            Lines.Add(Line);
         }
 
         public void UnExecute()
         {
-            lines.Remove(line);
+            Lines.Remove(Line);
         }
     }
 }

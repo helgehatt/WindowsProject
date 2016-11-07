@@ -5,6 +5,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
+using GalaSoft.MvvmLight.CommandWpf;
+using ClassDiagramTool.Commands;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
@@ -12,55 +14,58 @@ namespace ClassDiagramTool.ViewModel.Shapes
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
 
-        protected Shape shape { get; }
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(e));
+        public RelayCommand EditTextCommand => new RelayCommand(() => new EditText());
+
+        protected Shape Shape { get; }
 
         protected ShapeViewModel(Shape shape) {
-            this.shape = shape;
+            Shape = shape;
             Width = 250;
             Height = 100;
         }
 
-        public int Number => shape.Number;
+        public int Number => Shape.Number;
 
         public double X {
-            get { return shape.X; }
-            set { shape.X = value; }
+            get { return Shape.X; }
+            set { Shape.X = value; }
         }
 
         public double Y {
-            get { return shape.Y; }
-            set { shape.Y = value; }
+            get { return Shape.Y; }
+            set { Shape.Y = value; }
         }
 
         public double Width {
-            get { return shape.Width; }
-            set { shape.Width = value; }
+            get { return Shape.Width; }
+            set { Shape.Width = value; }
         }
 
         public double Height {
-            get { return shape.Height; }
-            set { shape.Height = value; }
+            get { return Shape.Height; }
+            set { Shape.Height = value; }
         }
 
         public double CenterX {
             get { return X + Width / 2; }
-            set { shape.X = value - Width / 2; }
+            set { Shape.X = value - Width / 2; }
         }
 
         public double CenterY {
             get { return Y + Height / 2; }
-            set { shape.Y = value - Height / 2; }
+            set { Shape.Y = value - Height / 2; }
         }
 
-        public EShape Type => shape.Type;
+        public EShape Type => Shape.Type;
 
         public string Title {
-            get { return shape.Title; }
-            set { shape.Title = value; }
+            get { return Shape.Title; }
+            set { Shape.Title = value; }
         }
 
         public List<string> Text { get; set; }
 
-        public override string ToString() => shape.ToString();
+        public override string ToString() => Shape.ToString();
     }
 }

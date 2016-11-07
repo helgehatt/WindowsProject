@@ -12,8 +12,6 @@ namespace ClassDiagramTool.Commands
         private string OriginalText;
         private string NewText;
 
-        public event EventHandler CanExecuteChanged;
-
         public bool CanExecute(object parameter)
         {
             return true;

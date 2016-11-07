@@ -10,7 +10,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
         {
         }
 
-        public SquareViewModel(Shape shape) 
+        public SquareViewModel(Shape shape)
             : base(shape)
         {
         }

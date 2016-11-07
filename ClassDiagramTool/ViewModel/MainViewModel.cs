@@ -35,7 +35,6 @@ namespace ClassDiagramTool.ViewModel
         
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand   => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand);
         public RelayCommand<MouseButtonEventArgs> AddLineCommand    => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand);
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand  => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(e));
         #endregion
 
         #region CommandMethods

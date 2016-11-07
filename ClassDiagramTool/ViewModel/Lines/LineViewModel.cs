@@ -5,28 +5,25 @@ namespace ClassDiagramTool.ViewModel.Lines
 {
     public abstract class LineViewModel : BaseViewModel, ILine
     {
-        private readonly Line line;
-        private ShapeViewModel to;
-        private ShapeViewModel from;
+        private readonly Line Line;
+        protected ShapeViewModel To;
+        protected ShapeViewModel From;
         
         protected LineViewModel(Line line)
         {
-            this.line = line;
+            Line = line;
         }
 
         protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to) 
             : this(line)
         {
-            this.to = to;
-            this.from = from;
+            To = to;
+            From = from;
         }
 
-        public int FromNumber => from.Number;
-        public int ToNumber => to.Number;
+        public int FromNumber => From.Number;
+        public int ToNumber => To.Number;
         public string Label { get; set; }
-        public ELine Type { get; set; } 
-
-        public ShapeViewModel From => from;
-        public ShapeViewModel To => to;
+        public ELine Type { get; set; }
     }
 }
