@@ -25,11 +25,16 @@
         <userControls:SidePanel DockPanel.Dock="Left"/>
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto">
-
-            <ItemsControl ItemsSource="{Binding Shapes}">
+            <ItemsControl ItemsSource="{Binding Objects}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas/>
+                        <Canvas Background="Transparent">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <cmd:EventToCommand Command="{Binding AddObjectCommand}" PassEventArgsToCommand="True"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Canvas>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemContainerStyle>
@@ -38,13 +43,7 @@
                         <Setter Property="Canvas.Top" Value="{Binding Y}"/>
                     </Style>
                 </ItemsControl.ItemContainerStyle>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <userControls:SquareUserControl/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
             </ItemsControl>
-
         </ScrollViewer>
     </DockPanel>
 </Window>

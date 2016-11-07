@@ -2,8 +2,22 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ClassDiagramTool"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewModel="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:shapes="clr-namespace:ClassDiagramTool.ViewModel.Shapes"
+             xmlns:lines="clr-namespace:ClassDiagramTool.ViewModel.Lines"
+             xmlns:userControls="clr-namespace:ClassDiagramTool.View.UserControls"
+             StartupUri="View/MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <DataTemplate DataType="{x:Type shapes:SquareViewModel}">
+                <userControls:ClassShapeUserControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type lines:SolidLineViewModel}">
+                <userControls:LineUserControl/>
+            </DataTemplate>
+            <ItemsPanelTemplate x:Key="CanvasContainer">
+                <Canvas></Canvas>
+            </ItemsPanelTemplate>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
