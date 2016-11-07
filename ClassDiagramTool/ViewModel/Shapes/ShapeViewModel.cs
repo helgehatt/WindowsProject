@@ -7,6 +7,7 @@ using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
 using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
+using System.Diagnostics;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
@@ -14,7 +15,12 @@ namespace ClassDiagramTool.ViewModel.Shapes
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
 
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)));
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) =>
+        {
+            Debug.WriteLine("MoveShape called.");
+            if (false)
+                UndoRedoController.AddAndExecute(new MoveShape(this, e));
+        });
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)));
 
         protected Shape Shape { get; }

@@ -33,14 +33,16 @@ namespace ClassDiagramTool.ViewModel
         #region Commands
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
-        
+
         public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand);
-        //public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
+        public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
         #endregion
 
         #region CommandMethods
         private void OnAddObjectCommand(MouseButtonEventArgs e)
-        {            
+        {
+            if (true) return;
+
             Canvas mainCanvas = e.Source as Canvas;
 
             Point position = Mouse.GetPosition(mainCanvas);
@@ -48,11 +50,6 @@ namespace ClassDiagramTool.ViewModel
             BaseViewModel Object = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
 
             UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
-        }
-
-        private void OnConnectShapesCommand(object parameter)
-        {
-
         }
         #endregion
 
