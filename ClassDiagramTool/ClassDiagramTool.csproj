@@ -79,6 +79,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\AddObjectCommand.cs" />
     <Compile Include="Commands\ConnectShapesCommand.cs" />
+    <Compile Include="Commands\DeleteObjectCommand.cs" />
     <Compile Include="Commands\EditText.cs" />
     <Compile Include="Commands\MoveShape.cs" />
     <Compile Include="View\MainWindow.xaml.cs">

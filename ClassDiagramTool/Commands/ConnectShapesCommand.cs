@@ -28,7 +28,6 @@ namespace ClassDiagramTool.Commands
                 ((ShapeViewModel)(e.Source as UserControl).DataContext).X = 0;
                 ((ShapeViewModel)(e.Source as UserControl).DataContext).Y = 0;
                 Debug.WriteLine(((ShapeViewModel)(e.Source as UserControl).DataContext).MoveShapeCommand.GetType());
-                //I has found the viewmodel!
             }
         }
 

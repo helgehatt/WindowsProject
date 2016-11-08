@@ -22,7 +22,7 @@ namespace ClassDiagramTool.ViewModel
     {
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-        
+
         public ObservableCollection<BaseViewModel> Objects { get; }
 
         public SquareViewModel shape1, shape2;
@@ -34,15 +34,13 @@ namespace ClassDiagramTool.ViewModel
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
 
-        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand);
+        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand, (e) => false);
         public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
         #endregion
 
         #region CommandMethods
         private void OnAddObjectCommand(MouseButtonEventArgs e)
         {
-            if (true) return;
-
             Canvas mainCanvas = e.Source as Canvas;
 
             Point position = Mouse.GetPosition(mainCanvas);
