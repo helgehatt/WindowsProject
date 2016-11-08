@@ -15,6 +15,7 @@
             <cmd:EventToCommand Command="{Binding MoveShapeCommand}" PassEventArgsToCommand="True"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
     <Grid>
         <Grid.Resources>
             <Style x:Key="separator" TargetType="Line">
@@ -37,6 +38,31 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Command="{Binding CutCommand}" Header="Cut">
+                    <MenuItem.Icon>
+                        <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="{Binding CopyCommand}" Header="Copy" CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+                    <MenuItem.Icon>
+                        <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="{Binding PasteCommand}" Header="Paste">
+                    <MenuItem.Icon>
+                        <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Command="{Binding DeleteCommand}" Header="Delete">
+                    <MenuItem.Icon>
+                        <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        
         <Label Content="{Binding Type}" HorizontalAlignment="Right" Margin="0,-5,0,0" VerticalAlignment="Top" FontSize="8"/>
         <TextBox Height="25"
                  Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}}"

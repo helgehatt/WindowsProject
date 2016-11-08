@@ -79,8 +79,11 @@
     </ApplicationDefinition>
     <Compile Include="Commands\AddObjectCommand.cs" />
     <Compile Include="Commands\ConnectShapesCommand.cs" />
+    <Compile Include="Commands\CopyCommand.cs" />
+    <Compile Include="Commands\CutCommand.cs" />
     <Compile Include="Commands\EditText.cs" />
     <Compile Include="Commands\MoveShape.cs" />
+    <Compile Include="Commands\PasteCommand.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>

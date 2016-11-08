@@ -16,6 +16,11 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)));
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)));
+        public RelayCommand<MouseButtonEventArgs> CutObjectCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new CutCommand(e)));
+        public RelayCommand<MouseButtonEventArgs> CopyObjectCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new CopyCommand(e)));
+        public RelayCommand<MouseButtonEventArgs> PasteObjectCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new PasteCommand(e)));
+
+
 
         protected Shape Shape { get; }
 
