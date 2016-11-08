@@ -40,6 +40,11 @@
 
         <Grid.ContextMenu>
             <ContextMenu>
+                <MenuItem Command="{Binding NewItemCommand}" Header="New item">
+                    <MenuItem.Icon>
+                        <Image Source="/ClassDiagramTool;component/Images/New.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <MenuItem Command="{Binding CutCommand}" Header="Cut">
                     <MenuItem.Icon>
                         <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
