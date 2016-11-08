@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ClassDiagramTool.ViewModel.Shapes;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,38 +18,25 @@ namespace ClassDiagramTool.ViewModel
 
         public void AddSelect(UserControl element)
         {
-            SelectedView(element);
+            (element.DataContext as ShapeViewModel).Selected = true;
             SelectionList.Add(element);
         }
 
         public void Select(UserControl element)
         {
-            SelectionList.ForEach(DeSelectView);
+            SelectionList.ForEach((current) => { (current.DataContext as ShapeViewModel).Selected = false; });
             SelectionList.Clear();
             AddSelect(element);
         }
 
         public void Deselect(UserControl element)
         {
-            DeSelectView(element);
+            (element.DataContext as ShapeViewModel).Selected = false;
             SelectionList.Remove(element);
         }
 
         public bool IsSelected(UserControl element) => SelectionList.Contains(element);
         public UserControl Get(int n) => SelectionList[n];
         public int Count => SelectionList.Count;
-
-        private Brush SelectionColor = Brushes.Blue;
-        private void SelectedView(UserControl element)
-        {
-            element.BorderBrush = SelectionColor;
-            element.BorderThickness = new Thickness(3);
-        }
-
-        private void DeSelectView(UserControl element)
-        {
-            element.BorderBrush = Brushes.Black;
-            element.BorderThickness = new Thickness(0);
-        }
     }
 }

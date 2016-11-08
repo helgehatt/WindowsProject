@@ -29,11 +29,12 @@ namespace ClassDiagramTool.Commands
             //    ((ShapeViewModel)(e.Source as UserControl).DataContext).Y = 0;
             //    Debug.WriteLine(((ShapeViewModel)(e.Source as UserControl).DataContext).MoveShapeCommand.GetType());
             //}
-            if (e.Source is Canvas)
-            {
-                Debug.WriteLine((e.Source as Canvas).TemplatedParent);
-                Debug.WriteLine(((e.Source as Canvas).TemplatedParent as ItemsPresenter));
-            }
+            //if (e.Source is Canvas)
+            //{
+            //    Debug.WriteLine((e.Source as Canvas).TemplatedParent);
+            //    Debug.WriteLine(((e.Source as Canvas).TemplatedParent as ItemsPresenter));
+            //}
+            Debug.WriteLine("ConnectShape");
         }
 
         private void OnMouseButtonDown(MouseButtonEventArgs e)

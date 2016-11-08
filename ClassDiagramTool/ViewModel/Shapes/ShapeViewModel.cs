@@ -16,10 +16,22 @@ namespace ClassDiagramTool.ViewModel.Shapes
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
 
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => { UndoRedoController.AddAndExecute(new MoveShape(this, e)); }, (e) => false);
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => { new MoveShape(this, e); }, (e) => true);
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), (e) => false);
 
         protected Shape Shape { get; }
+
+        private bool selected = false;
+        public bool Selected {
+            get { return selected; }
+            set { selected = value; OnPropertyChanged(); }
+        }
+        private bool dragging = false;
+        public bool Dragging
+        {
+            get { return dragging; }
+            set { dragging = value; OnPropertyChanged(); }
+        }
 
         protected ShapeViewModel(Shape shape) {
             Shape = shape;

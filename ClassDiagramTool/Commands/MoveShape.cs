@@ -89,7 +89,8 @@ namespace ClassDiagramTool.Commands
 
         private void SetupMoveShape(UserControl element, MouseButtonEventArgs e)
         {
-            element.Cursor = Cursors.Hand;
+            //element.Cursor = Cursors.Hand;
+            ViewModel.Dragging = true;
             Mouse.Capture((IInputElement)element);
             //Get current position.
             OriginalPosition = new Point(ViewModel.X, ViewModel.Y);
@@ -97,14 +98,15 @@ namespace ClassDiagramTool.Commands
             //Calculate cursor offset from element origin.
             Point CursorPos = e.GetPosition(element.Parent as Canvas);
             CursorOffset = new Point(OriginalPosition.X - CursorPos.X, OriginalPosition.Y - CursorPos.Y);
-            e.Handled = true;
         }
 
         private void FinalizeMoveShape(MouseButtonEventArgs e)
         {
             Mouse.Capture(null);
-            ((UserControl)e.Source).Cursor = Cursors.Arrow;
-            e.Handled = true;
+            //((UserControl)e.Source).Cursor = Cursors.Arrow;
+            ViewModel.Dragging = false;
+            if (!OriginalPosition.Equals(FinalPosition))
+                UndoRedoController.Instance.AddAndExecute(this);
         }
 
         private void UpdateMoveShape(MouseEventArgs e)
@@ -115,7 +117,6 @@ namespace ClassDiagramTool.Commands
             ViewModel.X = MoveToPosition.X;
             ViewModel.Y = MoveToPosition.Y;
             FinalPosition = new Point(MoveToPosition.X, MoveToPosition.Y);
-            e.Handled = true;
         }
     }
 }
