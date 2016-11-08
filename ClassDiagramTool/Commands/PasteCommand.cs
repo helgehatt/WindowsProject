@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ClassDiagramTool.Commands
@@ -13,12 +14,15 @@ namespace ClassDiagramTool.Commands
     {
         public PasteCommand(MouseButtonEventArgs e)
         {
+            UserControl data = Clipboard.GetDataObject() as UserControl;
+            //data.DataContext as 
+
 
         }
 
         public void Execute()
         {
-            IDataObject data = Clipboard.GetDataObject();
+            
 
         }
 
@@ -26,5 +30,7 @@ namespace ClassDiagramTool.Commands
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }
