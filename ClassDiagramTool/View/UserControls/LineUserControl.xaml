@@ -6,13 +6,7 @@
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d">
     <Grid>
-        <Line Stroke="Black" X1="{Binding From.P.X}" Y1="{Binding From.P.Y}" X2="{Binding From.P.X}" Y2="{Binding To.P.Y}" RenderOptions.EdgeMode="Aliased"/>
-        <Line Stroke="Black" X1="{Binding From.P.X}" Y1="{Binding To  .P.Y}" X2="{Binding To  .P.X}" Y2="{Binding To.P.Y}" RenderOptions.EdgeMode="Aliased"/>
-        <!--
-        <Line Stroke="Black" X1="{Binding From.P(from).X}" Y1="{Binding From.P(from).Y}" X2="{Binding From.P(from).X}" Y2="{Binding To.P(to).Y}" RenderOptions.EdgeMode="Aliased"/>
-        <Line Stroke="Black" X1="{Binding From.P(from).X}" Y1="{Binding To  .P(to  ).Y}" X2="{Binding To  .P(to  ).X}" Y2="{Binding To.P(to).Y}" RenderOptions.EdgeMode="Aliased"/>
-        <Line Stroke="Black" X1="{Binding From.CenterX}" Y1="{Binding From.CenterY}" X2="{Binding To.CenterX}" Y2="{Binding To.CenterY}"/>
-        <Line Stroke="Black" X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding To.X}" Y2="{Binding To.Y}"/>
-        -->
+        <Line Stroke="Black" X1="{Binding From.P[1].X}" Y1="{Binding From.P[1].Y}" X2="{Binding From.P[1].X}" Y2="{Binding To.P[3].Y}" RenderOptions.EdgeMode="Aliased"/>
+        <Line Stroke="Black" X1="{Binding From.P[1].X}" Y1="{Binding To  .P[3].Y}" X2="{Binding To  .P[3].X}" Y2="{Binding To.P[3].Y}" RenderOptions.EdgeMode="Aliased"/>
     </Grid>
 </UserControl>

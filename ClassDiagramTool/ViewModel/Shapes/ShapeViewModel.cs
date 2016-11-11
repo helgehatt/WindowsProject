@@ -24,9 +24,17 @@ namespace ClassDiagramTool.ViewModel.Shapes
             Shape = shape;
             Width = 250;
             Height = 100;
-        }        
 
-        public Point P => Point(EConnectionPoint.North, X, Y, Width, Height);
+            P = new List<ConnectionPoint>(
+            {
+                new ConnectionPoint(this, EConnectionPoint.North),
+                new ConnectionPoint(this, EConnectionPoint.South),
+                new ConnectionPoint(this, EConnectionPoint.East ),
+                new ConnectionPoint(this, EConnectionPoint.West )
+            };
+        }
+        
+        public List<ConnectionPoint> P { get; set; }
 
         public int Number => Shape.Number;
 
@@ -74,7 +82,5 @@ namespace ClassDiagramTool.ViewModel.Shapes
         }
 
         public List<string> Text { get; set; }
-
-        public override string ToString() => Shape.ToString();
     }
 }

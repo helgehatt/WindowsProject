@@ -12,8 +12,6 @@ namespace ClassDiagramTool.ViewModel.Lines
         public ShapeViewModel From { get; set; }
         public ShapeViewModel To { get; set; }
 
-        public EConnectionPoint from = EConnectionPoint.South, to = EConnectionPoint.West;
-
         public double X { get; } // Unused
         public double Y { get; } // Unused
 

@@ -7,42 +7,56 @@ using System.Windows;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
-    public enum EConnectionPoint
-    {
-        North,
-        NorthEast,
-        NorthWest,
-        South,
-        SouthEast,
-        SouthWest,
-        East,
-        EastNorth,
-        EastSouth,
-        West,
-        WestNorth,
-        WestSouth
-    }
 
-    class ConnectionPoint
+    public class ConnectionPoint
     {
-        public static Point Point(EConnectionPoint p, double x, double y, double width, double height)
+        private ShapeViewModel Shape;
+        private EConnectionPoint Orientation;
+        private double Percentile;
+
+        public ConnectionPoint(ShapeViewModel shape, EConnectionPoint orientation)
         {
-            switch(p)
+            Shape = shape;
+            Orientation = orientation;
+            Percentile = 0.5;
+        }
+
+        public double X
+        {
+            get
             {
-                case EConnectionPoint.North    : return new Point(x +     width / 2, y             );
-                case EConnectionPoint.NorthEast: return new Point(x + 3 * width / 4, y             );
-                case EConnectionPoint.NorthWest: return new Point(x +     width / 4, y             );
-                case EConnectionPoint.South    : return new Point(x +     width / 2, y + height    );
-                case EConnectionPoint.SouthEast: return new Point(x + 3 * width / 4, y + height    );
-                case EConnectionPoint.SouthWest: return new Point(x +     width / 4, y + height    );
-                case EConnectionPoint.East     : return new Point(x +     width,     y + height / 2);
-                case EConnectionPoint.EastNorth: return new Point(x +     width,     y + height / 4);
-                case EConnectionPoint.EastSouth: return new Point(x +     width, 3 * y + height / 4);
-                case EConnectionPoint.West     : return new Point(x            ,     y + height / 2);
-                case EConnectionPoint.WestNorth: return new Point(x            ,     y + height / 4);
-                case EConnectionPoint.WestSouth: return new Point(x            , 3 * y + height / 4);
-                default:                         return new Point();
+                switch(Orientation)
+                {
+                    case EConnectionPoint.North: return Shape.X + Shape.Width * Percentile;
+                    case EConnectionPoint.South: return Shape.X + Shape.Width * Percentile;
+                    case EConnectionPoint.East : return Shape.X + Shape.Width             ;
+                    case EConnectionPoint.West : return Shape.X                           ;
+                    default                    : return 0                                 ;
+                }
             }
+        }
+
+        public double Y
+        {
+            get
+            {
+                switch(Orientation)
+                {
+                    case EConnectionPoint.North: return Shape.Y                            ;
+                    case EConnectionPoint.South: return Shape.Y + Shape.Height             ;
+                    case EConnectionPoint.East : return Shape.Y + Shape.Height * Percentile;
+                    case EConnectionPoint.West : return Shape.Y + Shape.Height * Percentile;
+                    default                    : return 0                                  ;
+                }
+            }
+        }
+
+        public enum EConnectionPoint
+        {
+            North,
+            South,
+            East,
+            West
         }
     }
 
