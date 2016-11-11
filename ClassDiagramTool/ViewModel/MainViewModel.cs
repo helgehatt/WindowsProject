@@ -24,10 +24,9 @@ namespace ClassDiagramTool.ViewModel
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
         private ShapeViewModel From;
         public static bool IsAddingLine = false; // Replaced by selection
-
-        public ObservableCollection<BaseViewModel> Objects { get; }
+        
         public ObservableCollection<ShapeViewModel> Shapes { get; }
-        public ObservableCollection<LineViewModel> Lines { get; }
+        public ObservableCollection<LineViewModel>  Lines  { get; }
         #endregion
 
         #region Commands
@@ -52,9 +51,8 @@ namespace ClassDiagramTool.ViewModel
             Point Position = Mouse.GetPosition(MainCanvas);
 
             ShapeViewModel Shape = new SquareViewModel() { CenterX = Position.X, CenterY = Position.Y, Title = "Title", Text = new List<string> { "text1", "text2" } };
-            
 
-            UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Shape));
+            UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
         }
 
         private void OnAddLineCommand(MouseButtonEventArgs e)
@@ -68,7 +66,7 @@ namespace ClassDiagramTool.ViewModel
             else if (From  == null) From = Shape;
             else if (From  != Shape)
             {
-                UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, new SolidLineViewModel(From, Shape)));
+                UndoRedoController.AddAndExecute(new AddLineCommand(Lines, new SolidLineViewModel(From, Shape)));
                 From = null;
             }            
         }
@@ -76,9 +74,8 @@ namespace ClassDiagramTool.ViewModel
 
         public MainViewModel() : base()
         {
-            Objects = new ObservableCollection<BaseViewModel>();
             Shapes = new ObservableCollection<ShapeViewModel>();
-            Lines = new ObservableCollection<LineViewModel>();
+            Lines  = new ObservableCollection<LineViewModel>();
         }
     }
 
