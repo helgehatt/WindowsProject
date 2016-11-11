@@ -26,6 +26,8 @@ namespace ClassDiagramTool.ViewModel
         public static bool IsAddingLine = false; // Replaced by selection
 
         public ObservableCollection<BaseViewModel> Objects { get; }
+        public ObservableCollection<ShapeViewModel> Shapes { get; }
+        public ObservableCollection<LineViewModel> Lines { get; }
         #endregion
 
         #region Commands
@@ -49,9 +51,10 @@ namespace ClassDiagramTool.ViewModel
 
             Point Position = Mouse.GetPosition(MainCanvas);
 
-            BaseViewModel Object = new SquareViewModel() { CenterX = Position.X, CenterY = Position.Y, Title = "Title", Text = new List<string> { "text1", "text2" } };
+            ShapeViewModel Shape = new SquareViewModel() { CenterX = Position.X, CenterY = Position.Y, Title = "Title", Text = new List<string> { "text1", "text2" } };
+            
 
-            UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
+            UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Shape));
         }
 
         private void OnAddLineCommand(MouseButtonEventArgs e)
@@ -59,13 +62,13 @@ namespace ClassDiagramTool.ViewModel
             UserControl UserControl = e.Source as UserControl;
             if (UserControl == null) return;
 
-            ShapeViewModel Object = UserControl.DataContext as ShapeViewModel;
+            ShapeViewModel Shape = UserControl.DataContext as ShapeViewModel;
 
-                 if (Object == null) Debug.WriteLine("OnConnectShapesCommand, DataContext=" + (e.Source as UserControl).DataContext);
-            else if (From   == null) From = Object;
-            else if (From   != Object)
+                 if (Shape == null) Debug.WriteLine("OnConnectShapesCommand, DataContext=" + (e.Source as UserControl).DataContext);
+            else if (From  == null) From = Shape;
+            else if (From  != Shape)
             {
-                UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, new SolidLineViewModel(From, Object)));
+                UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, new SolidLineViewModel(From, Shape)));
                 From = null;
             }            
         }
@@ -74,6 +77,8 @@ namespace ClassDiagramTool.ViewModel
         public MainViewModel() : base()
         {
             Objects = new ObservableCollection<BaseViewModel>();
+            Shapes = new ObservableCollection<ShapeViewModel>();
+            Lines = new ObservableCollection<LineViewModel>();
         }
     }
 

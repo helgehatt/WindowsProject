@@ -81,6 +81,7 @@
     <Compile Include="Commands\EditText.cs" />
     <Compile Include="Commands\MoveShape.cs" />
     <Compile Include="ViewModel\Shapes\ConnectionPoint.cs" />
+    <Compile Include="View\Adorners\ConnectionPointAdorner.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>

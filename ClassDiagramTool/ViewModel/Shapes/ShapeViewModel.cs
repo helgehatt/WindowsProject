@@ -25,7 +25,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             Width = 250;
             Height = 100;
 
-            P = new List<ConnectionPoint>(
+            P = new List<ConnectionPoint>()
             {
                 new ConnectionPoint(this, EConnectionPoint.North),
                 new ConnectionPoint(this, EConnectionPoint.South),

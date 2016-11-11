@@ -7,6 +7,13 @@ using System.Windows;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
+    public enum EConnectionPoint
+    {
+        North,
+        South,
+        East,
+        West
+    }
 
     public class ConnectionPoint
     {
@@ -15,10 +22,15 @@ namespace ClassDiagramTool.ViewModel.Shapes
         private double Percentile;
 
         public ConnectionPoint(ShapeViewModel shape, EConnectionPoint orientation)
+            : this(shape, orientation, 0.5)
+        {
+        }
+
+        public ConnectionPoint(ShapeViewModel shape, EConnectionPoint orientation, double percentile)
         {
             Shape = shape;
             Orientation = orientation;
-            Percentile = 0.5;
+            Percentile = percentile;
         }
 
         public double X
@@ -50,14 +62,5 @@ namespace ClassDiagramTool.ViewModel.Shapes
                 }
             }
         }
-
-        public enum EConnectionPoint
-        {
-            North,
-            South,
-            East,
-            West
-        }
     }
-
 }
