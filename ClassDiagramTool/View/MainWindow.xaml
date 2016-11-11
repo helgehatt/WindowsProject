@@ -9,12 +9,17 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
-        Title="Class Diagram Tool" Height="350" Width="525">
+        
+        Title="Class Diagram Tool" 
+        Height="500" 
+        Width="800">
+    
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
+    
     <DockPanel LastChildFill="True">
-        <userControls:Menu DockPanel.Dock="Top"/>
+        <userControls:MenuUserControl DockPanel.Dock="Top"/>
 
         <StatusBar Height="20" DockPanel.Dock="Bottom">
             <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Status"/>
@@ -22,7 +27,7 @@
             <Slider x:Name="slider" Width="100" />
             <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="+"/>
         </StatusBar>
-        <userControls:SidePanel DockPanel.Dock="Left"/>
+        <userControls:SidePanelUserControl DockPanel.Dock="Left"/>
 
         <ItemsControl ItemsSource="{Binding Lines}">
             <ItemsControl.ItemsPanel>

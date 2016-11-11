@@ -39,11 +39,10 @@ namespace ClassDiagramTool.ViewModel.Shapes
             {
                 switch(Orientation)
                 {
-                    case EConnectionPoint.North: return Shape.X + Shape.Width * Percentile;
-                    case EConnectionPoint.South: return Shape.X + Shape.Width * Percentile;
-                    case EConnectionPoint.East : return Shape.X + Shape.Width             ;
-                    case EConnectionPoint.West : return Shape.X                           ;
-                    default                    : return 0                                 ;
+                    case EConnectionPoint.North: return Shape.Width * Percentile;
+                    case EConnectionPoint.South: return Shape.Width * Percentile;
+                    case EConnectionPoint.East : return Shape.Width             ;
+                    default                    : return 0                       ;
                 }
             }
         }
@@ -54,11 +53,10 @@ namespace ClassDiagramTool.ViewModel.Shapes
             {
                 switch(Orientation)
                 {
-                    case EConnectionPoint.North: return Shape.Y                            ;
-                    case EConnectionPoint.South: return Shape.Y + Shape.Height             ;
-                    case EConnectionPoint.East : return Shape.Y + Shape.Height * Percentile;
-                    case EConnectionPoint.West : return Shape.Y + Shape.Height * Percentile;
-                    default                    : return 0                                  ;
+                    case EConnectionPoint.South: return Shape.Height             ;
+                    case EConnectionPoint.East : return Shape.Height * Percentile;
+                    case EConnectionPoint.West : return Shape.Height * Percentile;
+                    default                    : return 0                        ;
                 }
             }
         }

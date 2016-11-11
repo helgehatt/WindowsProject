@@ -5,9 +5,9 @@ namespace ClassDiagramTool.View.UserControls
     /// <summary>
     /// Interaction logic for Menu.xaml
     /// </summary>
-    public partial class Menu : UserControl
+    public partial class MenuUserControl : UserControl
     {
-        public Menu()
+        public MenuUserControl()
         {
             InitializeComponent();
         }

@@ -20,18 +20,8 @@ namespace ClassDiagramTool.View.Adorners
             : base(adornedElement)
         {
             UserControl UserControl = adornedElement as UserControl;
-            if (UserControl == null)
-            {
-                Debug.WriteLine("Usercontrol == null: " + adornedElement);
-                return;
-            }
 
             Shape = UserControl.DataContext as ShapeViewModel;
-            if (Shape == null)
-            {
-                Debug.WriteLine("Shape == null: " + UserControl.DataContext);
-                return;
-            }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
@@ -42,7 +32,7 @@ namespace ClassDiagramTool.View.Adorners
 
             foreach (ConnectionPoint p in Shape.P)
             {
-                drawingContext.DrawRectangle(brush, null, new Rect(p.X-3, p.Y-3, 6, 6));
+                drawingContext.DrawRectangle(brush, null, new Rect(p.X-4, p.Y-4, 6, 6));
             }
         }
 

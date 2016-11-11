@@ -5,9 +5,9 @@ namespace ClassDiagramTool.View.UserControls
     /// <summary>
     /// Interaction logic for SidePanelUserControl.xaml
     /// </summary>
-    public partial class SidePanel : UserControl
+    public partial class SidePanelUserControl : UserControl
     {
-        public SidePanel()
+        public SidePanelUserControl()
         {
             InitializeComponent();
         }

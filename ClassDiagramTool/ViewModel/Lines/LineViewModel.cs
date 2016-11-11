@@ -12,9 +12,6 @@ namespace ClassDiagramTool.ViewModel.Lines
         public ShapeViewModel From { get; set; }
         public ShapeViewModel To { get; set; }
 
-        public double X { get; } // Unused
-        public double Y { get; } // Unused
-
         public int FromNumber => From.Number;
         public int ToNumber => To.Number;
         public string Label { get; set; }
