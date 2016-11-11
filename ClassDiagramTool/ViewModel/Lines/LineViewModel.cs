@@ -1,5 +1,7 @@
 ﻿using ClassDiagramTool.Model;
 using ClassDiagramTool.ViewModel.Shapes;
+using System.Windows;
+using static ClassDiagramTool.ViewModel.Shapes.ConnectionPoint;
 
 namespace ClassDiagramTool.ViewModel.Lines
 {
@@ -7,8 +9,10 @@ namespace ClassDiagramTool.ViewModel.Lines
     {
         private readonly Line Line;
 
-        public ShapeViewModel To { get; set; }
         public ShapeViewModel From { get; set; }
+        public ShapeViewModel To { get; set; }
+
+        public EConnectionPoint from = EConnectionPoint.South, to = EConnectionPoint.West;
 
         public double X { get; } // Unused
         public double Y { get; } // Unused
@@ -18,14 +22,9 @@ namespace ClassDiagramTool.ViewModel.Lines
         public string Label { get; set; }
         public ELine Type { get; set; }
 
-        protected LineViewModel(Line line)
+        protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to)
         {
             Line = line;
-        }
-
-        protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to) 
-            : this(line)
-        {
             To = to;
             From = from;
         }

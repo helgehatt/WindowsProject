@@ -22,45 +22,58 @@ namespace ClassDiagramTool.ViewModel
     {
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-        
+        private ShapeViewModel From;
+        public static bool IsAddingLine = false; // Replaced by selection
+
         public ObservableCollection<BaseViewModel> Objects { get; }
-
-        public SquareViewModel shape1, shape2;
-
-        private Random rand = new Random();
         #endregion
 
         #region Commands
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
         
-        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand);
-        //public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
+        public RelayCommand<MouseButtonEventArgs> MouseLeftButtonDown => new RelayCommand<MouseButtonEventArgs>(OnMouseLeftButtonDown);
+        public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; });
         #endregion
 
         #region CommandMethods
-        private void OnAddObjectCommand(MouseButtonEventArgs e)
-        {            
-            Canvas mainCanvas = e.Source as Canvas;
+        private void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            if (IsAddingLine) OnAddLineCommand(e);
+            else              OnAddShapeCommand(e);
+        }
 
-            Point position = Mouse.GetPosition(mainCanvas);
+        private void OnAddShapeCommand(MouseButtonEventArgs e)
+        {
+            Canvas MainCanvas = e.Source as Canvas;
 
-            BaseViewModel Object = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
+            Point Position = Mouse.GetPosition(MainCanvas);
+
+            BaseViewModel Object = new SquareViewModel() { CenterX = Position.X, CenterY = Position.Y, Title = "Title", Text = new List<string> { "text1", "text2" } };
 
             UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
         }
 
-        private void OnConnectShapesCommand(object parameter)
+        private void OnAddLineCommand(MouseButtonEventArgs e)
         {
+            UserControl UserControl = e.Source as UserControl;
+            if (UserControl == null) return;
 
+            ShapeViewModel Object = UserControl.DataContext as ShapeViewModel;
+
+                 if (Object == null) Debug.WriteLine("OnConnectShapesCommand, DataContext=" + (e.Source as UserControl).DataContext);
+            else if (From   == null) From = Object;
+            else if (From   != Object)
+            {
+                UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, new SolidLineViewModel(From, Object)));
+                From = null;
+            }            
         }
         #endregion
 
         public MainViewModel() : base()
         {
             Objects = new ObservableCollection<BaseViewModel>();
-            BaseViewModel Object = new SquareViewModel() { CenterX = 300, CenterY = 200, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
-            Objects.Add(Object);
         }
     }
 

@@ -28,10 +28,10 @@
             <ItemsControl ItemsSource="{Binding Objects}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="Transparent">
+                        <Canvas Name="myCanvas" Background="Transparent">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <cmd:EventToCommand Command="{Binding AddObjectCommand}" PassEventArgsToCommand="True"/>
+                                    <cmd:EventToCommand Command="{Binding MouseLeftButtonDown}" PassEventArgsToCommand="True"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Canvas>

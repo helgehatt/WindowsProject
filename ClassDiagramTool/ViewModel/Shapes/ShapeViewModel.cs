@@ -7,6 +7,7 @@ using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
 using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
+using static ClassDiagramTool.ViewModel.Shapes.ConnectionPoint;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
@@ -14,7 +15,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
 
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)));
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)));
 
         protected Shape Shape { get; }
@@ -23,20 +24,26 @@ namespace ClassDiagramTool.ViewModel.Shapes
             Shape = shape;
             Width = 250;
             Height = 100;
-        }
+        }        
+
+        public Point P => Point(EConnectionPoint.North, X, Y, Width, Height);
 
         public int Number => Shape.Number;
 
         public double X {
             get { return Shape.X; }
             set { Shape.X = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(P));
+            }
         }
 
         public double Y {
             get { return Shape.Y; }
             set { Shape.Y = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(P));
+            }
         }
 
         public double Width {

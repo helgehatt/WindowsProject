@@ -7,7 +7,7 @@
              d:DesignHeight="40" d:DesignWidth="800">
     
     <ToolBar ToolBarTray.IsLocked="True">
-      <Button Command="{Binding NewCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
+      <Button Command="{Binding IsAddingLineChange}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
         <Button.Background>
           <ImageBrush ImageSource="/ClassDiagramTool;component/Images/New.png"/>
         </Button.Background>
