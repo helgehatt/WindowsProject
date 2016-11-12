@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d"
-             MaxWidth="240"
              d:DesignHeight="500" d:DesignWidth="260">
     <Expander ExpandDirection="Left">
         <StackPanel>

@@ -9,8 +9,8 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
-        Background="Gray"
         Title="Class Diagram Tool" 
+        Background="Gray"
         Height="500" 
         Width="800">
     
@@ -18,7 +18,7 @@
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <DockPanel>        
+    <DockPanel LastChildFill="True">        
         <userControls:MenuUserControl DockPanel.Dock="Top"/>
 
         <StatusBar Height="20" DockPanel.Dock="Bottom" Background="Transparent">
@@ -40,13 +40,10 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding Shapes}" 
-                      Background="DimGray" 
-                      BorderBrush="DarkGray" 
-                      BorderThickness="1">
+        <ItemsControl ItemsSource="{Binding Shapes}" BorderBrush="DarkGray" BorderThickness="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas>
+                    <Canvas Background="DimGray">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <cmd:EventToCommand Command="{Binding MouseLeftButtonDown}" PassEventArgsToCommand="True"/>
