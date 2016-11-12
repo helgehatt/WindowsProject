@@ -5,50 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d"
+             Height="30"
              d:DesignHeight="40" d:DesignWidth="800">
-    
-    <ToolBar ToolBarTray.IsLocked="True">
-      <Button Command="{Binding IsAddingLineChange}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-        <Button.Background>
-          <ImageBrush ImageSource="/ClassDiagramTool;component/Images/New.png"/>
-        </Button.Background>
-      </Button>
-        <Button Command="{Binding SaveCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Save.png"/>
-            </Button.Background>
+    <ToolBar ToolBarTray.IsLocked="True" Background="DimGray">
+        <Button Command="{Binding IsAddingLineChange}">
+            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
         </Button>
-        <Button Command="{Binding OpenCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Open.png"/>
-            </Button.Background>
+        <Button Command="{Binding SaveCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Save.png"/>
         </Button>
-      <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-      <Button Command="Cut" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Cut.png"/>
-            </Button.Background>
+        <Button Command="{Binding OpenCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Open.png"/>
         </Button>
-        <Button Command="Copy" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Copy.png"/>
-            </Button.Background>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+        <Button Command="Cut">
+            <Image Source="/ClassDiagramTool;component/Images/Cut.png"/>
         </Button>
-        <Button Command="{Binding PasteCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Paste.png"/>
-            </Button.Background>
+        <Button Command="Copy">
+            <Image Source="/ClassDiagramTool;component/Images/Copy.png"/>
         </Button>
-      <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
-      <Button Command="{Binding UndoCommand}" Width="20"  Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Undo.png"/>
-            </Button.Background>
+        <Button Command="{Binding PasteCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Paste.png"/>
         </Button>
-        <Button Command="{Binding RedoCommand}" Width="20" Height="{Binding ActualWidth, Mode=OneWay, RelativeSource={RelativeSource Self}}">
-            <Button.Background>
-                <ImageBrush ImageSource="/ClassDiagramTool;component/Images/Redo.png"/>
-            </Button.Background>
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="20" />
+        <Button Command="{Binding UndoCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Undo.png"/>
+        </Button>
+        <Button Command="{Binding RedoCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Redo.png"/>
         </Button>
     </ToolBar>
 </UserControl>
