@@ -10,26 +10,20 @@
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
         Title="Class Diagram Tool" 
-        Background="Gray"
-        Height="500" 
-        Width="800">
+        Background="DimGray">
     
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <DockPanel LastChildFill="True">        
+    <DockPanel LastChildFill="True">
+        
         <userControls:MenuUserControl DockPanel.Dock="Top"/>
 
-        <StatusBar Height="20" DockPanel.Dock="Bottom" Background="Transparent">
-            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Status"/>
-            <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="-"/>
-            <Slider x:Name="slider" Width="100" />
-            <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="+"/>
-        </StatusBar>
-        
+        <userControls:StatusBarUserControl DockPanel.Dock="Bottom"/>
+
         <userControls:SidePanelUserControl DockPanel.Dock="Left"/>
-        
+
         <Rectangle Width="20" DockPanel.Dock="Right"/>
 
         <ItemsControl ItemsSource="{Binding Lines}">
@@ -40,10 +34,12 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding Shapes}" BorderBrush="DarkGray" BorderThickness="1">
+        <ItemsControl ItemsSource="{Binding Shapes}"
+                      BorderBrush="Gray" 
+                      BorderThickness="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas Background="DimGray">
+                    <Canvas Background="Transparent">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <cmd:EventToCommand Command="{Binding MouseLeftButtonDown}" PassEventArgsToCommand="True"/>
