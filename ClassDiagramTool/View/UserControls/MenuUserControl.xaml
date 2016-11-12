@@ -5,33 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d"
-             Height="30"
              d:DesignHeight="40" d:DesignWidth="800">
-    <ToolBar ToolBarTray.IsLocked="True" Background="DimGray">
-        <Button Command="{Binding IsAddingLineChange}">
+    <ToolBar ToolBarTray.IsLocked="True" Background="Transparent" Margin="0,0,-20,0">
+        <Button Command="{Binding IsAddingLineChange}" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/New.png"/>
         </Button>
-        <Button Command="{Binding SaveCommand}">
+        <Button Command="{Binding SaveCommand}" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Save.png"/>
         </Button>
-        <Button Command="{Binding OpenCommand}">
+        <Button Command="{Binding OpenCommand}" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Open.png"/>
         </Button>
-        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
-        <Button Command="Cut">
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="15" />
+        <Button Command="Cut" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Cut.png"/>
         </Button>
-        <Button Command="Copy">
+        <Button Command="Copy" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Copy.png"/>
         </Button>
-        <Button Command="{Binding PasteCommand}">
+        <Button Command="{Binding PasteCommand}" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Paste.png"/>
         </Button>
-        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="20" />
-        <Button Command="{Binding UndoCommand}">
+        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="15" />
+        <Button Command="{Binding UndoCommand}" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Undo.png"/>
         </Button>
-        <Button Command="{Binding RedoCommand}">
+        <Button Command="{Binding RedoCommand}" Width="20">
             <Image Source="/ClassDiagramTool;component/Images/Redo.png"/>
         </Button>
     </ToolBar>

@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              MaxWidth="240"
              d:DesignHeight="500" d:DesignWidth="260">
-    <Expander ExpandDirection="Left" >
+    <Expander ExpandDirection="Left">
         <StackPanel>
             <Button Height="20">
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
