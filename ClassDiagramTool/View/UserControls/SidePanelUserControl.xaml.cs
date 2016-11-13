@@ -11,5 +11,10 @@ namespace ClassDiagramTool.View.UserControls
         {
             InitializeComponent();
         }
+
+        private void Expander_Collapsed(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
     }
 }

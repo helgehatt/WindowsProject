@@ -8,15 +8,19 @@
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="View\Resources\ExpanderTemplates.xaml"/>
+                <ResourceDictionary Source="View\Resources\ColorDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
             <DataTemplate DataType="{x:Type shapes:SquareViewModel}">
                 <userControls:ClassShapeUserControl/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type lines:SolidLineViewModel}">
                 <userControls:LineUserControl/>
             </DataTemplate>
-            <ItemsPanelTemplate x:Key="CanvasContainer">
-                <Canvas></Canvas>
-            </ItemsPanelTemplate>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

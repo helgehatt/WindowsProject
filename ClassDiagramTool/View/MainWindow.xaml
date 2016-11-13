@@ -9,21 +9,20 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
-        Title="Class Diagram Tool" 
-        Background="DimGray">
-    
+        Title="Class Diagram Tool">
+
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
-    <DockPanel LastChildFill="True">
-        
+    <DockPanel Background="DimGray">
+
         <userControls:MenuUserControl DockPanel.Dock="Top"/>
 
         <userControls:StatusBarUserControl DockPanel.Dock="Bottom"/>
 
         <userControls:SidePanelUserControl DockPanel.Dock="Left"/>
-
+        
         <Rectangle Width="20" DockPanel.Dock="Right"/>
 
         <ItemsControl ItemsSource="{Binding Lines}">
@@ -55,5 +54,7 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
+        
     </DockPanel>
+    
 </Window>

@@ -7,43 +7,60 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              mc:Ignorable="d"
-             
-             Width="{Binding Width}"
-             Height="{Binding Height}"
-             Background="LightGray"
-             BorderBrush="Black"
-             BorderThickness="1">
+             d:DesignWidth="200" d:DesignHeight="150">
+
+    <UserControl.Resources>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Margin" Value="5,5,5,0"/>
+        </Style>
+    </UserControl.Resources>
     
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <cmd:EventToCommand Command="{Binding MoveShapeCommand}" PassEventArgsToCommand="True"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <Label Content="{Binding Type}" HorizontalAlignment="Right" Margin="0,-5,0,0" VerticalAlignment="Top" FontSize="8"/>
+    <Border BorderBrush="Black"
+            BorderThickness="1"
+            CornerRadius="5"
+            Background="LightGray"
+            Width="{Binding Width}"
+            Height="{Binding Height}">
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Text="{Binding Title}" Background="{x:Null}" AcceptsReturn="True" TextWrapping="Wrap"/>
+            <Label Content="{Binding Type}" 
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top" 
+                   Margin="0,-5,0,0" 
+                   FontSize="8"/>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding Text}" Background="{x:Null}" Height="auto" BorderBrush="Black" BorderThickness="0,1,0,0">
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <UniformGrid Columns="1">
-                        <TextBox Text="{Binding .}" Background="{x:Null}" AcceptsReturn="True" TextWrapping="Wrap"/>
-                    </UniformGrid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            <TextBox Grid.Row="0" Text="{Binding Title}" 
+                     Background="Transparent" 
+                     BorderThickness="0" 
+                     Margin="5"/>
+
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Text}" 
+                          Background="Transparent" 
+                          Height="auto" 
+                          BorderBrush="Black" 
+                          BorderThickness="0,1,0,0">
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBox Text="{Binding .}" Style="{StaticResource TextBoxStyle}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                
+            </ItemsControl>
+        </Grid>
 
         <!--
         <ItemsControl ItemsSource="{Binding P}">
@@ -60,5 +77,6 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         -->
-    </Grid>
+
+    </Border>
 </UserControl>

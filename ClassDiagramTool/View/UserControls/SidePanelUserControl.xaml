@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d"
-             d:DesignHeight="550" d:DesignWidth="260">
+             d:DesignHeight="550" d:DesignWidth="240">
     
     <UserControl.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
@@ -45,84 +45,96 @@
             <Setter Property="Margin" Value="5"/>
         </Style>
 
-        <Style x:Key="TitleStyle" TargetType="TextBlock">
+        <Style x:Key="ExpanderStyle" TargetType="Expander">
             <Setter Property="Foreground" Value="LightGray"/>
-            <Setter Property="FontSize" Value="25"/>
-            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Template" Value="{StaticResource ExpandDownTemp}"/>
         </Style>
 
         <Style x:Key="TextBlockStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="LightGray"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Margin" Value="5,0,10,0"/>
         </Style>
     </UserControl.Resources>
-    
-    <Expander ExpandDirection="Left">
-        <StackPanel Margin="5,0,0,0">
-            <TextBlock Style="{StaticResource TitleStyle}">Shapes</TextBlock>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Class</TextBlock>
+
+    <Expander Style="{StaticResource ExpandLeftStyle}">
+        
+        <StackPanel Margin="15,0,0,0" Width="150">
+            
+            <Expander Style="{StaticResource ExpanderStyle}" Header="Shapes" IsExpanded="True">
+                <StackPanel>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Class</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Interface</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Enumeration</TextBlock>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Interface</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Enumeration</TextBlock>
-                </StackPanel>
-            </Button>
-            <TextBlock Style="{StaticResource TitleStyle}">Lines</TextBlock>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Aggregation</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Association</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Composition</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Dependency</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Directed<LineBreak/>Association</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Inheritance</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Style="{StaticResource ButtonStyle}">
-                <StackPanel Style="{StaticResource StackPanelStyle}">
-                    <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                    <TextBlock Style="{StaticResource TextBlockStyle}">Interface<LineBreak/>Realization</TextBlock>
-                </StackPanel>
-            </Button>
+            </Expander>
+
+            <Expander Style="{StaticResource ExpanderStyle}" Header="Lines">
+                <StackPanel>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Aggregation</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Association</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Composition</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Dependency</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Directed<LineBreak/>Association</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Inheritance</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Style="{StaticResource ButtonStyle}">
+                        <StackPanel Style="{StaticResource StackPanelStyle}">
+                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}">Interface<LineBreak/>Realization</TextBlock>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>                
+            </Expander>
+            
         </StackPanel>
+        
     </Expander>
+    
 </UserControl>
