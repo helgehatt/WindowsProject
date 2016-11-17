@@ -1,4 +1,5 @@
 ﻿using ClassDiagramTool.UndoRedo;
+using ClassDiagramTool.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,9 @@ namespace ClassDiagramTool.Commands
         {
             if(e == null)
             {
-                SelectedElement = SelectedObjectCollection.Instance.get();
+                //Get int?
+                SelectedElement = SelectedObjectsCollection.Instance.Get(1);
+                
 
             } else
             {
