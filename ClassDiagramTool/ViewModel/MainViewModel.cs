@@ -52,6 +52,12 @@ namespace ClassDiagramTool.ViewModel
 
             UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
         }
+
+        
+        private void OnConnectShapesCommand(object parameter)
+        {
+
+        }
         #endregion
 
         public MainViewModel() : base()
