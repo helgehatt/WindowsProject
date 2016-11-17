@@ -5,11 +5,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:ClassDiagramTool"
-             xmlns:viewModel="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:viewModel="clr-namespace:ClassDiagramTool.ViewModel.Shapes"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              Width="{Binding Width}"
              Height="{Binding Height}">
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <!-- Properties for when UserControl selected or dragged -->
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Cursor" Value="Arrow"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                    <Setter Property="BorderThickness" Value="3"/>
+                    <Setter Property="BorderBrush" Value="Blue"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Dragging}" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <cmd:EventToCommand Command="{Binding MoveShapeCommand}" PassEventArgsToCommand="True"/>

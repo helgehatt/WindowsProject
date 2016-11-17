@@ -1,10 +1,11 @@
 ﻿using ClassDiagramTool.UndoRedo;
-using ClassDiagramTool.View.UserControls;
 using ClassDiagramTool.ViewModel.Shapes;
+using GalaSoft.MvvmLight.Command;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interactivity;
 
 namespace ClassDiagramTool.Commands
 {
@@ -23,16 +24,20 @@ namespace ClassDiagramTool.Commands
             //Setup move command.
             SetupMoveShape(MovedElement, e);
 
-            //Create Event Handlers to perform move command.
+            //Construct and add event handlers to moving element.
             MouseEventHandler MouseMove = new MouseEventHandler(
-                (object sender, MouseEventArgs e1) => { UpdateMoveShape(e1); }
-                );
+                (object sender, MouseEventArgs e1) => {
+                    UpdateMoveShape(e1);
+                });
             MouseButtonEventHandler MouseUp = null;
-            MouseUp = new MouseButtonEventHandler( //Delegate ends the move command and removes event handlers from element.
-                (object sender, MouseButtonEventArgs e2) => { FinalizeMoveShape(e2); MovedElement.MouseMove -= MouseMove; MovedElement.MouseLeftButtonUp -= MouseUp; }
-                );
+            MouseUp = new MouseButtonEventHandler( //This delegate ends the move command and removes event handlers from element.
+                (object sender, MouseButtonEventArgs e2) => {
+                    FinalizeMoveShape(e2);
+                    MovedElement.MouseMove -= MouseMove;
+                    MovedElement.MouseLeftButtonUp -= MouseUp;
+                });
 
-            //Add these to the element to be moved.
+            //Add event handlers to the element to be moved.
             MovedElement.MouseMove += MouseMove;
             MovedElement.MouseLeftButtonUp += MouseUp;
         }
@@ -58,7 +63,8 @@ namespace ClassDiagramTool.Commands
 
         private void SetupMoveShape(UserControl element, MouseButtonEventArgs e)
         {
-            element.Cursor = Cursors.Hand;
+            //element.Cursor = Cursors.Hand;
+            ViewModel.Dragging = true;
             Mouse.Capture((IInputElement)element);
             //Get current position.
             OriginalPosition = new Point(ViewModel.X, ViewModel.Y);
@@ -66,14 +72,15 @@ namespace ClassDiagramTool.Commands
             //Calculate cursor offset from element origin.
             Point CursorPos = e.GetPosition(element.Parent as Canvas);
             CursorOffset = new Point(OriginalPosition.X - CursorPos.X, OriginalPosition.Y - CursorPos.Y);
-            e.Handled = true;
         }
 
         private void FinalizeMoveShape(MouseButtonEventArgs e)
         {
             Mouse.Capture(null);
-            ((UserControl)e.Source).Cursor = Cursors.Arrow;
-            e.Handled = true;
+            //((UserControl)e.Source).Cursor = Cursors.Arrow;
+            ViewModel.Dragging = false;
+            if (!OriginalPosition.Equals(FinalPosition))
+                UndoRedoController.Instance.AddAndExecute(this);
         }
 
         private void UpdateMoveShape(MouseEventArgs e)
@@ -84,7 +91,6 @@ namespace ClassDiagramTool.Commands
             ViewModel.X = MoveToPosition.X;
             ViewModel.Y = MoveToPosition.Y;
             FinalPosition = new Point(MoveToPosition.X, MoveToPosition.Y);
-            e.Handled = true;
         }
     }
 }

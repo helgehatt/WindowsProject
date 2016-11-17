@@ -7,6 +7,8 @@ using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
 using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
+using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
@@ -14,15 +16,22 @@ namespace ClassDiagramTool.ViewModel.Shapes
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
 
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)));
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)));
-        public RelayCommand<MouseButtonEventArgs> CutObjectCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new CutCommand(e)));
-        public RelayCommand<MouseButtonEventArgs> CopyObjectCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new CopyCommand(e)));
-        public RelayCommand<MouseButtonEventArgs> PasteObjectCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new PasteCommand(e)));
-
-
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(this, e), (e) => true);
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => new EditText(e), (e) => e.Source is TextBox);
 
         protected Shape Shape { get; }
+
+        private bool selected = false;
+        public bool Selected {
+            get { return selected; }
+            set { selected = value; OnPropertyChanged(); }
+        }
+        private bool dragging = false;
+        public bool Dragging
+        {
+            get { return dragging; }
+            set { dragging = value; OnPropertyChanged(); }
+        }
 
         protected ShapeViewModel(Shape shape) {
             Shape = shape;

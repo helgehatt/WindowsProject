@@ -22,7 +22,7 @@ namespace ClassDiagramTool.ViewModel
     {
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-        
+
         public ObservableCollection<BaseViewModel> Objects { get; }
 
         public SquareViewModel shape1, shape2;
@@ -33,14 +33,17 @@ namespace ClassDiagramTool.ViewModel
         #region Commands
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
-        
-        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand);
-        //public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(e));
+
+        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand, (e) => (e.Source is Canvas));
+        //TODO Setup CanExecute to ConnectShape
+        public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(), (e) => true);
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), (e) => (e.Source is UserControl));
+
         #endregion
 
         #region CommandMethods
         private void OnAddObjectCommand(MouseButtonEventArgs e)
-        {            
+        {
             Canvas mainCanvas = e.Source as Canvas;
 
             Point position = Mouse.GetPosition(mainCanvas);
@@ -48,12 +51,6 @@ namespace ClassDiagramTool.ViewModel
             BaseViewModel Object = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
 
             UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
-        }
-
-        
-        private void OnConnectShapesCommand(object parameter)
-        {
-
         }
         #endregion
 
