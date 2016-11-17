@@ -41,8 +41,9 @@
                     <Canvas Background="Transparent">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <cmd:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
+                                <cmd:EventToCommand Command="{Binding AddLineCommand}" PassEventArgsToCommand="True"/>
                                 <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
-                                <cmd:EventToCommand Command="{Binding MouseLeftButtonDown}" PassEventArgsToCommand="True"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Canvas>
