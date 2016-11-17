@@ -25,7 +25,7 @@ namespace ClassDiagramTool.ViewModel
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
         private ShapeViewModel From;
 
-        public static bool IsAddingLine = false; // Replaced by selection
+        public static bool IsAddingLine = false; // Temporary
 
         public EShape SelectedShape { get; set; }
         public ELine  SelectedLine  { get; set; }
@@ -38,21 +38,18 @@ namespace ClassDiagramTool.ViewModel
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
         
-        public RelayCommand<MouseButtonEventArgs> MouseLeftButtonDown => new RelayCommand<MouseButtonEventArgs>(OnMouseLeftButtonDown);
-        public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; });
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, e => e.Source is Canvas);
+        public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand, e => e.Source is ShapeViewModel);
         public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is UserControl);
+
+        public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; }); // Temporary
         #endregion
 
         #region CommandMethods
-        private void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            if (IsAddingLine) OnAddLineCommand(e);
-            else              OnAddShapeCommand(e);
-        }
-        
 
         private void OnAddShapeCommand(MouseButtonEventArgs e)
         {
+            Debug.WriteLine(e.Source is Canvas);
             Canvas MainCanvas = e.Source as Canvas;
 
             Point Position = Mouse.GetPosition(MainCanvas);
