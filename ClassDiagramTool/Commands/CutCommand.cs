@@ -19,7 +19,7 @@ namespace ClassDiagramTool.Commands
         {
             SelectedElement = e.Source as UserControl;
             DataObject data = new DataObject();
-            data.SetData
+            //data.SetData
             //Call method to receive reference to the element in focus. 
         }
 
