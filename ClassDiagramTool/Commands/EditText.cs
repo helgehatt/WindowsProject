@@ -12,8 +12,6 @@ namespace ClassDiagramTool.Commands
         private string OriginalText;
         private string NewText;
 
-        public event EventHandler CanExecuteChanged;
-
         public EditText(MouseButtonEventArgs e)
         {
             EditedTextBox = (TextBox)e.Source;

@@ -1,5 +1,9 @@
 ﻿using ClassDiagramTool.Model;
 using ClassDiagramTool.ViewModel.Shapes;
+using System;
+using System.Diagnostics;
+using System.Windows;
+using static ClassDiagramTool.ViewModel.Shapes.ConnectionPoint;
 
 namespace ClassDiagramTool.ViewModel.Lines
 {
@@ -7,25 +11,18 @@ namespace ClassDiagramTool.ViewModel.Lines
     {
         private readonly Line Line;
 
-        public ShapeViewModel To { get; set; }
         public ShapeViewModel From { get; set; }
-
-        public double X { get; } // Unused
-        public double Y { get; } // Unused
+        public ShapeViewModel To { get; set; }
 
         public int FromNumber => From.Number;
         public int ToNumber => To.Number;
         public string Label { get; set; }
-        public ELine Type { get; set; }
+        public ELine Type => Line.Type;
 
-        protected LineViewModel(Line line)
+        protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to)
         {
             Line = line;
-        }
-
-        protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to) 
-            : this(line)
-        {
+            Label = Enum.GetName(typeof(ELine), Type); // Temporary
             To = to;
             From = from;
         }

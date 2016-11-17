@@ -15,9 +15,9 @@ namespace ClassDiagramTool.ViewModel.Shapes
     public abstract class ShapeViewModel : BaseViewModel, IShape
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShape(this, e), (e) => true);
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => new EditText(e), (e) => e.Source is TextBox);
+        
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
 
         protected Shape Shape { get; }
 
@@ -37,20 +37,36 @@ namespace ClassDiagramTool.ViewModel.Shapes
             Shape = shape;
             Width = 250;
             Height = 100;
+            Title = "Title";
+            Text = new List<string>() { "text1", "text2" };
+
+            P = new List<ConnectionPoint>()
+            {
+                new ConnectionPoint(this, EConnectionPoint.North),
+                new ConnectionPoint(this, EConnectionPoint.South),
+                new ConnectionPoint(this, EConnectionPoint.East ),
+                new ConnectionPoint(this, EConnectionPoint.West )
+            };
         }
+        
+        public List<ConnectionPoint> P { get; set; }
 
         public int Number => Shape.Number;
 
         public double X {
             get { return Shape.X; }
             set { Shape.X = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(P));
+            }
         }
 
         public double Y {
             get { return Shape.Y; }
             set { Shape.Y = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(P));
+            }
         }
 
         public double Width {
@@ -81,7 +97,5 @@ namespace ClassDiagramTool.ViewModel.Shapes
         }
 
         public List<string> Text { get; set; }
-
-        public override string ToString() => Shape.ToString();
     }
 }

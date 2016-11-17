@@ -19,7 +19,7 @@ namespace ClassDiagramTool.Commands
         public MoveShape(ShapeViewModel viewModel, MouseButtonEventArgs e)
         {
             ViewModel = viewModel;
-            UserControl MovedElement = (UserControl)e.Source;
+            UserControl MovedElement = (UserControl) e.Source;
 
             //Setup move command.
             SetupMoveShape(MovedElement, e);

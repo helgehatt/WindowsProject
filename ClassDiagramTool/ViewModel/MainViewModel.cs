@@ -1,4 +1,5 @@
 ﻿using ClassDiagramTool.Commands;
+using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
 using ClassDiagramTool.ViewModel.Lines;
 using ClassDiagramTool.ViewModel.Shapes;
@@ -22,49 +23,92 @@ namespace ClassDiagramTool.ViewModel
     {
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
+        private ShapeViewModel From;
 
-        public ObservableCollection<BaseViewModel> Objects { get; }
+        public static bool IsAddingLine = false; // Replaced by selection
 
-        public SquareViewModel shape1, shape2;
-
-        private Random rand = new Random();
+        public EShape SelectedShape { get; set; }
+        public ELine  SelectedLine  { get; set; }
+        
+        public ObservableCollection<ShapeViewModel> Shapes { get; }
+        public ObservableCollection<LineViewModel>  Lines  { get; }
         #endregion
 
         #region Commands
         public ICommand UndoCommand => UndoRedoController.UndoCommand;
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
-
-        public RelayCommand<MouseButtonEventArgs> AddObjectCommand => new RelayCommand<MouseButtonEventArgs>(OnAddObjectCommand, (e) => (e.Source is Canvas));
-        //TODO Setup CanExecute to ConnectShape
-        public RelayCommand<MouseButtonEventArgs> ConnectShapesCommand => new RelayCommand<MouseButtonEventArgs>((e) => new ConnectShapesCommand(), (e) => true);
-        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), (e) => (e.Source is UserControl));
-
+        
+        public RelayCommand<MouseButtonEventArgs> MouseLeftButtonDown => new RelayCommand<MouseButtonEventArgs>(OnMouseLeftButtonDown);
+        public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; });
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is UserControl);
         #endregion
 
         #region CommandMethods
-        private void OnAddObjectCommand(MouseButtonEventArgs e)
+        private void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            Canvas mainCanvas = e.Source as Canvas;
-
-            Point position = Mouse.GetPosition(mainCanvas);
-
-            BaseViewModel Object = new SquareViewModel() { CenterX = position.X, CenterY = position.Y, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
-
-            UndoRedoController.AddAndExecute(new AddObjectCommand(Objects, Object));
+            if (IsAddingLine) OnAddLineCommand(e);
+            else              OnAddShapeCommand(e);
         }
-
         
-        private void OnConnectShapesCommand(object parameter)
-        {
 
+        private void OnAddShapeCommand(MouseButtonEventArgs e)
+        {
+            Canvas MainCanvas = e.Source as Canvas;
+
+            Point Position = Mouse.GetPosition(MainCanvas);
+
+            ShapeViewModel Shape = null;
+
+            switch (SelectedShape)
+            {
+                case EShape.Class       : Shape = new ClassViewModel        () { CenterX = Position.X, CenterY = Position.Y };  break;
+                case EShape.Enumeration : Shape = new EnumerationViewModel  () { CenterX = Position.X, CenterY = Position.Y };  break;
+                case EShape.Interface   : Shape = new InterfaceViewModel    () { CenterX = Position.X, CenterY = Position.Y };  break;
+            }
+
+            if (Shape == null) Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape);
+            else
+            {
+                UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
+            }
+        }
+        
+        private void OnAddLineCommand(MouseButtonEventArgs e)
+        {
+            UserControl UserControl = e.Source as UserControl;
+            if (UserControl == null) return;
+
+            ShapeViewModel Shape = UserControl.DataContext as ShapeViewModel;
+
+                 if (Shape == null) Debug.WriteLine("OnAddLineCommand, DataContext=" + (e.Source as UserControl).DataContext);
+            else if (From  == null) From = Shape;
+            else if (From  != Shape)
+            {
+                LineViewModel Line = null;
+                switch (SelectedLine)
+                {
+                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, Shape);   break;
+                    case ELine.Association          : Line = new AssociationViewModel           (From, Shape);   break;
+                    case ELine.Composition          : Line = new CompositionViewModel           (From, Shape);   break;
+                    case ELine.Dependency           : Line = new DependencyViewModel            (From, Shape);   break;
+                    case ELine.DirectedAssociation  : Line = new DirectedAssociationViewModel   (From, Shape);   break;
+                    case ELine.Inheritance          : Line = new InheritanceViewModel           (From, Shape);   break;
+                    case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, Shape);   break;
+                }
+                if (Line == null) Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine);
+                else
+                {
+                    UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
+                    From = null;
+                }
+            }            
         }
         #endregion
 
         public MainViewModel() : base()
         {
-            Objects = new ObservableCollection<BaseViewModel>();
-            BaseViewModel Object = new SquareViewModel() { CenterX = 300, CenterY = 200, Title = "Title", Text = new List<string> { "text1", "text2", "text3" } };
-            Objects.Add(Object);
+            Shapes = new ObservableCollection<ShapeViewModel>();
+            Lines  = new ObservableCollection<LineViewModel>();
         }
     }
 

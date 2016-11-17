@@ -1,75 +1,144 @@
-﻿<UserControl x:Class="ClassDiagramTool.View.UserControls.SidePanel"
+﻿<UserControl x:Class="ClassDiagramTool.View.UserControls.SidePanelUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:commands="clr-namespace:ClassDiagramTool.Commands"
-             mc:Ignorable="d" 
-             MaxWidth="240"
-             d:DesignHeight="500" d:DesignWidth="260">
-    <Expander ExpandDirection="Left" >
-        <StackPanel>
-            <Button Height="20">
-            <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Class</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Interface</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Enumeration</TextBlock>
-            </StackPanel>
-          </Button>
-          <Separator/>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Aggregation</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Association</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Composition</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Dependency</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Directed Association</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Inheritance</TextBlock>
-            </StackPanel>
-          </Button>
-          <Button Height="20">
-            <StackPanel Orientation="Horizontal">
-              <Image Source="/ClassDiagramTool;component/Images/New.png"/>
-              <TextBlock Margin="5,0,0,0">Interface Realization</TextBlock>
-            </StackPanel>
-          </Button>
+             xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
+             xmlns:vm="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:model="clr-namespace:ClassDiagramTool.Model;assembly=ClassDiagramTool.Model"
+             mc:Ignorable="d"
+             d:DesignHeight="550" d:DesignWidth="240">
+
+    <UserControl.Resources>
+        <vm:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+
+        <Style TargetType="{x:Type RadioButton}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border Name="border"
+                                BorderThickness="1"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Gray"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="DimGray"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style TargetType="{x:Type Expander}">
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Template" Value="{StaticResource ExpandDownTemp}"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5,0,10,0"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Expander Style="{StaticResource ExpandLeftStyle}">
+        
+        <StackPanel Margin="15,0,0,0" Width="150" Style="{x:Null}">
+            
+            <Expander Header="Shapes" IsExpanded="True">
+                <StackPanel Style="{x:Null}">
+                    <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Class}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Class</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Enumeration}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Enumeration</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Interface}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Interface</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>
+            </Expander>
+
+            <Expander Header="Lines">
+                <StackPanel Style="{x:Null}">
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Aggregation}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Aggregation</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Association}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Association</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Composition}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Composition</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Dependency}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Dependency</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.DirectedAssociation}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Directed<LineBreak/>Association</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Inheritance}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Inheritance</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.InterfaceRealization}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Interface<LineBreak/>Realization</TextBlock>
+                        </StackPanel>
+                    </RadioButton>
+                </StackPanel>                
+            </Expander>
+            
         </StackPanel>
+        
     </Expander>
+    
 </UserControl>

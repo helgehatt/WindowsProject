@@ -9,43 +9,52 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Class Diagram Tool">
+
     <Window.DataContext>
         <viewModel:MainViewModel/>
     </Window.DataContext>
-    <DockPanel LastChildFill="True">
-        <userControls:Menu DockPanel.Dock="Top"/>
 
-        <StatusBar Height="20" DockPanel.Dock="Bottom">
-            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Status"/>
-            <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Text="-"/>
-            <Slider x:Name="slider" Width="100" />
-            <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Text="+"/>
-        </StatusBar>
-        <userControls:SidePanel DockPanel.Dock="Left"/>
+    <DockPanel Background="DimGray">
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Objects}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Canvas Background="Transparent">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <cmd:EventToCommand Command="{Binding AddObjectCommand}" PassEventArgsToCommand="True"/>
-                                    <cmd:EventToCommand Command="{Binding ConnectShapesCommand}" PassEventArgsToCommand="True"/>
-                                    <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Canvas>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemContainerStyle>
-                    <Style TargetType="ContentPresenter">
-                        <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                        <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                    </Style>
-                </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-        </ScrollViewer>
+        <userControls:MenuUserControl DockPanel.Dock="Top"/>
+
+        <userControls:StatusBarUserControl DockPanel.Dock="Bottom"/>
+
+        <userControls:SidePanelUserControl DockPanel.Dock="Left"/>
+        
+        <Rectangle Width="20" DockPanel.Dock="Right"/>
+
+        <ItemsControl ItemsSource="{Binding Lines}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <ItemsControl ItemsSource="{Binding Shapes}"
+                      BorderBrush="Gray" 
+                      BorderThickness="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas Background="Transparent">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
+                                <cmd:EventToCommand Command="{Binding MouseLeftButtonDown}" PassEventArgsToCommand="True"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
     </DockPanel>
+    
 </Window>
