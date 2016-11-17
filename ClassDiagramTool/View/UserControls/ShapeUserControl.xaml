@@ -9,11 +9,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-    <UserControl.Style>
-        <Style TargetType="{x:Type UserControl}">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="Margin" Value="5,5,5,0"/>
+        </Style>
+
+        <Style TargetType="{x:Type Border}">
             <!-- Properties for when UserControl selected or dragged -->
-            <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Width" Value="{Binding Width}"/>
+            <Setter Property="Height" Value="{Binding Height}"/>
             <Setter Property="Cursor" Value="Arrow"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=Selected}" Value="True">
@@ -24,14 +34,6 @@
                     <Setter Property="Cursor" Value="Hand"/>
                 </DataTrigger>
             </Style.Triggers>
-        </Style>
-    </UserControl.Style>
-    
-    <UserControl.Resources>
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="Margin" Value="5,5,5,0"/>
         </Style>
     </UserControl.Resources>
 
@@ -44,26 +46,9 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
 
-            <Border BorderBrush="Black"
-                    BorderThickness="1"
-                    CornerRadius="5"
-                    Background="LightGray"
-                    Width="{Binding Width}"
-                    Height="{Binding Height}">
+            <Border>
 
                 <Grid>
-                    <Grid.Resources>
-                        <Style x:Key="separator" TargetType="Line">
-                            <Setter Property="Stroke" Value="Black" />
-                            <Setter Property="Stretch" Value="Fill" />
-                            <Setter Property="Grid.ZIndex" Value="100" />
-                            <Setter Property="X2" Value="1" />
-                            <Setter Property="VerticalAlignment" Value="Bottom" />
-                            <Setter Property="Grid.ColumnSpan" 
-                                    Value="{Binding Path=ColumnDefinitions.Count, 
-                                            RelativeSource={RelativeSource AncestorType=Grid}}"/>
-                        </Style>
-                    </Grid.Resources>
                     
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
