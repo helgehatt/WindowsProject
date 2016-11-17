@@ -4,21 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
+             xmlns:vm="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:model="clr-namespace:ClassDiagramTool.Model;assembly=ClassDiagramTool.Model"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="240">
-    
+
     <UserControl.Resources>
-        <Style x:Key="ButtonStyle" TargetType="Button">
+        <vm:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+
+        <Style TargetType="{x:Type RadioButton}">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
+                    <ControlTemplate TargetType="RadioButton">
                         <Border Name="border"
                                 BorderThickness="1"
                                 Background="{TemplateBinding Background}">
-                            <ContentPresenter />
+                            <ContentPresenter/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -36,22 +40,22 @@
             </Setter>
         </Style>
 
-        <Style x:Key="StackPanelStyle" TargetType="StackPanel">
+        <Style TargetType="{x:Type StackPanel}">
             <Setter Property="Orientation" Value="Horizontal"/>
         </Style>
 
-        <Style x:Key="ImageStyle" TargetType="Image">
+        <Style TargetType="{x:Type Image}">
             <Setter Property="Height" Value="30"/>
             <Setter Property="Margin" Value="5"/>
         </Style>
 
-        <Style x:Key="ExpanderStyle" TargetType="Expander">
+        <Style TargetType="{x:Type Expander}">
             <Setter Property="Foreground" Value="LightGray"/>
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Template" Value="{StaticResource ExpandDownTemp}"/>
         </Style>
 
-        <Style x:Key="TextBlockStyle" TargetType="TextBlock">
+        <Style TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="LightGray"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="15"/>
@@ -61,75 +65,75 @@
 
     <Expander Style="{StaticResource ExpandLeftStyle}">
         
-        <StackPanel Margin="15,0,0,0" Width="150">
+        <StackPanel Margin="15,0,0,0" Width="150" Style="{x:Null}">
             
-            <Expander Style="{StaticResource ExpanderStyle}" Header="Shapes" IsExpanded="True">
-                <StackPanel>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Class</TextBlock>
+            <Expander Header="Shapes" IsExpanded="True">
+                <StackPanel Style="{x:Null}">
+                    <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Class}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Class</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Interface</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Enumeration}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Enumeration</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Enumeration</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Interface}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Interface</TextBlock>
                         </StackPanel>
-                    </Button>
+                    </RadioButton>
                 </StackPanel>
             </Expander>
 
-            <Expander Style="{StaticResource ExpanderStyle}" Header="Lines">
-                <StackPanel>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Aggregation</TextBlock>
+            <Expander Header="Lines">
+                <StackPanel Style="{x:Null}">
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Aggregation}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Aggregation</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Association</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Association}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Association</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Composition</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Composition}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Composition</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Dependency</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Dependency}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Dependency</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Directed<LineBreak/>Association</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.DirectedAssociation}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Directed<LineBreak/>Association</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Inheritance</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Inheritance}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Inheritance</TextBlock>
                         </StackPanel>
-                    </Button>
-                    <Button Style="{StaticResource ButtonStyle}">
-                        <StackPanel Style="{StaticResource StackPanelStyle}">
-                            <Image Style="{StaticResource ImageStyle}" Source="/ClassDiagramTool;component/Images/New.png"/>
-                            <TextBlock Style="{StaticResource TextBlockStyle}">Interface<LineBreak/>Realization</TextBlock>
+                    </RadioButton>
+                    <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.InterfaceRealization}}">
+                        <StackPanel>
+                            <Image Source="/ClassDiagramTool;component/Images/New.png"/>
+                            <TextBlock>Interface<LineBreak/>Realization</TextBlock>
                         </StackPanel>
-                    </Button>
+                    </RadioButton>
                 </StackPanel>                
             </Expander>
             

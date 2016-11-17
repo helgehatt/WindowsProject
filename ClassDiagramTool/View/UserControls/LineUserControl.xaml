@@ -4,9 +4,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
-             mc:Ignorable="d">
-    <Grid>
-        <Line Stroke="Black" X1="{Binding From.P[1].X}" Y1="{Binding From.P[1].Y}" X2="{Binding From.P[1].X}" Y2="{Binding To.P[3].Y}" RenderOptions.EdgeMode="Aliased"/>
-        <Line Stroke="Black" X1="{Binding From.P[1].X}" Y1="{Binding To  .P[3].Y}" X2="{Binding To  .P[3].X}" Y2="{Binding To.P[3].Y}" RenderOptions.EdgeMode="Aliased"/>
-    </Grid>
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Line}">
+            <Setter Property="Stroke" Value="Black"/>
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        </Style>
+
+        <Style TargetType="{x:Type Border}">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="Background" Value="DimGray"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <ContentPresenter ContentSource="Content"/>
+        </ControlTemplate>
+    </UserControl.Template>
 </UserControl>

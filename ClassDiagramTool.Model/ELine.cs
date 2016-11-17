@@ -3,7 +3,12 @@ namespace ClassDiagramTool.Model
 {
     public enum ELine
     {
-        Solid,
-        Dashed
+        Aggregation,
+        Association,
+        Composition,
+        Dependency,
+        DirectedAssociation,
+        Inheritance,
+        InterfaceRealization
     }
 }

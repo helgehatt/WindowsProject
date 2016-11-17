@@ -5,7 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="800">
+             d:DesignHeight="25" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground" Value="LightGray"/>
+        </Style>
+    </UserControl.Resources>
+    
     <StatusBar Background="Transparent">
         <StatusBar.ItemsPanel>
             <ItemsPanelTemplate>
@@ -25,16 +31,16 @@
             </ItemsPanelTemplate>
         </StatusBar.ItemsPanel>
         <StatusBarItem Grid.Column="1">
-            <TextBlock Foreground="LightGray" Text="Ready"/>
+            <TextBlock Text="Ready"/>
         </StatusBarItem>
         <StatusBarItem Grid.Column="2">
-            <TextBlock Foreground="LightGray" Text="-"/>
+            <TextBlock Text="-"/>
         </StatusBarItem>
         <StatusBarItem Grid.Column="3">
-            <Slider Foreground="LightGray" Width="100"/>
+            <Slider Width="100"/>
         </StatusBarItem>
         <StatusBarItem Grid.Column="4">
-            <TextBlock Foreground="LightGray" Text="+"/>
+            <TextBlock Text="+"/>
         </StatusBarItem>
     </StatusBar>
 </UserControl>

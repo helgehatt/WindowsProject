@@ -1,4 +1,5 @@
 ﻿using ClassDiagramTool.Commands;
+using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
 using ClassDiagramTool.ViewModel.Lines;
 using ClassDiagramTool.ViewModel.Shapes;
@@ -23,7 +24,11 @@ namespace ClassDiagramTool.ViewModel
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
         private ShapeViewModel From;
+
         public static bool IsAddingLine = false; // Replaced by selection
+
+        public EShape SelectedShape { get; set; }
+        public ELine  SelectedLine  { get; set; }
         
         public ObservableCollection<ShapeViewModel> Shapes { get; }
         public ObservableCollection<LineViewModel>  Lines  { get; }
@@ -50,9 +55,20 @@ namespace ClassDiagramTool.ViewModel
 
             Point Position = Mouse.GetPosition(MainCanvas);
 
-            ShapeViewModel Shape = new SquareViewModel() { CenterX = Position.X, CenterY = Position.Y, Title = "Title", Text = new List<string> { "text1", "text2" } };
+            ShapeViewModel Shape = null;
 
-            UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
+            switch (SelectedShape)
+            {
+                case EShape.Class       : Shape = new ClassViewModel        () { CenterX = Position.X, CenterY = Position.Y };  break;
+                case EShape.Enumeration : Shape = new EnumerationViewModel  () { CenterX = Position.X, CenterY = Position.Y };  break;
+                case EShape.Interface   : Shape = new InterfaceViewModel    () { CenterX = Position.X, CenterY = Position.Y };  break;
+            }
+
+            if (Shape == null) Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape);
+            else
+            {
+                UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
+            }
         }
 
         private void OnAddLineCommand(MouseButtonEventArgs e)
@@ -62,12 +78,28 @@ namespace ClassDiagramTool.ViewModel
 
             ShapeViewModel Shape = UserControl.DataContext as ShapeViewModel;
 
-                 if (Shape == null) Debug.WriteLine("OnConnectShapesCommand, DataContext=" + (e.Source as UserControl).DataContext);
+                 if (Shape == null) Debug.WriteLine("OnAddLineCommand, DataContext=" + (e.Source as UserControl).DataContext);
             else if (From  == null) From = Shape;
             else if (From  != Shape)
             {
-                UndoRedoController.AddAndExecute(new AddLineCommand(Lines, new SolidLineViewModel(From, Shape)));
-                From = null;
+                LineViewModel Line = null;
+                switch (SelectedLine)
+                {
+                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, Shape);   break;
+                    case ELine.Association          : Line = new AssociationViewModel           (From, Shape);   break;
+                    case ELine.Composition          : Line = new CompositionViewModel           (From, Shape);   break;
+                    case ELine.Dependency           : Line = new DependencyViewModel            (From, Shape);   break;
+                    case ELine.DirectedAssociation  : Line = new DirectedAssociationViewModel   (From, Shape);   break;
+                    case ELine.Inheritance          : Line = new InheritanceViewModel           (From, Shape);   break;
+                    case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, Shape);   break;
+                }
+                if (Line == null) Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine);
+                else
+                {
+                    Debug.WriteLine("Line.Type = " + Line.Type + " SelectedLine = " + SelectedLine);
+                    UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
+                    From = null;
+                }
             }            
         }
         #endregion
