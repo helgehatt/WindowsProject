@@ -13,10 +13,13 @@ namespace ClassDiagramTool.Commands
     class CutCommand : IUndoRedoCommand
     {
         private UserControl SelectedElement;
+        private DataObject DataObject;
 
         public CutCommand(MouseButtonEventArgs e)
         {
             SelectedElement = e.Source as UserControl;
+            DataObject data = new DataObject();
+            data.SetData
             //Call method to receive reference to the element in focus. 
         }
 

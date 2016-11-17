@@ -16,7 +16,14 @@ namespace ClassDiagramTool.Commands
 
         public CopyCommand(MouseButtonEventArgs e)
         {
-            SelectedElement = e.Source as UserControl;
+            if(e == null)
+            {
+                SelectedElement = SelectedObjectCollection.Instance.get();
+
+            } else
+            {
+                SelectedElement = e.Source as UserControl;
+            }
 
         }
 
