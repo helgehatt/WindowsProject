@@ -9,6 +9,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
+    <UserControl.Style>
+        <Style TargetType="{x:Type UserControl}">
+            <!-- Properties for when UserControl selected or dragged -->
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Cursor" Value="Arrow"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=Selected}" Value="True">
+                    <Setter Property="BorderThickness" Value="3"/>
+                    <Setter Property="BorderBrush" Value="Blue"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Path=Dragging}" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Style>
+    
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="Transparent"/>
@@ -34,10 +52,56 @@
                     Height="{Binding Height}">
 
                 <Grid>
+                    <Grid.Resources>
+                        <Style x:Key="separator" TargetType="Line">
+                            <Setter Property="Stroke" Value="Black" />
+                            <Setter Property="Stretch" Value="Fill" />
+                            <Setter Property="Grid.ZIndex" Value="100" />
+                            <Setter Property="X2" Value="1" />
+                            <Setter Property="VerticalAlignment" Value="Bottom" />
+                            <Setter Property="Grid.ColumnSpan" 
+                                    Value="{Binding Path=ColumnDefinitions.Count, 
+                                            RelativeSource={RelativeSource AncestorType=Grid}}"/>
+                        </Style>
+                    </Grid.Resources>
+                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+
+                    <Grid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="{Binding NewItemCommand}" Header="New item">
+                                <MenuItem.Icon>
+                                    <Image Source="/ClassDiagramTool;component/Images/New.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding CutCommand}" Header="Cut">
+                                <MenuItem.Icon>
+                                    <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding CopyCommand}" Header="Copy" 
+                                      CommandTarget="{Binding Path=PlacementTarget, 
+                                                      RelativeSource={RelativeSource FindAncestor, 
+                                                      AncestorType={x:Type UserControl}}}">
+                                <MenuItem.Icon>
+                                    <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding PasteCommand}" Header="Paste">
+                                <MenuItem.Icon>
+                                    <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="{Binding DeleteCommand}" Header="Delete">
+                                <MenuItem.Icon>
+                                    <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Grid.ContextMenu>
 
                     <Label Content="{Binding Type}" 
                            HorizontalAlignment="Right"

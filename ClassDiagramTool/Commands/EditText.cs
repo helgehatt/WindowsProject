@@ -42,6 +42,7 @@ namespace ClassDiagramTool.Commands
             EditedTextBox.IsReadOnly = false;
             EditedTextBox.SelectAll();
             EditedTextBox.Focus();
+            e.Handled = true;
         }
 
         public bool CanExecute(object parameter)
@@ -68,6 +69,8 @@ namespace ClassDiagramTool.Commands
             EditedTextBox.Focusable = false;
             EditedTextBox.IsEnabled = false;
             EditedTextBox.IsEnabled = true;
+            if (!OriginalText.Equals(NewText))
+                UndoRedoController.Instance.AddAndExecute(this);
         }
     }
 }

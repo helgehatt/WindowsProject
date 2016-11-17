@@ -22,7 +22,7 @@ namespace ClassDiagramTool.ViewModel.Lines
         protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to)
         {
             Line = line;
-            Label = Enum.GetName(typeof(ELine), Type);
+            Label = Enum.GetName(typeof(ELine), Type); // Temporary
             To = to;
             From = from;
         }

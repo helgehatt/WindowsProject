@@ -3,7 +3,6 @@ using ClassDiagramTool.ViewModel.Lines;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Input;
 
 namespace ClassDiagramTool.Commands

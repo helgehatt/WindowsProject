@@ -79,8 +79,14 @@
     </ApplicationDefinition>
     <Compile Include="Commands\AddLineCommand.cs" />
     <Compile Include="Commands\AddShapeCommand.cs" />
+    <Compile Include="Commands\CopyCommand.cs" />
+    <Compile Include="Commands\CutCommand.cs" />
+    <Compile Include="Commands\DeleteObjectCommand.cs" />
     <Compile Include="Commands\EditText.cs" />
     <Compile Include="Commands\MoveShape.cs" />
+    <Compile Include="Commands\PasteCommand.cs" />
+    <Compile Include="Commands\SelectObjectCommand.cs" />
+    <Compile Include="ViewModel\SelectedObjectsCollection.cs" />
     <Compile Include="ViewModel\ConnectionPoint.cs" />
     <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Lines\CompositionViewModel.cs" />

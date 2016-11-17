@@ -41,6 +41,7 @@
                     <Canvas Background="Transparent">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
                                 <cmd:EventToCommand Command="{Binding MouseLeftButtonDown}" PassEventArgsToCommand="True"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
@@ -54,7 +55,6 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
-        
     </DockPanel>
     
 </Window>

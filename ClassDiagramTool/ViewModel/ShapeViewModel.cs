@@ -7,23 +7,38 @@ using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
 using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
-using static ClassDiagramTool.ViewModel.Shapes.ConnectionPoint;
+using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
     public abstract class ShapeViewModel : BaseViewModel, IShape
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-
+        
         public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)));
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
 
         protected Shape Shape { get; }
+
+        private bool selected = false;
+        public bool Selected {
+            get { return selected; }
+            set { selected = value; OnPropertyChanged(); }
+        }
+        private bool dragging = false;
+        public bool Dragging
+        {
+            get { return dragging; }
+            set { dragging = value; OnPropertyChanged(); }
+        }
 
         protected ShapeViewModel(Shape shape) {
             Shape = shape;
             Width = 250;
             Height = 100;
+            Title = "Title";
+            Text = new List<string>() { "text1", "text2" };
 
             P = new List<ConnectionPoint>()
             {

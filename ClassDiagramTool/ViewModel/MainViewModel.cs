@@ -40,6 +40,7 @@ namespace ClassDiagramTool.ViewModel
         
         public RelayCommand<MouseButtonEventArgs> MouseLeftButtonDown => new RelayCommand<MouseButtonEventArgs>(OnMouseLeftButtonDown);
         public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; });
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is UserControl);
         #endregion
 
         #region CommandMethods
@@ -48,6 +49,7 @@ namespace ClassDiagramTool.ViewModel
             if (IsAddingLine) OnAddLineCommand(e);
             else              OnAddShapeCommand(e);
         }
+        
 
         private void OnAddShapeCommand(MouseButtonEventArgs e)
         {
@@ -70,7 +72,7 @@ namespace ClassDiagramTool.ViewModel
                 UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
             }
         }
-
+        
         private void OnAddLineCommand(MouseButtonEventArgs e)
         {
             UserControl UserControl = e.Source as UserControl;
@@ -96,7 +98,6 @@ namespace ClassDiagramTool.ViewModel
                 if (Line == null) Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine);
                 else
                 {
-                    Debug.WriteLine("Line.Type = " + Line.Type + " SelectedLine = " + SelectedLine);
                     UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
                     From = null;
                 }
