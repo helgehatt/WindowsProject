@@ -24,17 +24,17 @@ namespace ClassDiagramTool.View.Adorners
             Shape = UserControl.DataContext as ShapeViewModel;
         }
 
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            base.OnRender(drawingContext);
-
-            SolidColorBrush brush = new SolidColorBrush(Colors.Black);
-
-            foreach (ConnectionPoint p in Shape.P)
-            {
-                drawingContext.DrawRectangle(brush, null, new Rect(p.X-4, p.Y-4, 6, 6));
-            }
-        }
+        //protected override void OnRender(DrawingContext drawingContext)
+        //{
+        //    base.OnRender(drawingContext);
+        //
+        //    SolidColorBrush brush = new SolidColorBrush(Colors.Black);
+        //
+        //    foreach (ConnectionPoint p in Shape.P)
+        //    {
+        //        drawingContext.DrawRectangle(brush, null, new Rect(p.X-4, p.Y-4, 6, 6));
+        //    }
+        //}
 
     }
 }

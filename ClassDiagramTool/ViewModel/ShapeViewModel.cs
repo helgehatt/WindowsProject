@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ClassDiagramTool.Model;
@@ -15,10 +14,9 @@ namespace ClassDiagramTool.ViewModel.Shapes
     public abstract class ShapeViewModel : BaseViewModel, IShape
     {
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-        
+
         public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
-       
 
         public Shape Shape { get; }
 
@@ -41,16 +39,16 @@ namespace ClassDiagramTool.ViewModel.Shapes
             Title = "Title";
             Text = new List<string>() { "text1", "text2" };
 
-            P = new List<ConnectionPoint>()
-            {
-                new ConnectionPoint(this, EConnectionPoint.North),
-                new ConnectionPoint(this, EConnectionPoint.South),
-                new ConnectionPoint(this, EConnectionPoint.East ),
-                new ConnectionPoint(this, EConnectionPoint.West )
-            };
+            //P = new List<ConnectionPoint>()
+            //{
+            //    new ConnectionPoint(this, EConnectionPoint.North),
+            //    new ConnectionPoint(this, EConnectionPoint.South),
+            //    new ConnectionPoint(this, EConnectionPoint.East ),
+            //    new ConnectionPoint(this, EConnectionPoint.West )
+            //};
         }
         
-        public List<ConnectionPoint> P { get; set; }
+        public List<ConnectionPoint> Points { get; set; }
 
         public int Number => Shape.Number;
 
@@ -58,7 +56,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.X; }
             set { Shape.X = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(P));
+                //OnPropertyChanged(nameof(P));
             }
         }
 
@@ -66,7 +64,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.Y; }
             set { Shape.Y = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(P));
+                //OnPropertyChanged(nameof(P));
             }
         }
 
@@ -98,5 +96,27 @@ namespace ClassDiagramTool.ViewModel.Shapes
         }
 
         public List<string> Text { get; set; }
+
+        public double PointX(ConnectionPoint point)
+        {
+            switch(point.Orientation)
+            {
+                case EConnectionPoint.North: return Shape.X + Shape.Width * point.Percentile;
+                case EConnectionPoint.South: return Shape.X + Shape.Width * point.Percentile;
+                case EConnectionPoint.East : return Shape.X + Shape.Width                   ;
+                default          : return Shape.X + 0                             ;
+            }
+        }
+
+        public double PointY(ConnectionPoint point)
+        {
+            switch(point.Orientation)
+            {
+                case EConnectionPoint.South: return Shape.Y + Shape.Height                   ;
+                case EConnectionPoint.East : return Shape.Y + Shape.Height * point.Percentile;
+                case EConnectionPoint.West : return Shape.Y + Shape.Height * point.Percentile;
+                default          : return Shape.Y + 0                              ;
+            }
+        }
     }
 }

@@ -89,7 +89,6 @@
     <Compile Include="Commands\SelectObjectCommand.cs" />
     <Compile Include="Commands\Serializer.cs" />
     <Compile Include="ViewModel\SelectedObjectsCollection.cs" />
-    <Compile Include="ViewModel\ConnectionPoint.cs" />
     <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
     <Compile Include="ViewModel\Lines\CompositionViewModel.cs" />
     <Compile Include="ViewModel\Lines\DependencyViewModel.cs" />
