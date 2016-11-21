@@ -24,13 +24,13 @@
             <Image Source="/ClassDiagramTool;component/Images/Open.png"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="15" />
-        <Button Command="Cut">
+        <Button Command="{Binding CutShapeCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Cut.png"/>
         </Button>
-        <Button Command="Copy">
+        <Button Command="{Binding CopyShapeCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Copy.png"/>
         </Button>
-        <Button Command="{Binding PasteCommand}">
+        <Button Command="{Binding PasteShapeCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Paste.png"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="15" />

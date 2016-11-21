@@ -12,7 +12,7 @@ namespace ClassDiagramTool.ViewModel
         private static readonly SelectedObjectsCollection Self = new SelectedObjectsCollection();
         public static SelectedObjectsCollection Instance => Self;
 
-        private readonly List<UserControl> SelectionList = new List<UserControl>();
+        public readonly List<UserControl> SelectionList = new List<UserControl>();
 
         private SelectedObjectsCollection():base() {}
 

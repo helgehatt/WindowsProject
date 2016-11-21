@@ -28,6 +28,17 @@ namespace ClassDiagramTool.Commands
             }
         }
 
+        private void SerializeToClipboard(Shape shape, string path)
+        {
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                var serializer = new DataContractSerializer(typeof(Shape));
+                serializer.WriteObject(stream, shape);
+                
+            }
+        }
+
+
         public Task<Diagram> AsyncDeserializeFromFile(string path)
         {
             return Task.Run(() => DeserializeFromFile(path));
