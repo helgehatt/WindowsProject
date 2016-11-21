@@ -7,14 +7,11 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace ClassDiagramTool.View.UserControls.Shapes
+namespace ClassDiagramTool.View.ShapeControls
 {
-    /// <summary>
-    /// Interaction logic for ClassShape.xaml
-    /// </summary>
-    public partial class InterfaceUserControl : UserControl
+    public partial class InterfaceShapeControl : ShapeControl
     {
-        public InterfaceUserControl()
+        public InterfaceShapeControl()
         {
             InitializeComponent();
         }

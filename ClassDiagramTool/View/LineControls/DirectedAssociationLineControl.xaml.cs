@@ -13,14 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ClassDiagramTool.View.UserControls.Lines
+namespace ClassDiagramTool.View.LineControls
 {
-    /// <summary>
-    /// Interaction logic for LineUserControl.xaml
-    /// </summary>
-    public partial class InheritanceUserControl : UserControl
+    public partial class DirectedAssociationLineControl : LineControl
     {
-        public InheritanceUserControl()
+        public DirectedAssociationLineControl()
         {
             InitializeComponent();
         }

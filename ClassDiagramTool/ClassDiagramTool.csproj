@@ -104,35 +104,37 @@
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Lines\AggregationUserControl.xaml.cs">
-      <DependentUpon>AggregationUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\LineControl.cs" />
+    <Compile Include="View\LineControls\AggregationLineControl.xaml.cs">
+      <DependentUpon>AggregationLineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Lines\CompositionUserControl.xaml.cs">
-      <DependentUpon>CompositionUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\CompositionLineControl.xaml.cs">
+      <DependentUpon>CompositionLineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Lines\DependencyUserControl.xaml.cs">
-      <DependentUpon>DependencyUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\DependencyLineControl.xaml.cs">
+      <DependentUpon>DependencyLineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Lines\DirectedAssociationUserControl.xaml.cs">
-      <DependentUpon>DirectedAssociationUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\DirectedAssociationLineControl.xaml.cs">
+      <DependentUpon>DirectedAssociationLineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Lines\InheritanceUserControl.xaml.cs">
-      <DependentUpon>InheritanceUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\InheritanceLineControl.xaml.cs">
+      <DependentUpon>InheritanceLineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Lines\InterfaceRealizationUserControl.xaml.cs">
-      <DependentUpon>InterfaceRealizationUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\InterfaceRealizationLineControl.xaml.cs">
+      <DependentUpon>InterfaceRealizationLineControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\LineUserControl.xaml.cs">
       <DependentUpon>LineUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Shapes\InterfaceUserControl.xaml.cs">
-      <DependentUpon>InterfaceUserControl.xaml</DependentUpon>
+    <Compile Include="View\ShapeControls\ShapeControl.cs" />
+    <Compile Include="View\ShapeControls\InterfaceShapeControl.xaml.cs">
+      <DependentUpon>InterfaceShapeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Shapes\EnumerationUserControl.xaml.cs">
-      <DependentUpon>EnumerationUserControl.xaml</DependentUpon>
+    <Compile Include="View\ShapeControls\EnumerationShapeControl.xaml.cs">
+      <DependentUpon>EnumerationShapeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\UserControls\Shapes\ClassUserControl.xaml.cs">
-      <DependentUpon>ClassUserControl.xaml</DependentUpon>
+    <Compile Include="View\ShapeControls\ClassShapeControl.xaml.cs">
+      <DependentUpon>ClassShapeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UndoRedo\IUndoRedoCommand.cs" />
     <Compile Include="UndoRedo\UndoRedoController.cs" />
@@ -142,8 +144,8 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
     <Compile Include="ViewModel\Shapes\ClassViewModel.cs" />
-    <Compile Include="View\UserControls\Lines\AssociationUserControl.xaml.cs">
-      <DependentUpon>AssociationUserControl.xaml</DependentUpon>
+    <Compile Include="View\LineControls\AssociationLineControl.xaml.cs">
+      <DependentUpon>AssociationLineControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\MenuUserControl.xaml.cs">
       <DependentUpon>MenuUserControl.xaml</DependentUpon>
@@ -173,27 +175,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Lines\AggregationUserControl.xaml">
+    <Page Include="View\LineControls\AggregationLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Lines\CompositionUserControl.xaml">
+    <Page Include="View\LineControls\CompositionLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Lines\DependencyUserControl.xaml">
+    <Page Include="View\LineControls\DependencyLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Lines\DirectedAssociationUserControl.xaml">
+    <Page Include="View\LineControls\DirectedAssociationLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Lines\InheritanceUserControl.xaml">
+    <Page Include="View\LineControls\InheritanceLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Lines\InterfaceRealizationUserControl.xaml">
+    <Page Include="View\LineControls\InterfaceRealizationLineControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -201,19 +203,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\UserControls\Shapes\InterfaceUserControl.xaml">
+    <Page Include="View\ShapeControls\InterfaceShapeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Shapes\EnumerationUserControl.xaml">
+    <Page Include="View\ShapeControls\EnumerationShapeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Shapes\ClassUserControl.xaml">
+    <Page Include="View\ShapeControls\ClassShapeControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\UserControls\Lines\AssociationUserControl.xaml">
+    <Page Include="View\LineControls\AssociationLineControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
