@@ -9,13 +9,14 @@ namespace ClassDiagramTool.ViewModel.Lines
 {
     public abstract class LineViewModel : BaseViewModel, ILine
     {
-        private readonly Line Line;
+        public readonly Line Line;
 
         public ShapeViewModel From { get; set; }
         public ShapeViewModel To { get; set; }
 
         public int FromNumber => From.Number;
         public int ToNumber => To.Number;
+        
         public string Label { get; set; }
         public ELine Type => Line.Type;
 

@@ -1,6 +1,8 @@
 ﻿
+
 namespace ClassDiagramTool.Model
 {
+    
     public interface ILine
     {
         int FromNumber { get; }

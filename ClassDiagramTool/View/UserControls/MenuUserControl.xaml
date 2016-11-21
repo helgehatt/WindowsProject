@@ -17,10 +17,10 @@
         <Button Command="{Binding IsAddingLineChange}">
             <Image Source="/ClassDiagramTool;component/Images/New.png"/>
         </Button>
-        <Button Command="{Binding SaveCommand}">
+        <Button Command="{Binding SaveDiagramCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Save.png"/>
         </Button>
-        <Button Command="{Binding OpenCommand}">
+        <Button Command="{Binding LoadDiagramCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Open.png"/>
         </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="15" />

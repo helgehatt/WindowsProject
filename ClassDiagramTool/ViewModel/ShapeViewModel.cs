@@ -18,8 +18,9 @@ namespace ClassDiagramTool.ViewModel.Shapes
         
         public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
+       
 
-        protected Shape Shape { get; }
+        public Shape Shape { get; }
 
         private bool selected = false;
         public bool Selected {
