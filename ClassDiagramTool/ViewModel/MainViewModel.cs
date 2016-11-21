@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,7 @@ namespace ClassDiagramTool.ViewModel
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
         private ShapeViewModel From;
+        private Serializer Serializer => Serializer.Instance;
 
         public static bool IsAddingLine = false; // Temporary
 
@@ -43,11 +45,55 @@ namespace ClassDiagramTool.ViewModel
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, e => e.Source is Canvas);
         public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand, e => e.Source is ShapeControl && IsAddingLine);
         public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is ShapeControl);
+        public RelayCommand<MouseButtonEventArgs> CutShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnCutShapeCommand);
+        //public RelayCommand<MouseButtonEventArgs> CopyShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new CopyCommand(this, e)));
+        //public RelayCommand<MouseButtonEventArgs> PasteShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new PasteCommand(this, e)));
+        public RelayCommand<MouseButtonEventArgs> SaveDiagramCommand => new RelayCommand<MouseButtonEventArgs>(OnSaveDiagramCommand);
+        public RelayCommand<MouseButtonEventArgs> LoadDiagramCommand => new RelayCommand<MouseButtonEventArgs>(OnLoadDiagramCommand);
 
         public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; }); // Temporary
         #endregion
 
         #region CommandMethods
+
+
+        private void OnSaveDiagramCommand(MouseButtonEventArgs e)
+        {
+            Diagram diagram = new Diagram()
+            {
+                Shapes = new List<Shape>(Shapes.Select(o => o.Shape).ToList()),
+                Lines = new List<Line>(Lines.Select(o => o.Line).ToList())
+            };
+           
+            Serializer.AsyncSerializeToFile(diagram, Directory.GetCurrentDirectory()+"\\testSave.XML");
+        }
+
+        private void OnLoadDiagramCommand(MouseButtonEventArgs e)
+        {
+            
+            Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
+            Shapes.Clear();
+            foreach(Shape shape in diagram.Shapes)
+            {
+               
+                ShapeViewModel Shape = null;
+
+                switch (shape.Type)
+                {
+                    case EShape.Class       : Shape = new ClassViewModel        (shape) ;  break;
+                    case EShape.Enumeration : Shape = new EnumerationViewModel  (shape) ;  break;
+                    case EShape.Interface   : Shape = new InterfaceViewModel    (shape) ;  break;
+                }
+                Shapes.Add(Shape);
+            }
+            
+        }
+
+        private void OnCutShapeCommand(MouseButtonEventArgs e)
+        {
+
+        }
+
 
         private void OnAddShapeCommand(MouseButtonEventArgs e)
         {
@@ -70,6 +116,27 @@ namespace ClassDiagramTool.ViewModel
             {
                 UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
             }
+        }
+
+        private void OnPasteCommand(MouseButtonEventArgs e)
+        {
+            Canvas MainCanvas = e.Source as Canvas;
+
+            Point Position = Mouse.GetPosition(MainCanvas);
+
+            ShapeViewModel Shape = null;
+            //EShape data = Clipboard.GetDataObject() as EShape;
+            /*switch (data)
+            {
+                case EShape.Class: Shape = new ClassViewModel() { CenterX = Position.X, CenterY = Position.Y }; break;
+                case EShape.Enumeration: Shape = new EnumerationViewModel() { CenterX = Position.X, CenterY = Position.Y }; break;
+                case EShape.Interface: Shape = new InterfaceViewModel() { CenterX = Position.X, CenterY = Position.Y }; break;
+            }*/
+
+            
+            //if (data.GetDataPresent()) { }
+             //   textBox1.Text = data.GetData(DataFormats.Text).ToString();
+            //UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, data));
         }
         
         private void OnAddLineCommand(MouseButtonEventArgs e)

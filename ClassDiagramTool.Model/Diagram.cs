@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class Diagram
     {
-        public List<IShape> Shapes { get; set; }
-        public List<ILine> Lines { get; set; }
+        public List<Shape> Shapes { get; set; }
+        public List<Line> Lines { get; set; }
     }
 }

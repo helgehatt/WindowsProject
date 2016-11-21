@@ -4,9 +4,9 @@ namespace ClassDiagramTool.Model
 {
     public class Shape : IShape
     {
-        private static int _number;
+        private static int number;
 
-        public int Number { get; set; } = _number++;
+        public int Number { get; set; } = number++;
         public double X { get; set; }
         public double Y { get; set; }
         public double Width { get; set; }

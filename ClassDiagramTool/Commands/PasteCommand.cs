@@ -1,6 +1,8 @@
 ﻿using ClassDiagramTool.UndoRedo;
+using ClassDiagramTool.ViewModel.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +14,14 @@ namespace ClassDiagramTool.Commands
 {
     class PasteCommand : IUndoRedoCommand
     {
-        public PasteCommand(MouseButtonEventArgs e)
+        private ObservableCollection<ShapeViewModel> Shapes;
+
+        public PasteCommand(ObservableCollection<ShapeViewModel> shapes, ShapeViewModel viewModel, MouseButtonEventArgs e)
         {
             UserControl data = Clipboard.GetDataObject() as UserControl;
-            //data.DataContext as 
+            //data.DataContext as
+            
+            
 
 
         }
@@ -23,7 +29,7 @@ namespace ClassDiagramTool.Commands
         public void Execute()
         {
             
-
+            
         }
 
         public void UnExecute()

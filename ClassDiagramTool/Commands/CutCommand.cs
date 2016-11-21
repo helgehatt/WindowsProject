@@ -1,4 +1,5 @@
 ﻿using ClassDiagramTool.UndoRedo;
+using ClassDiagramTool.ViewModel.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace ClassDiagramTool.Commands
         private UserControl SelectedElement;
         private DataObject DataObject;
 
-        public CutCommand(MouseButtonEventArgs e)
+        public CutCommand(ShapeViewModel viewModel, MouseButtonEventArgs e)
         {
             SelectedElement = e.Source as UserControl;
             DataObject data = new DataObject();
@@ -34,10 +35,7 @@ namespace ClassDiagramTool.Commands
             throw new NotImplementedException();
         }
 
-        void CutOnExecute(object sender, ExecutedRoutedEventArgs args)
-        {
-            
-        }
+      
        
     }
 }
