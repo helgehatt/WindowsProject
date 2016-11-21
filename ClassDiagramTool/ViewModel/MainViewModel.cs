@@ -1,6 +1,7 @@
 ﻿using ClassDiagramTool.Commands;
 using ClassDiagramTool.Model;
 using ClassDiagramTool.UndoRedo;
+using ClassDiagramTool.View.ShapeControls;
 using ClassDiagramTool.View.UserControls;
 using ClassDiagramTool.ViewModel.Lines;
 using ClassDiagramTool.ViewModel.Shapes;
@@ -40,8 +41,8 @@ namespace ClassDiagramTool.ViewModel
         public ICommand RedoCommand => UndoRedoController.RedoCommand;
         
         public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, e => e.Source is Canvas);
-        public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand, e => e.Source is UserControl && IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is UserControl);
+        public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand, e => e.Source is ShapeControl && IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is ShapeControl);
 
         public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; }); // Temporary
         #endregion

@@ -1,0 +1,17 @@
+﻿<local:LineControl x:Class="ClassDiagramTool.View.LineControls.DirectedAssociationLineControl"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                   xmlns:local="clr-namespace:ClassDiagramTool.View.LineControls"
+                   xmlns:uc="clr-namespace:ClassDiagramTool.View.UserControls"
+                   mc:Ignorable="d">
+
+    <uc:LineUserControl>
+        <Grid>
+            <Line X1="{Binding From.P[1].X}" Y1="{Binding From.P[1].Y}" X2="{Binding From.P[1].X}" Y2="{Binding To.P[3].Y}"/>
+            <Line X1="{Binding From.P[1].X}" Y1="{Binding To  .P[3].Y}" X2="{Binding To  .P[3].X}" Y2="{Binding To.P[3].Y}"/>
+        </Grid>
+    </uc:LineUserControl>
+    
+</local:LineControl>
