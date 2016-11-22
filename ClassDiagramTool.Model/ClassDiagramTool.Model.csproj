@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionPoint\IConnectionPoint.cs" />
     <Compile Include="Diagram.cs" />
     <Compile Include="Line\ELine.cs" />
     <Compile Include="ConnectionPoint\EConnectionPoint.cs" />

@@ -62,7 +62,7 @@ namespace ClassDiagramTool.ViewModel
             Diagram diagram = new Diagram()
             {
                 Shapes = new List<Shape>(Shapes.Select(o => o.Shape).ToList()),
-                Lines = new List<Line>(Lines.Select(o => o.Line).ToList())
+                Lines  = new List<Line> (Lines .Select(o => o.Line ).ToList())
             };
            
             Serializer.AsyncSerializeToFile(diagram, Directory.GetCurrentDirectory()+"\\testSave.XML");
@@ -70,9 +70,10 @@ namespace ClassDiagramTool.ViewModel
 
         private void OnLoadDiagramCommand(MouseButtonEventArgs e)
         {
-            
-            Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
             Shapes.Clear();
+
+            Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
+
             foreach(Shape shape in diagram.Shapes)
             {
                
@@ -85,6 +86,14 @@ namespace ClassDiagramTool.ViewModel
                     case EShape.Interface   : Shape = new InterfaceViewModel    (shape) ;  break;
                 }
                 Shapes.Add(Shape);
+            }
+
+            foreach (ShapeViewModel shapeViewModel in Shapes)
+            {
+                foreach (ConnectionPoint connectionPoint in shapeViewModel.Points)
+                {
+                    connectionPoint.Shape = shapeViewModel.Shape;
+                }
             }
             
         }
@@ -153,7 +162,7 @@ namespace ClassDiagramTool.ViewModel
                 LineViewModel Line = null;
                 switch (SelectedLine)
                 {
-                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, Shape);   break;
+                    case ELine.Aggregation          : Line = new AggregationViewModel           (From.Points[3], Shape.Points[0]);   break;
                     case ELine.Association          : Line = new AssociationViewModel           (From, Shape);   break;
                     case ELine.Composition          : Line = new CompositionViewModel           (From, Shape);   break;
                     case ELine.Dependency           : Line = new DependencyViewModel            (From, Shape);   break;

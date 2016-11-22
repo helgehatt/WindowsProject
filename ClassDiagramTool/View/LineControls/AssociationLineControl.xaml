@@ -9,8 +9,8 @@
     
     <uc:LineUserControl>
         <Grid>
-            <Line X1="{Binding From.P[1].X}" Y1="{Binding From.P[1].Y}" X2="{Binding From.P[1].X}" Y2="{Binding To.P[3].Y}"/>
-            <Line X1="{Binding From.P[1].X}" Y1="{Binding To  .P[3].Y}" X2="{Binding To  .P[3].X}" Y2="{Binding To.P[3].Y}"/>
+            <Line X1="{Binding From.X}" Y1="{Binding From.Y}" X2="{Binding From.X}" Y2="{Binding To.Y}"/>
+            <Line X1="{Binding From.X}" Y1="{Binding To  .Y}" X2="{Binding To  .X}" Y2="{Binding To.Y}"/>
         </Grid>
     </uc:LineUserControl>
     

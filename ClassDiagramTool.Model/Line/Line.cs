@@ -9,8 +9,8 @@ namespace ClassDiagramTool.Model
         public int FromPoint { get; set; }
         public int ToPoint { get; set; }
 
-        public string Label { get; set; }
-
         public ELine Type { get; set; }
+
+        public string Label { get; set; }
     }
 }

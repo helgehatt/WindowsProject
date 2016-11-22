@@ -11,8 +11,8 @@ namespace ClassDiagramTool.Model
         int FromPoint { get; }
         int ToPoint { get; }
 
-        string Label { get; }
-
         ELine Type { get; }
+
+        string Label { get; }
     }
 }

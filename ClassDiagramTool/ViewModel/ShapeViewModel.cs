@@ -35,23 +35,25 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
             Points = new List<ConnectionPoint>()
             {
-                new ConnectionPoint(Shape, EConnectionPoint.North),
-                new ConnectionPoint(Shape, EConnectionPoint.South),
-                new ConnectionPoint(Shape, EConnectionPoint.East ),
-                new ConnectionPoint(Shape, EConnectionPoint.West )
+                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.North },
+                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.South },
+                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.East  },
+                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.West  }
             };
         }
 
-        public bool Selected
-        {
+        public bool Selected {
             get { return selected; }
-            set { selected = value; OnPropertyChanged(); }
+            set { selected = value;
+                OnPropertyChanged();
+            }
         }
 
-        public bool Dragging
-        {
+        public bool Dragging {
             get { return dragging; }
-            set { dragging = value; OnPropertyChanged(); }
+            set { dragging = value;
+                OnPropertyChanged();
+            }
         }
 
         public Shape Shape { get; }
@@ -64,6 +66,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.X; }
             set { Shape.X = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Points));
             }
         }
 
@@ -71,6 +74,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.Y; }
             set { Shape.Y = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Points));
             }
         }
 
