@@ -72,12 +72,14 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         public double Width {
             get { return Shape.Width; }
-            set { Shape.Width = value; }
+            set { Shape.Width = value;
+                OnPropertyChanged(); }
         }
 
         public double Height {
             get { return Shape.Height; }
-            set { Shape.Height = value; }
+            set { Shape.Height = value;
+                OnPropertyChanged(); }
         }
 
         public double CenterX {
