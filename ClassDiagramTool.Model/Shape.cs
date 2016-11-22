@@ -9,11 +9,11 @@ namespace ClassDiagramTool.Model
         public int Number { get; set; } = number++;
         public double X { get; set; }
         public double Y { get; set; }
-        public double Width { get; set; }
-        public double Height { get; set; }
+        public double Width { get; set; } = 250;
+        public double Height { get; set; } = 100;
         public EShape Type { get; set; }
-        
-        public string Title { get; set; }
-        public List<string> Text { get; set; }
+
+        public string Title { get; set; } = "Title";
+        public List<string> Text { get; set; } = new List<string>() { "Text1", "Text2" };
     }
 }
