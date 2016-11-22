@@ -36,10 +36,6 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         protected ShapeViewModel(Shape shape) {
             Shape = shape;
-            Width = 250;
-            Height = 100;
-            Title = "Title";
-            Text = new List<string>() { "text1", "text2" };
 
             P = new List<ConnectionPoint>()
             {
@@ -99,6 +95,10 @@ namespace ClassDiagramTool.ViewModel.Shapes
             set { Shape.Title = value; }
         }
 
-        public List<string> Text { get; set; }
+        public List<string> Text {
+            get { return Shape.Text; }
+            set { Shape.Text = value;
+                OnPropertyChanged(); }
+        }
     }
 }

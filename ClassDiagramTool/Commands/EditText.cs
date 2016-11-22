@@ -40,7 +40,7 @@ namespace ClassDiagramTool.Commands
 
             EditedTextBox.Focusable = true;
             EditedTextBox.IsReadOnly = false;
-            EditedTextBox.SelectAll();
+            //EditedTextBox.SelectAll();
             EditedTextBox.Focus();
             e.Handled = true;
         }
