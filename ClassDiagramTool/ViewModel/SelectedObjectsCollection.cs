@@ -28,19 +28,8 @@ namespace ClassDiagramTool.ViewModel
 
         public void Select(UserControl element)
         {
-            SelectionList.ForEach((current) => { (current.DataContext as ShapeViewModel).Selected = false;
-                Adorner[] adorners = AdornerLayer.GetAdornerLayer(current).GetAdorners(current);
-                if (adorners != null)
-                    foreach (Adorner adorner in AdornerLayer.GetAdornerLayer(current).GetAdorners(current))
-                    {
-                        AdornerLayer.GetAdornerLayer(current).Remove(adorner);
-                    }
-                if (adorners != null)
-                    foreach (Adorner adorner in adorners)
-                    {
-                        if (adorner is SelectionAdorner)
-                            AdornerLayer.GetAdornerLayer(current).Remove(adorner);
-                    }
+            SelectionList.ForEach((current) => { //(current.DataContext as ShapeViewModel).Selected = false;
+                RemoveAdorner(current);
             });
             SelectionList.Clear();
             AddSelect(element);
@@ -50,18 +39,24 @@ namespace ClassDiagramTool.ViewModel
         {
             //(element.DataContext as ShapeViewModel).Selected = false;
             SelectionList.Remove(element);
-            Adorner[] adorners = AdornerLayer.GetAdornerLayer(element).GetAdorners(element);
-            if (adorners != null)
-                foreach (Adorner adorner in AdornerLayer.GetAdornerLayer(element).GetAdorners(element))
+            RemoveAdorner(element);
+        }
+
+        void RemoveAdorner(UIElement element)
+        {
+            AdornerLayer layer = AdornerLayer.GetAdornerLayer(element);
+            if (layer != null)
+            {
+                Adorner[] adorners = layer.GetAdorners(element);
+                if (adorners != null)
                 {
-                    AdornerLayer.GetAdornerLayer(element).Remove(adorner);
+                    foreach (Adorner adorner in AdornerLayer.GetAdornerLayer(element).GetAdorners(element))
+                    {
+                        if (adorner is SelectionAdorner || adorner is ResizeAdorner)
+                            AdornerLayer.GetAdornerLayer(element).Remove(adorner);
+                    }
                 }
-            if (adorners != null)
-                foreach (Adorner adorner in AdornerLayer.GetAdornerLayer(element).GetAdorners(element))
-                {
-                    if (adorner is SelectionAdorner)
-                        AdornerLayer.GetAdornerLayer(element).Remove(adorner);
-                }
+            }
         }
 
         public bool IsSelected(UserControl element) => SelectionList.Contains(element);
