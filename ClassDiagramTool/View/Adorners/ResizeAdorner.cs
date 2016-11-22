@@ -173,8 +173,7 @@ namespace ClassDiagramTool.View.Adorners
             thumb.Cursor = customizedCursor;
             thumb.Height = 10;
             thumb.Width = 10;
-            thumb.Opacity = 1.00;
-            thumb.Background = new SolidColorBrush(Colors.AntiqueWhite);
+            thumb.Opacity = 0.00;
 
             visualChildren.Add(thumb);
         }

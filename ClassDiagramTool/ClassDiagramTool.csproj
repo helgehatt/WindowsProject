@@ -99,6 +99,7 @@
     <Compile Include="ViewModel\Shapes\InterfaceViewModel.cs" />
     <Compile Include="View\Adorners\ConnectionPointAdorner.cs" />
     <Compile Include="View\Adorners\ResizeAdorner.cs" />
+    <Compile Include="View\Adorners\SelectionAdorner.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
