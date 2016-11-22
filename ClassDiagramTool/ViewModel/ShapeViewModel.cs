@@ -51,13 +51,8 @@ namespace ClassDiagramTool.ViewModel.Shapes
                 OnPropertyChanged();
             }
         }
-
-<<<<<<< HEAD
+        
         public Shape Shape { get; }
-=======
-        protected ShapeViewModel(Shape shape) {
-            Shape = shape;
->>>>>>> origin/master
 
         public List<ConnectionPoint> Points
         {
