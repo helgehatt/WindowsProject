@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace ClassDiagramTool.Model
 {
     public class Line : ILine

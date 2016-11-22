@@ -104,15 +104,15 @@
                         </i:Interaction.Triggers>
                     </TextBox>
 
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Text}" 
-                                  Background="Transparent" 
-                                  Height="auto" 
-                                  BorderBrush="Black" 
-                                  BorderThickness="0,1,0,0">
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Text}" 
+                                Background="Transparent" 
+                                Height="auto" 
+                                BorderBrush="Black" 
+                                BorderThickness="0,1,0,0">
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding .}">
+                                <TextBox Text="{Binding Value}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDoubleClick">
                                             <cmd:EventToCommand Command="{Binding DataContext.EditTextCommand, Source={x:Reference Name=UserControl}}" PassEventArgsToCommand="True"/>

@@ -8,6 +8,8 @@ using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
@@ -26,20 +28,14 @@ namespace ClassDiagramTool.ViewModel.Shapes
         #endregion
 
 
-        protected ShapeViewModel(Shape shape) {
+        protected ShapeViewModel(Shape shape)
+        {
             Shape = shape;
-            Width = 250;
-            Height = 100;
-            Title = "Title";
-            Text = new List<string>() { "text1", "text2" };
 
-            Points = new List<ConnectionPoint>()
+            foreach (ConnectionPoint point in Points)
             {
-                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.North },
-                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.South },
-                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.East  },
-                new ConnectionPoint() { Shape = Shape, Orientation = EConnectionPoint.West  }
-            };
+                point.Shape = Shape;
+            }
         }
 
         public bool Selected {
@@ -58,7 +54,11 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         public Shape Shape { get; }
 
-        public List<ConnectionPoint> Points { get; set; }
+        public List<ConnectionPoint> Points
+        {
+            get { return Shape.Points; }
+            set { Shape.Points = value; }
+        }
 
         public int Number => Shape.Number;
 
@@ -105,7 +105,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             set { Shape.Title = value; }
         }
 
-        public List<string> Text {
+        public List<TextItem> Text {
             get { return Shape.Text; }
             set { Shape.Text = value; }
         }

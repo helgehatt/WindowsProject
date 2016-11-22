@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ClassDiagramTool.Model
 {
@@ -17,7 +19,7 @@ namespace ClassDiagramTool.Model
         EShape Type { get; }
 
         string Title { get; }
-        List<string> Text { get; }
+        List<TextItem> Text { get; }
 
         List<ConnectionPoint> Points { get; }
     }

@@ -42,11 +42,6 @@ namespace ClassDiagramTool.Commands
             MovedElement.MouseLeftButtonUp += MouseUp;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
         public void Execute() => Execute(null);
         public void Execute(object parameter)
         {

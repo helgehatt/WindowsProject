@@ -74,9 +74,8 @@ namespace ClassDiagramTool.ViewModel
 
             Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
 
-            foreach(Shape shape in diagram.Shapes)
-            {
-               
+            foreach (Shape shape in diagram.Shapes)
+            {               
                 ShapeViewModel Shape = null;
 
                 switch (shape.Type)
@@ -85,17 +84,46 @@ namespace ClassDiagramTool.ViewModel
                     case EShape.Enumeration : Shape = new EnumerationViewModel  (shape) ;  break;
                     case EShape.Interface   : Shape = new InterfaceViewModel    (shape) ;  break;
                 }
+
+                if (Shape == null) { Debug.WriteLine("OnLoadDiagramCommand, Shape == null, shape:" + shape); return; }
+
                 Shapes.Add(Shape);
             }
-
-            foreach (ShapeViewModel shapeViewModel in Shapes)
-            {
-                foreach (ConnectionPoint connectionPoint in shapeViewModel.Points)
-                {
-                    connectionPoint.Shape = shapeViewModel.Shape;
-                }
-            }
             
+            foreach (Line line in diagram.Lines)
+            {
+                LineViewModel Line = null;
+
+                ShapeViewModel From = GetShapeByNumber(line.FromNumber);
+                ShapeViewModel To   = GetShapeByNumber(line.ToNumber  );
+
+                if (From == null || To == null) { Debug.WriteLine("OnLoadDiagramCommand, From == null || To == null, FromNumber: "
+                                                                   + line.FromNumber + " ToNumber: " + line.ToNumber); return; }
+
+                switch (line.Type)
+                {
+                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, To);   break;
+                    case ELine.Association          : Line = new AssociationViewModel           (From, To);   break;
+                    case ELine.Composition          : Line = new CompositionViewModel           (From, To);   break;
+                    case ELine.Dependency           : Line = new DependencyViewModel            (From, To);   break;
+                    case ELine.DirectedAssociation  : Line = new DirectedAssociationViewModel   (From, To);   break;
+                    case ELine.Inheritance          : Line = new InheritanceViewModel           (From, To);   break;
+                    case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, To);   break;
+                }
+
+                if (Line == null) { Debug.WriteLine("OnLoadDiagramCommand, Line == null, line: " + line); return; }
+
+                Lines.Add(Line);
+            }
+        }
+
+        private ShapeViewModel GetShapeByNumber(int number)
+        {
+            foreach (ShapeViewModel shape in Shapes)
+            {
+                if (shape.Number == number) return shape;
+            }
+            return null;
         }
 
         private void OnCutShapeCommand(MouseButtonEventArgs e)
@@ -106,7 +134,6 @@ namespace ClassDiagramTool.ViewModel
 
         private void OnAddShapeCommand(MouseButtonEventArgs e)
         {
-            Debug.WriteLine(e.Source is Canvas);
             Canvas MainCanvas = e.Source as Canvas;
 
             Point Position = Mouse.GetPosition(MainCanvas);
@@ -120,11 +147,9 @@ namespace ClassDiagramTool.ViewModel
                 case EShape.Interface   : Shape = new InterfaceViewModel    () { CenterX = Position.X, CenterY = Position.Y };  break;
             }
 
-            if (Shape == null) Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape);
-            else
-            {
-                UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
-            }
+            if (Shape == null) { Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape); return; }
+            
+            UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, Shape));
         }
 
         private void OnPasteCommand(MouseButtonEventArgs e)
@@ -162,7 +187,7 @@ namespace ClassDiagramTool.ViewModel
                 LineViewModel Line = null;
                 switch (SelectedLine)
                 {
-                    case ELine.Aggregation          : Line = new AggregationViewModel           (From.Points[3], Shape.Points[0]);   break;
+                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, Shape);   break;
                     case ELine.Association          : Line = new AssociationViewModel           (From, Shape);   break;
                     case ELine.Composition          : Line = new CompositionViewModel           (From, Shape);   break;
                     case ELine.Dependency           : Line = new DependencyViewModel            (From, Shape);   break;
@@ -170,12 +195,10 @@ namespace ClassDiagramTool.ViewModel
                     case ELine.Inheritance          : Line = new InheritanceViewModel           (From, Shape);   break;
                     case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, Shape);   break;
                 }
-                if (Line == null) Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine);
-                else
-                {
-                    UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
-                    From = null;
-                }
+                if (Line == null) { Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine); return; }
+
+                UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
+                From = null;
             }            
         }
         #endregion
