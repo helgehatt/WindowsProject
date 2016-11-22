@@ -46,6 +46,36 @@
                                 <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
+                        <Canvas.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Command="{Binding NewItemCommand}" Header="New item">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ClassDiagramTool;component/Images/New.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding CutShapeCommand}" 
+                                          Header="Cut">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding CopyShapeCommand}" Header="Copy">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding PasteShapeCommand}" Header="Paste">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding DeleteShapeCommand}" Header="Delete">
+                                    <MenuItem.Icon>
+                                        <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Canvas.ContextMenu>
                     </Canvas>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>

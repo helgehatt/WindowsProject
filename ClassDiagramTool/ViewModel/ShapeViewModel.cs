@@ -52,7 +52,12 @@ namespace ClassDiagramTool.ViewModel.Shapes
             }
         }
 
+<<<<<<< HEAD
         public Shape Shape { get; }
+=======
+        protected ShapeViewModel(Shape shape) {
+            Shape = shape;
+>>>>>>> origin/master
 
         public List<ConnectionPoint> Points
         {
@@ -80,12 +85,14 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         public double Width {
             get { return Shape.Width; }
-            set { Shape.Width = value; }
+            set { Shape.Width = value;
+                OnPropertyChanged(); }
         }
 
         public double Height {
             get { return Shape.Height; }
-            set { Shape.Height = value; }
+            set { Shape.Height = value;
+                OnPropertyChanged(); }
         }
 
         public double CenterX {
@@ -104,7 +111,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.Title; }
             set { Shape.Title = value; }
         }
-
+        
         public List<TextItem> Text {
             get { return Shape.Text; }
             set { Shape.Text = value; }
