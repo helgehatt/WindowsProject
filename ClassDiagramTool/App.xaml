@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="View\Resources\ExpanderTemplates.xaml"/>
                 <ResourceDictionary Source="View\Resources\ColorDictionary.xaml"/>
+                <ResourceDictionary Source="View\Resources\AdornerTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
             <!-- SHAPES -->

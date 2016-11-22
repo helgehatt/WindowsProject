@@ -1,11 +1,8 @@
 ﻿using ClassDiagramTool.View.Adorners;
-using ClassDiagramTool.ViewModel.Shapes;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace ClassDiagramTool.ViewModel
 {
@@ -24,11 +21,13 @@ namespace ClassDiagramTool.ViewModel
             SelectionList.Add(element);
             AdornerLayer.GetAdornerLayer(element).Add(new ResizeAdorner(element));
             AdornerLayer.GetAdornerLayer(element).Add(new SelectionAdorner(element));
+            AdornerLayer.GetAdornerLayer(element).Add(new ConnectionPointAdorner(element));
         }
 
         public void Select(UserControl element)
         {
-            SelectionList.ForEach((current) => { //(current.DataContext as ShapeViewModel).Selected = false;
+            SelectionList.ForEach((current) => {
+                //(current.DataContext as ShapeViewModel).Selected = false;
                 RemoveAdorner(current);
             });
             SelectionList.Clear();
@@ -52,7 +51,7 @@ namespace ClassDiagramTool.ViewModel
                 {
                     foreach (Adorner adorner in AdornerLayer.GetAdornerLayer(element).GetAdorners(element))
                     {
-                        if (adorner is SelectionAdorner || adorner is ResizeAdorner)
+                        if (adorner is SelectionAdorner || adorner is ResizeAdorner || adorner is ConnectionPointAdorner)
                             AdornerLayer.GetAdornerLayer(element).Remove(adorner);
                     }
                 }
