@@ -2,30 +2,39 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System;
+using ClassDiagramTool.ViewModel.Shapes;
+using ClassDiagramTool.UndoRedo;
+using System.Collections.Generic;
 
 namespace ClassDiagramTool.Commands
 {
-    class DeleteObjectCommand : ICommand
+    class DeleteObjectCommand : IUndoRedoCommand
     {
-        private ObservableCollection<BaseViewModel> Objects;
-        private BaseViewModel Object;
+        private ObservableCollection<ShapeViewModel> Shapes;
+        private List<ShapeViewModel> ShapeList;
 
         public event EventHandler CanExecuteChanged;
 
-        public DeleteObjectCommand(ObservableCollection<BaseViewModel> objects, BaseViewModel @object)
+        public DeleteObjectCommand(ObservableCollection<ShapeViewModel> shapes, List<ShapeViewModel> shapeList)
         {
-            Objects = objects;
-            Object = @object;
+            Shapes = shapes;
+            ShapeList = shapeList;
         }
 
         public void Execute()
         {
-            Objects.Remove(Object);
+            foreach (ShapeViewModel shape in ShapeList)
+            {
+                Shapes.Remove(shape);
+            }
         }
 
         public void UnExecute()
         {
-            Objects.Add(Object);
+            foreach (ShapeViewModel shape in ShapeList)
+            {
+                Shapes.Add(shape);
+            }
         }
 
         public bool CanExecute(object parameter)

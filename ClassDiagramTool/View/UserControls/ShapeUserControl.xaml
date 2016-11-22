@@ -59,36 +59,7 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
-                    <Grid.ContextMenu>
-                        <ContextMenu>
-                            <MenuItem Command="{Binding NewItemCommand}" Header="New item">
-                                <MenuItem.Icon>
-                                    <Image Source="/ClassDiagramTool;component/Images/New.png" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Command="{Binding CutCommand}" Header="Cut">
-                                <MenuItem.Icon>
-                                    <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Command="{Binding CopyCommand}" Header="Copy">
-                                <MenuItem.Icon>
-                                    <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Command="{Binding PasteCommand}" Header="Paste">
-                                <MenuItem.Icon>
-                                    <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem Command="{Binding DeleteCommand}" Header="Delete">
-                                <MenuItem.Icon>
-                                    <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </Grid.ContextMenu>
+                 
 
                     <Label Content="{Binding Type}" 
                            HorizontalAlignment="Right"
@@ -104,7 +75,7 @@
                         </i:Interaction.Triggers>
                     </TextBox>
 
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Text}" 
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Text}" 
                                   Background="Transparent" 
                                   Height="auto" 
                                   BorderBrush="Black" 
@@ -112,7 +83,7 @@
 
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding .}">
+                                <TextBox Text="{Binding ., UpdateSourceTrigger=PropertyChanged}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="MouseDoubleClick">
                                             <cmd:EventToCommand Command="{Binding DataContext.EditTextCommand, Source={x:Reference Name=UserControl}}" PassEventArgsToCommand="True"/>
