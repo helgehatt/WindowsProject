@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class Shape : IShape
     {
         private static int number;

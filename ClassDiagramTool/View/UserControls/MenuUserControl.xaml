@@ -33,6 +33,9 @@
         <Button Command="{Binding PasteShapeCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Paste.png"/>
         </Button>
+        <Button Command="{Binding DeleteShapeCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Delete.png"/>
+        </Button>
         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Height="15" />
         <Button Command="{Binding UndoCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Undo.png"/>
