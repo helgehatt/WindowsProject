@@ -47,8 +47,6 @@ namespace ClassDiagramTool.ViewModel
         public RelayCommand<MouseButtonEventArgs> DeleteShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnDeleteShapeCommand, e => selectedObjects.Count > 0);
         public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand, e => e.Source is ShapeControl && IsAddingLine);
         public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is ShapeControl);
-        //public RelayCommand<MouseButtonEventArgs> CutShapeToolbarCommand => new RelayCommand<MouseButtonEventArgs>(OnCutShapeCommand, e => selectedObjects.Count>0);
-        //public RelayCommand<MouseButtonEventArgs> CutShapeContextMenuCommand => new RelayCommand<MouseButtonEventArgs>(OnCutShapeCommand, e => { Debug.WriteLine(e.Source); return true; });
         public RelayCommand CutShapeCommand => new RelayCommand(OnCutShapeCommand, () => selectedObjects.Count > 0);
         public RelayCommand CopyShapeCommand => new RelayCommand(OnCopyShapeCommand, () => selectedObjects.Count > 0);
         public RelayCommand<MouseButtonEventArgs> PasteShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnPasteShapeCommand, e => (Clipboard.ContainsData("ShapeList")));
