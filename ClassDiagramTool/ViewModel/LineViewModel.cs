@@ -1,9 +1,10 @@
 ﻿using ClassDiagramTool.Model;
 using ClassDiagramTool.ViewModel.Shapes;
+using GalaSoft.MvvmLight.Messaging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
-using static ClassDiagramTool.ViewModel.Shapes.ConnectionPoint;
 
 namespace ClassDiagramTool.ViewModel.Lines
 {
@@ -16,16 +17,37 @@ namespace ClassDiagramTool.ViewModel.Lines
 
         public int FromNumber => From.Number;
         public int ToNumber => To.Number;
-        
-        public string Label { get; set; }
+
+        public int FromPoint => 1;
+        public int ToPoint => 3;
+
         public ELine Type => Line.Type;
+
+        public string Label {
+            get { return Line.Label; }
+            set { Line.Label = value; }
+        }
 
         protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to)
         {
             Line = line;
-            Label = Enum.GetName(typeof(ELine), Type); // Temporary
-            To = to;
             From = from;
+            To = to;
         }
+
+        protected LineViewModel(Line line, ConnectionPoint from, ConnectionPoint to)
+        {
+            Line = line;
+            //From = from;
+            //To = to;
+        }
+
+        //protected LineViewModel(Line line, ConnectionPoint from, ConnectionPoint to)
+        //{
+        //    Line = line;
+        //    From = from.Shape;
+        //    To = to.Shape;
+        //
+        //}
     }
 }

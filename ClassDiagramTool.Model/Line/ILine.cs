@@ -7,7 +7,12 @@ namespace ClassDiagramTool.Model
     {
         int FromNumber { get; }
         int ToNumber { get; }
-        string Label { get; }
+
+        int FromPoint { get; }
+        int ToPoint { get; }
+
         ELine Type { get; }
+
+        string Label { get; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using ClassDiagramTool.Model;
@@ -9,44 +8,62 @@ using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
 using System.Diagnostics;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
     public abstract class ShapeViewModel : BaseViewModel, IShape
     {
+        #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-        
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
-       
-
-        public Shape Shape { get; }
 
         private bool selected = false;
-        public bool Selected {
-            get { return selected; }
-            set { selected = value; OnPropertyChanged(); }
-        }
         private bool dragging = false;
-        public bool Dragging
-        {
-            get { return dragging; }
-            set { dragging = value; OnPropertyChanged(); }
-        }
+        #endregion
 
-        protected ShapeViewModel(Shape shape) {
+        #region Commands
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
+        #endregion
+
+
+        protected ShapeViewModel(Shape shape)
+        {
             Shape = shape;
 
-            P = new List<ConnectionPoint>()
+            foreach (ConnectionPoint point in Points)
             {
-                new ConnectionPoint(this, EConnectionPoint.North),
-                new ConnectionPoint(this, EConnectionPoint.South),
-                new ConnectionPoint(this, EConnectionPoint.East ),
-                new ConnectionPoint(this, EConnectionPoint.West )
-            };
+                point.Shape = Shape;
+            }
         }
-        
-        public List<ConnectionPoint> P { get; set; }
+
+        public bool Selected {
+            get { return selected; }
+            set { selected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Dragging {
+            get { return dragging; }
+            set { dragging = value;
+                OnPropertyChanged();
+            }
+        }
+
+<<<<<<< HEAD
+        public Shape Shape { get; }
+=======
+        protected ShapeViewModel(Shape shape) {
+            Shape = shape;
+>>>>>>> origin/master
+
+        public List<ConnectionPoint> Points
+        {
+            get { return Shape.Points; }
+            set { Shape.Points = value; }
+        }
 
         public int Number => Shape.Number;
 
@@ -54,7 +71,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.X; }
             set { Shape.X = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(P));
+                OnPropertyChanged(nameof(Points));
             }
         }
 
@@ -62,7 +79,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.Y; }
             set { Shape.Y = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(P));
+                OnPropertyChanged(nameof(Points));
             }
         }
 
@@ -94,11 +111,10 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.Title; }
             set { Shape.Title = value; }
         }
-
-        public List<string> Text {
+        
+        public List<TextItem> Text {
             get { return Shape.Text; }
-            set { Shape.Text = value;
-                OnPropertyChanged(); }
+            set { Shape.Text = value; }
         }
     }
 }

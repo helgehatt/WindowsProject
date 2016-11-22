@@ -45,11 +45,6 @@ namespace ClassDiagramTool.Commands
             e.Handled = true;
         }
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
         public void Execute() => Execute(null);
         public void Execute(object parameter)
         {

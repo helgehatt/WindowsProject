@@ -3,41 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 
-namespace ClassDiagramTool.ViewModel.Shapes
+namespace ClassDiagramTool.Model
 {
-    public enum EConnectionPoint
-    {
-        North,
-        South,
-        East,
-        West
-    }
-
+    [Serializable]
     public class ConnectionPoint
     {
-        private ShapeViewModel Shape;
-        private EConnectionPoint Orientation;
-        private double Percentile;
+        public int Number;
+        [NonSerialized]
+        public Shape Shape;
 
-        public ConnectionPoint(ShapeViewModel shape, EConnectionPoint orientation)
-            : this(shape, orientation, 0.5)
-        {
-        }
-
-        public ConnectionPoint(ShapeViewModel shape, EConnectionPoint orientation, double percentile)
-        {
-            Shape = shape;
-            Orientation = orientation;
-            Percentile = percentile;
-        }
+        public EConnectionPoint Orientation;
+        public double Percentile = 0.5;
 
         public double X
         {
             get
             {
-                switch(Orientation)
+                switch (Orientation)
                 {
                     case EConnectionPoint.North: return Shape.X + Shape.Width * Percentile;
                     case EConnectionPoint.South: return Shape.X + Shape.Width * Percentile;
@@ -51,7 +34,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
         {
             get
             {
-                switch(Orientation)
+                switch (Orientation)
                 {
                     case EConnectionPoint.South: return Shape.Y + Shape.Height             ;
                     case EConnectionPoint.East : return Shape.Y + Shape.Height * Percentile;

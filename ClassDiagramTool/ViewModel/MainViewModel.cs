@@ -64,7 +64,7 @@ namespace ClassDiagramTool.ViewModel
             Diagram diagram = new Diagram()
             {
                 Shapes = new List<Shape>(Shapes.Select(o => o.Shape).ToList()),
-                Lines = new List<Line>(Lines.Select(o => o.Line).ToList())
+                Lines  = new List<Line> (Lines .Select(o => o.Line ).ToList())
             };
            
             Serializer.AsyncSerializeToFile(diagram, Directory.GetCurrentDirectory()+"\\testSave.XML");
@@ -72,12 +72,12 @@ namespace ClassDiagramTool.ViewModel
 
         private void OnLoadDiagramCommand(MouseButtonEventArgs e)
         {
-            
-            Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
             Shapes.Clear();
-            foreach(Shape shape in diagram.Shapes)
-            {
-               
+
+            Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
+
+            foreach (Shape shape in diagram.Shapes)
+            {               
                 ShapeViewModel Shape = null;
 
                 switch (shape.Type)
@@ -86,9 +86,46 @@ namespace ClassDiagramTool.ViewModel
                     case EShape.Enumeration : Shape = new EnumerationViewModel  (shape) ;  break;
                     case EShape.Interface   : Shape = new InterfaceViewModel    (shape) ;  break;
                 }
+
+                if (Shape == null) { Debug.WriteLine("OnLoadDiagramCommand, Shape == null, shape:" + shape); return; }
+
                 Shapes.Add(Shape);
             }
             
+            foreach (Line line in diagram.Lines)
+            {
+                LineViewModel Line = null;
+
+                ShapeViewModel From = GetShapeByNumber(line.FromNumber);
+                ShapeViewModel To   = GetShapeByNumber(line.ToNumber  );
+
+                if (From == null || To == null) { Debug.WriteLine("OnLoadDiagramCommand, From == null || To == null, FromNumber: "
+                                                                   + line.FromNumber + " ToNumber: " + line.ToNumber); return; }
+
+                switch (line.Type)
+                {
+                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, To);   break;
+                    case ELine.Association          : Line = new AssociationViewModel           (From, To);   break;
+                    case ELine.Composition          : Line = new CompositionViewModel           (From, To);   break;
+                    case ELine.Dependency           : Line = new DependencyViewModel            (From, To);   break;
+                    case ELine.DirectedAssociation  : Line = new DirectedAssociationViewModel   (From, To);   break;
+                    case ELine.Inheritance          : Line = new InheritanceViewModel           (From, To);   break;
+                    case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, To);   break;
+                }
+
+                if (Line == null) { Debug.WriteLine("OnLoadDiagramCommand, Line == null, line: " + line); return; }
+
+                Lines.Add(Line);
+            }
+        }
+
+        private ShapeViewModel GetShapeByNumber(int number)
+        {
+            foreach (ShapeViewModel shape in Shapes)
+            {
+                if (shape.Number == number) return shape;
+            }
+            return null;
         }
 
         private void OnCutShapeCommand()
@@ -146,7 +183,6 @@ namespace ClassDiagramTool.ViewModel
 
         private void OnAddShapeCommand(MouseButtonEventArgs e)
         {
-            Debug.WriteLine(e.Source is Canvas);
             Canvas MainCanvas = e.Source as Canvas;
 
             Point Position = Mouse.GetPosition(MainCanvas);
@@ -159,12 +195,10 @@ namespace ClassDiagramTool.ViewModel
                 case EShape.Enumeration : Shape = new EnumerationViewModel  () { CenterX = Position.X, CenterY = Position.Y };  break;
                 case EShape.Interface   : Shape = new InterfaceViewModel    () { CenterX = Position.X, CenterY = Position.Y };  break;
             }
-
-            if (Shape == null) Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape);
-            else
-            {
-                UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new List<ShapeViewModel> () { Shape } ));
-            }
+            
+            if (Shape == null) { Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape); return; }
+            
+            UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new List<ShapeViewModel>() { Shape }));
         }
 
         private void OnDeleteShapeCommand(MouseButtonEventArgs e)
@@ -197,12 +231,10 @@ namespace ClassDiagramTool.ViewModel
                     case ELine.Inheritance          : Line = new InheritanceViewModel           (From, Shape);   break;
                     case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, Shape);   break;
                 }
-                if (Line == null) Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine);
-                else
-                {
-                    UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
-                    From = null;
-                }
+                if (Line == null) { Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine); return; }
+
+                UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
+                From = null;
             }            
         }
         #endregion
