@@ -26,8 +26,19 @@
     </UserControl.Resources>
     
     <UserControl.Template>
-        <ControlTemplate TargetType="UserControl">
-            <ContentPresenter ContentSource="Content"/>
+        <ControlTemplate TargetType="{x:Type UserControl}">
+            <ItemsControl ItemsSource="{Binding LineParts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Line Style="{StaticResource {x:Type Line}}" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ControlTemplate>
     </UserControl.Template>
 </UserControl>

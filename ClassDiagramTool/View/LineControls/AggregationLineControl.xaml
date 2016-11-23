@@ -7,11 +7,6 @@
                    xmlns:uc="clr-namespace:ClassDiagramTool.View.UserControls"
                    mc:Ignorable="d">
 
-    <uc:LineUserControl>
-        <Grid>
-            <Line X1="{Binding From.Points[0].X}" Y1="{Binding From.Points[0].Y}" X2="{Binding From.Points[0].X}" Y2="{Binding To.Points[0].Y}"/>
-            <Line X1="{Binding From.Points[0].X}" Y1="{Binding To  .Points[0].Y}" X2="{Binding To  .Points[0].X}" Y2="{Binding To.Points[0].Y}"/>
-        </Grid>
-    </uc:LineUserControl>
-    
+    <uc:LineUserControl/>
+
 </local:LineControl>

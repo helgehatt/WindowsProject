@@ -49,7 +49,7 @@
     </i:Interaction.Triggers>
 
     <UserControl.Template>
-        <ControlTemplate TargetType="UserControl">
+        <ControlTemplate TargetType="{x:Type UserControl}">
 
             <Border>
 

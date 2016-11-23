@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using ClassDiagramTool.ViewModel.Lines;
 
 namespace ClassDiagramTool.ViewModel.Shapes
 {
@@ -27,7 +28,6 @@ namespace ClassDiagramTool.ViewModel.Shapes
         public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
         #endregion
 
-
         protected ShapeViewModel(Shape shape)
         {
             Shape = shape;
@@ -36,29 +36,12 @@ namespace ClassDiagramTool.ViewModel.Shapes
             {
                 point.Shape = Shape;
             }
+
+            Lines = new List<LineViewModel>();
         }
 
-        public bool Selected {
-            get { return selected; }
-            set { selected = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool Dragging {
-            get { return dragging; }
-            set { dragging = value;
-                OnPropertyChanged();
-            }
-        }
-        
+        #region Wrapper
         public Shape Shape { get; }
-
-        public List<ConnectionPoint> Points
-        {
-            get { return Shape.Points; }
-            set { Shape.Points = value; }
-        }
 
         public int Number => Shape.Number;
 
@@ -66,7 +49,8 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.X; }
             set { Shape.X = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(Points));
+                foreach (LineViewModel line in Lines)
+                    line.CalculateLinePart();
             }
         }
 
@@ -74,20 +58,21 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.Y; }
             set { Shape.Y = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(Points));
             }
         }
 
         public double Width {
             get { return Shape.Width; }
             set { Shape.Width = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+            }
         }
 
         public double Height {
             get { return Shape.Height; }
             set { Shape.Height = value;
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+            }
         }
 
         public double CenterX {
@@ -110,6 +95,31 @@ namespace ClassDiagramTool.ViewModel.Shapes
         public List<TextItem> Text {
             get { return Shape.Text; }
             set { Shape.Text = value; }
+        }
+
+        public List<ConnectionPoint> Points
+        {
+            get { return Shape.Points; }
+            set { Shape.Points = value; }
+        }
+        #endregion
+
+        public List<LineViewModel> Lines { get; set; }
+
+        public bool Selected
+        {
+            get { return selected; }
+            set { selected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Dragging
+        {
+            get { return dragging; }
+            set { dragging = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

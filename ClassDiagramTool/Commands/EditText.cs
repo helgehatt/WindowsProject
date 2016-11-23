@@ -45,11 +45,11 @@ namespace ClassDiagramTool.Commands
             e.Handled = true;
         }
 
-        public void Execute() => Execute(null);
-        public void Execute(object parameter)
+        public void Execute()
         {
             EditedTextBox.Text = NewText;
         }
+
 
         public void UnExecute()
         {
