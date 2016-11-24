@@ -8,11 +8,6 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <UserControl.Resources>
-        <Style TargetType="{x:Type Line}">
-            <Setter Property="Stroke" Value="Black"/>
-            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        </Style>
-
         <Style TargetType="{x:Type Border}">
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -27,18 +22,7 @@
     
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
-            <ItemsControl ItemsSource="{Binding LineParts}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <Grid/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Line Style="{StaticResource {x:Type Line}}" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <ContentPresenter ContentSource="Content"/>
         </ControlTemplate>
     </UserControl.Template>
 </UserControl>

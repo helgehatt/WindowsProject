@@ -9,8 +9,9 @@
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            
+
             <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="View\Resources\StyleDictionary.xaml"/>
                 <ResourceDictionary Source="View\Resources\ExpanderTemplates.xaml"/>
                 <ResourceDictionary Source="View\Resources\ColorDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>

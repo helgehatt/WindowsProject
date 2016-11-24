@@ -11,6 +11,8 @@ namespace ClassDiagramTool.ViewModel.Lines
 {
     public abstract class LineViewModel : BaseViewModel, ILine
     {
+        private const int OFFSET = 20;
+
         public Line Line { get; }
 
         public List<LinePart> LineParts { get; set; }
@@ -50,36 +52,40 @@ namespace ClassDiagramTool.ViewModel.Lines
         {
             LineParts = new List<LinePart>();
 
-            CalculateLinePart(FP.Orientation, FP.X, FP.Y, TP.Orientation, TP.X, TP.Y);
+            CalculateLinePart(FP.Orientation, FP.X, FP.Y, TP.Orientation, TP.X, TP.Y, true);
 
             OnPropertyChanged(nameof(LineParts));
         }
 
-        private void CalculateLinePart(EConnectionPoint from, double X1, double Y1, EConnectionPoint to, double X2, double Y2)
+        private void CalculateLinePart(EConnectionPoint from, double X1, double Y1, EConnectionPoint to, double X2, double Y2, bool first)
         {
             double nextX = 0, nextY = 0;
 
-                 if (X1 == X2 && Y1 == Y2) return;
-            else if (X1 == X2 || Y1 == Y2) { nextX = X2; nextY = Y2; }
+                 if  (X1 == X2 && Y1 == Y2) return;
+            else if ((X1 == X2 || Y1 == Y2) && !first) { nextX = X2; nextY = Y2; }
             else
             { 
                 switch (from)
                 {
-                    case EConnectionPoint.North:    nextX = X1;
-                        if (Y1 < Y2)                nextY = Y1 - 10;
-                        else                        nextY = Y2;
+                    case EConnectionPoint.North:                nextX = X1;
+                             if (EConnectionPoint.North == to)  nextY = Math.Min(Y1, Y2) - OFFSET;
+                        else if (EConnectionPoint.South == to)  nextY = (Y1 + Y2) / 2;
+                        else                                    nextY = Y2;
                         break;
-                    case EConnectionPoint.South:    nextX = X1;
-                        if (Y1 < Y2)                nextY = Y2;
-                        else                        nextY = Y1 + 10;
+                    case EConnectionPoint.South:                nextX = X1;
+                             if (EConnectionPoint.South == to)  nextY = Math.Max(Y1, Y2) + OFFSET;
+                        else if (EConnectionPoint.North == to)  nextY = (Y1 + Y2) / 2;
+                        else                                    nextY = Y2;
                         break;
-                    case EConnectionPoint.East:     nextY = Y1;
-                        if (X1 < X2)                nextX = X2;
-                        else                        nextX = X1 + 10;
+                    case EConnectionPoint.East:                 nextY = Y1;
+                             if (EConnectionPoint.East == to)   nextX = Math.Max(X1, X2) + OFFSET;
+                        else if (EConnectionPoint.West == to)   nextX = (X1 + X2) / 2;
+                        else                                    nextX = X2;
                         break;
-                    case EConnectionPoint.West:     nextY = Y1;
-                        if (X1 < X2)                nextX = X1 - 10;
-                        else                        nextX = X2;
+                    case EConnectionPoint.West:                 nextY = Y1;
+                             if (EConnectionPoint.West == to)   nextX = Math.Min(X1, X2) - OFFSET;
+                        else if (EConnectionPoint.East == to)   nextX = (X1 + X2) / 2;
+                        else                                    nextX = X2;
                         break;
                 }
 
@@ -89,22 +95,18 @@ namespace ClassDiagramTool.ViewModel.Lines
                     case EConnectionPoint.South:
                         if (X1 < X2) from = EConnectionPoint.East;
                         else         from = EConnectionPoint.West;
-                             if      (to == EConnectionPoint.North) nextY -= 10;
-                        else if      (to == EConnectionPoint.South) nextY += 10;
                         break;
                     case EConnectionPoint.East :
                     case EConnectionPoint.West :
                         if (Y1 < Y2) from = EConnectionPoint.South;
                         else         from = EConnectionPoint.North;
-                             if      (to == EConnectionPoint.West) nextX -= 10;
-                        else if      (to == EConnectionPoint.East) nextX += 10;
                         break;
                 }
             }
 
             LineParts.Add(new LinePart() { X1 = X1, Y1 = Y1, X2 = nextX, Y2 = nextY });
 
-            CalculateLinePart(from, nextX, nextY, to, X2, Y2);
+            CalculateLinePart(from, nextX, nextY, to, X2, Y2, false);
         }
     }
 

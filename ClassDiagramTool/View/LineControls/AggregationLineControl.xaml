@@ -7,6 +7,28 @@
                    xmlns:uc="clr-namespace:ClassDiagramTool.View.UserControls"
                    mc:Ignorable="d">
 
-    <uc:LineUserControl/>
+    <local:LineControl.Resources>
+        <Style TargetType="{x:Type Line}" BasedOn="{StaticResource {x:Type Line}}">
+            <Setter Property="StrokeDashArray" Value="4 4"/>
+        </Style>
+    </local:LineControl.Resources>
+
+    <uc:LineUserControl>
+        <Grid>
+            <ItemsControl ItemsSource="{Binding LineParts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Line Style="{StaticResource {x:Type Line}}" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        
+    </uc:LineUserControl>
 
 </local:LineControl>
