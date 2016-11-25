@@ -7,12 +7,6 @@
                    xmlns:uc="clr-namespace:ClassDiagramTool.View.UserControls"
                    mc:Ignorable="d">
 
-    <local:LineControl.Resources>
-        <Style TargetType="{x:Type Line}" BasedOn="{StaticResource {x:Type Line}}">
-            <Setter Property="StrokeDashArray" Value="4 4"/>
-        </Style>
-    </local:LineControl.Resources>
-
     <uc:LineUserControl>
         <Grid>
             <ItemsControl ItemsSource="{Binding LineParts}">
@@ -27,8 +21,20 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-        </Grid>
-        
+            <Path Fill="DimGray">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="{Binding StartLineCap[0]}" IsClosed="True" IsFilled="True">
+                                <LineSegment Point="{Binding StartLineCap[1]}"/>
+                                <LineSegment Point="{Binding StartLineCap[2]}"/>
+                                <LineSegment Point="{Binding StartLineCap[3]}"/>
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
+        </Grid>        
     </uc:LineUserControl>
 
 </local:LineControl>

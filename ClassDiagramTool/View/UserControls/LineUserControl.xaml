@@ -6,23 +6,11 @@
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    
-    <UserControl.Resources>
-        <Style TargetType="{x:Type Border}">
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
-        </Style>
 
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="LightGray"/>
-            <Setter Property="Background" Value="DimGray"/>
-            <Setter Property="FontSize" Value="15"/>
-        </Style>
-    </UserControl.Resources>
-    
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
             <ContentPresenter ContentSource="Content"/>
         </ControlTemplate>
     </UserControl.Template>
+    
 </UserControl>

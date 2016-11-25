@@ -5,6 +5,12 @@
     <Style TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="Black"/>
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="Black"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
     
 </ResourceDictionary>
