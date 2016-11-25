@@ -9,10 +9,5 @@ namespace ClassDiagramTool.ViewModel.Lines
             : base(new Line() { Type = ELine.Aggregation }, from, to)
         {
         }
-
-        public AggregationViewModel(ConnectionPoint from, ConnectionPoint to)
-            : base(new Line() { Type = ELine.Aggregation }, from, to)
-        {
-        }
     }
 }

@@ -22,14 +22,15 @@
         </Style>
 
         <Style TargetType="{x:Type Border}">
-            <!-- Properties for when UserControl selected or dragged -->
+            <Setter Property="Margin" Value="-1"/> <!-- Lines were one off -->
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="CornerRadius" Value="5"/>
-            <Setter Property="Background" Value="LightGray"/>
             <Setter Property="Width" Value="{Binding Width}"/>
             <Setter Property="Height" Value="{Binding Height}"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Background" Value="LightGray"/>
             <Setter Property="Cursor" Value="Arrow"/>
+            <!-- Properties for when UserControl selected or dragged -->
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Path=Selected}" Value="True">
                     <Setter Property="BorderThickness" Value="3"/>
@@ -49,7 +50,7 @@
     </i:Interaction.Triggers>
 
     <UserControl.Template>
-        <ControlTemplate TargetType="UserControl">
+        <ControlTemplate TargetType="{x:Type UserControl}">
 
             <Border>
 
@@ -67,7 +68,7 @@
                            Margin="0,-5,0,0" 
                            FontSize="8"/>
 
-                    <TextBox Text="{Binding Title}">
+                    <TextBox Text="{Binding Title}" BorderThickness="0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseDoubleClick">
                                 <cmd:EventToCommand Command="{Binding EditTextCommand}" PassEventArgsToCommand="True"/>

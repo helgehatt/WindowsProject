@@ -13,8 +13,6 @@ namespace ClassDiagramTool.Commands
         private ObservableCollection<ShapeViewModel> Shapes;
         private List<ShapeViewModel> ShapeList;
 
-        public event EventHandler CanExecuteChanged;
-
         public DeleteObjectCommand(ObservableCollection<ShapeViewModel> shapes, List<ShapeViewModel> shapeList)
         {
             Shapes = shapes;
@@ -35,16 +33,6 @@ namespace ClassDiagramTool.Commands
             {
                 Shapes.Add(shape);
             }
-        }
-
-        public bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Execute(object parameter)
-        {
-            throw new NotImplementedException();
         }
     }
 }

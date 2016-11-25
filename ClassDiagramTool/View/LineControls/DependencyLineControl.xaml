@@ -7,11 +7,38 @@
                    xmlns:uc="clr-namespace:ClassDiagramTool.View.UserControls"
                    mc:Ignorable="d">
 
-    <uc:LineUserControl>
+    <local:LineControl.Resources>
+        <Style TargetType="{x:Type Line}" BasedOn="{StaticResource {x:Type Line}}">
+            <Setter Property="StrokeDashArray" Value="4 4"/>
+        </Style>
+    </local:LineControl.Resources>
 
+    <uc:LineUserControl>
         <Grid>
-            <Line X1="{Binding From.P[1].X}" Y1="{Binding From.P[1].Y}" X2="{Binding From.P[1].X}" Y2="{Binding To.P[3].Y}"/>
-            <Line X1="{Binding From.P[1].X}" Y1="{Binding To  .P[3].Y}" X2="{Binding To  .P[3].X}" Y2="{Binding To.P[3].Y}"/>
+            <ItemsControl ItemsSource="{Binding LineParts}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Line Style="{StaticResource {x:Type Line}}" X1="{Binding X1}" Y1="{Binding Y1}" X2="{Binding X2}" Y2="{Binding Y2}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Path>
+                <Path.Data>
+                    <PathGeometry>
+                        <PathGeometry.Figures>
+                            <PathFigure StartPoint="{Binding EndLineCap[0]}">
+                                <LineSegment Point="{Binding EndLineCap[1]}"/>
+                                <LineSegment Point="{Binding EndLineCap[2]}"/>
+                            </PathFigure>
+                        </PathGeometry.Figures>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
         </Grid>
     </uc:LineUserControl>
     

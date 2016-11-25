@@ -42,13 +42,12 @@ namespace ClassDiagramTool.Commands
             MovedElement.MouseLeftButtonUp += MouseUp;
         }
 
-        public void Execute() => Execute(null);
-        public void Execute(object parameter)
+        public void Execute()
         {
-            // Moves the element.
             ViewModel.X = FinalPosition.X;
             ViewModel.Y = FinalPosition.Y;
         }
+
 
         public void UnExecute()
         {
