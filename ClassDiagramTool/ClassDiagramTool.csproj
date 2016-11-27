@@ -78,23 +78,25 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\AddLineCommand.cs" />
-    <Compile Include="Commands\AddShapeCommand.cs" />
-    <Compile Include="Commands\DeleteObjectCommand.cs" />
-    <Compile Include="Commands\EditText.cs" />
-    <Compile Include="Commands\MoveShape.cs" />
-    <Compile Include="Commands\SelectObjectCommand.cs" />
-    <Compile Include="Commands\Serializer.cs" />
-    <Compile Include="ViewModel\SelectedObjectsCollection.cs" />
-    <Compile Include="ViewModel\EnumToBooleanConverter.cs" />
-    <Compile Include="ViewModel\Lines\CompositionViewModel.cs" />
-    <Compile Include="ViewModel\Lines\DependencyViewModel.cs" />
-    <Compile Include="ViewModel\Lines\DirectedAssociationViewModel.cs" />
-    <Compile Include="ViewModel\Lines\InheritanceViewModel.cs" />
-    <Compile Include="ViewModel\Lines\InterfaceRealizationViewModel.cs" />
-    <Compile Include="ViewModel\Lines\AggregationViewModel.cs" />
-    <Compile Include="ViewModel\Shapes\EnumerationViewModel.cs" />
-    <Compile Include="ViewModel\Shapes\InterfaceViewModel.cs" />
+    <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\AddShapeCommand.cs" />
+    <Compile Include="Commands\ClipboardCommands.cs" />
+    <Compile Include="Commands\UndoRedoCommands\DeleteShapeCommand.cs" />
+    <Compile Include="Commands\DiagramCommands.cs" />
+    <Compile Include="Commands\UndoRedoCommands\EditTextCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\MoveShapeCommand.cs" />
+    <Compile Include="Commands\ObjectCommands.cs" />
+    <Compile Include="Tools\SerializationController.cs" />
+    <Compile Include="Tools\SelectedObjectsController.cs" />
+    <Compile Include="Tools\EnumToBooleanConverter.cs" />
+    <Compile Include="ViewModel\LineViewModel\CompositionViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel\DependencyViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel\DirectedAssociationViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel\InheritanceViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel\InterfaceRealizationViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel\AggregationViewModel.cs" />
+    <Compile Include="ViewModel\ShapeViewModel\EnumerationViewModel.cs" />
+    <Compile Include="ViewModel\ShapeViewModel\InterfaceViewModel.cs" />
     <Compile Include="View\Adorners\ConnectionPointAdorner.cs" />
     <Compile Include="View\Adorners\ResizeAdorner.cs" />
     <Compile Include="View\Adorners\SelectionAdorner.cs" />
@@ -134,14 +136,14 @@
     <Compile Include="View\ShapeControls\ClassShapeControl.xaml.cs">
       <DependentUpon>ClassShapeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UndoRedo\IUndoRedoCommand.cs" />
-    <Compile Include="UndoRedo\UndoRedoController.cs" />
+    <Compile Include="Commands\UndoRedoCommands\IUndoRedoCommand.cs" />
+    <Compile Include="Tools\UndoRedoController.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel.cs" />
-    <Compile Include="ViewModel\Lines\AssociationViewModel.cs" />
+    <Compile Include="ViewModel\LineViewModel\AssociationViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel.cs" />
-    <Compile Include="ViewModel\Shapes\ClassViewModel.cs" />
+    <Compile Include="ViewModel\ShapeViewModel\ClassViewModel.cs" />
     <Compile Include="View\LineControls\AssociationLineControl.xaml.cs">
       <DependentUpon>AssociationLineControl.xaml</DependentUpon>
     </Compile>
@@ -166,10 +168,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Resources\AdornerTemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Resources\ColorDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

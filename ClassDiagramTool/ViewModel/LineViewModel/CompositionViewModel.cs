@@ -1,7 +1,7 @@
 ﻿using ClassDiagramTool.Model;
-using ClassDiagramTool.ViewModel.Shapes;
+using ClassDiagramTool.ViewModel;
 
-namespace ClassDiagramTool.ViewModel.Lines
+namespace ClassDiagramTool.ViewModel
 {
     public class CompositionViewModel : LineViewModel
     {

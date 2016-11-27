@@ -95,22 +95,6 @@
                         </ItemsControl.ItemTemplate>
 
                     </ItemsControl>
-
-                    <!--
-                    <ItemsControl ItemsSource="{Binding P}">
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                                <Setter Property="Canvas.Top"  Value="{Binding Y}"/>
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Rectangle Fill="Black" Width="6" Height="6" Margin="-3,-3,0,0"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                    -->
                 </Grid>
             </Border>
         </ControlTemplate>

@@ -1,7 +1,7 @@
 ﻿using System;
 using ClassDiagramTool.Model;
 
-namespace ClassDiagramTool.ViewModel.Shapes
+namespace ClassDiagramTool.ViewModel
 {
     public class ClassViewModel : ShapeViewModel
     {       

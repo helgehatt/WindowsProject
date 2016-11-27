@@ -6,13 +6,13 @@ using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace ClassDiagramTool.Commands
+namespace ClassDiagramTool.Tools
 {
-    public class Serializer
+    public class SerializationController
     {
-        public static Serializer Instance { get; } = new Serializer();
+        public static SerializationController Instance { get; } = new SerializationController();
 
-        private Serializer() { }
+        private SerializationController() { }
 
         public async void AsyncSerializeToFile(Diagram diagram, string path)
         {

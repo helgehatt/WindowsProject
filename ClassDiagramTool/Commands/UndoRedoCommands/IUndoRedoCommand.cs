@@ -1,4 +1,6 @@
-﻿namespace ClassDiagramTool.UndoRedo
+﻿
+
+namespace ClassDiagramTool.Commands
 {
     public interface IUndoRedoCommand
     {

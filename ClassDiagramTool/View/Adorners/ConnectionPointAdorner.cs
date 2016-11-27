@@ -1,5 +1,5 @@
 ﻿using ClassDiagramTool.Model;
-using ClassDiagramTool.ViewModel.Shapes;
+using ClassDiagramTool.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

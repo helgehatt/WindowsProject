@@ -1,5 +1,5 @@
 ﻿using ClassDiagramTool.Model;
-using ClassDiagramTool.ViewModel.Shapes;
+using ClassDiagramTool.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 
-namespace ClassDiagramTool.ViewModel.Lines
+namespace ClassDiagramTool.ViewModel
 {
     public abstract class LineViewModel : BaseViewModel, ILine
     {
@@ -44,8 +44,8 @@ namespace ClassDiagramTool.ViewModel.Lines
 
         protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to)
         {
-            from.Lines.Add(this);
-            to  .Lines.Add(this);
+            from.LineViewModels.Add(this);
+            to  .LineViewModels.Add(this);
             
             Line = line;
             From = from;

@@ -1,22 +1,19 @@
-﻿using ClassDiagramTool.UndoRedo;
-using ClassDiagramTool.ViewModel.Shapes;
-using GalaSoft.MvvmLight.Command;
-using System.Diagnostics;
+﻿using ClassDiagramTool.Tools;
+using ClassDiagramTool.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace ClassDiagramTool.Commands
 {
-    class MoveShape : IUndoRedoCommand
+    class MoveShapeCommand : IUndoRedoCommand
     {
         private ShapeViewModel ViewModel;
         private Point OriginalPosition;
         private Point FinalPosition;
         private Point CursorOffset;
 
-        public MoveShape(ShapeViewModel viewModel, MouseButtonEventArgs e)
+        public MoveShapeCommand(ShapeViewModel viewModel, MouseButtonEventArgs e)
         {
             ViewModel = viewModel;
             UserControl MovedElement = (UserControl) e.Source;
@@ -74,7 +71,7 @@ namespace ClassDiagramTool.Commands
             //((UserControl)e.Source).Cursor = Cursors.Arrow;
             ViewModel.Dragging = false;
             if (!OriginalPosition.Equals(FinalPosition))
-                UndoRedoController.Instance.AddAndExecute(this);
+                UndoRedoController.Instance.Execute(this);
         }
 
         private void UpdateMoveShape(MouseEventArgs e)

@@ -2,6 +2,16 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:ClassDiagramTool.View.Resources">
 
+    <!-- GENERAL -->    
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="LightGray"/>
+    </Style>
+
+    <Style TargetType="{x:Type UserControl}">
+        <Setter Property="Background" Value="DimGray"/>
+    </Style>
+    
+    <!-- LINES -->
     <Style TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="Black"/>
         <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
@@ -13,4 +23,5 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
     
+
 </ResourceDictionary>
