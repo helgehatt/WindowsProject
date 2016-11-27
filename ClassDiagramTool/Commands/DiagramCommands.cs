@@ -26,7 +26,13 @@ namespace ClassDiagramTool.Commands
             MainViewModel = mainViewModel;
         }
 
-        public void Save(MouseButtonEventArgs e)
+        public void New()
+        {
+            ShapeViewModels.Clear();
+            LineViewModels.Clear();
+        }
+
+        public void Save()
         {
             Diagram Diagram = new Diagram()
             {
@@ -37,9 +43,9 @@ namespace ClassDiagramTool.Commands
             Serializer.AsyncSerializeToFile(Diagram, Directory.GetCurrentDirectory() + "\\testSave.XML");
         }
 
-        public void Load(MouseButtonEventArgs e)
+        public void Load()
         {
-            ShapeViewModels.Clear();
+            New();
 
             Diagram Diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
 
@@ -54,7 +60,7 @@ namespace ClassDiagramTool.Commands
                     case EShape.Interface   : ShapeViewModel = new InterfaceViewModel    (Shape) ;  break;
                 }
 
-                if (ShapeViewModel == null) { Debug.WriteLine("Load, Shape == null, shape:" + Shape); return; }
+                if (ShapeViewModel == null) { Debug.WriteLine("Load, ShapeViewModel == null"); continue; }
 
                 ShapeViewModels.Add(ShapeViewModel);
             }
@@ -63,24 +69,23 @@ namespace ClassDiagramTool.Commands
             {
                 LineViewModel LineViewModel = null;
 
-                ShapeViewModel From = GetShapeViewModelByNumber(Line.FromNumber);
-                ShapeViewModel To   = GetShapeViewModelByNumber(Line.ToNumber  );
+                ShapeViewModel FromShapeViewModel = GetShapeViewModelByNumber(Line.FromNumber);
+                ShapeViewModel ToShapeViewModel   = GetShapeViewModelByNumber(Line.ToNumber  );
 
-                if (From == null || To == null) { Debug.WriteLine("Load, From == null || To == null, FromNumber: "
-                                                        + Line.FromNumber + " ToNumber: " + Line.ToNumber); return; }
+                if (FromShapeViewModel == null || ToShapeViewModel == null) { Debug.WriteLine("Load, From == null || To == null"); continue; }
                 
                 switch (Line.Type)
                 {
-                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, To);   break;
-                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, To);   break;
-                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, To);   break;
-                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, To);   break;
-                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, To);   break;
-                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, To);   break;
-                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, To);   break;
+                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.Association          : LineViewModel = new AssociationViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (FromShapeViewModel, ToShapeViewModel);   break;
                 }
 
-                if (LineViewModel == null) { Debug.WriteLine("Load, Line == null, line: " + Line); return; }
+                if (LineViewModel == null) { Debug.WriteLine("Load, LineViewModel == null"); continue; }
 
                 LineViewModels.Add(LineViewModel);
             }

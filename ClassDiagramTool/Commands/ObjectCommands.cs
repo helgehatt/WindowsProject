@@ -1,5 +1,6 @@
 ﻿using ClassDiagramTool.Model;
 using ClassDiagramTool.Tools;
+using ClassDiagramTool.View.ShapeControls;
 using ClassDiagramTool.ViewModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,7 @@ namespace ClassDiagramTool.Commands
         private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
         private ShapeViewModel From;
+        private int FromPoint;
 
         private EShape SelectedShape => MainViewModel.SelectedShape;
         private ELine  SelectedLine  => MainViewModel.SelectedLine;
@@ -33,28 +35,27 @@ namespace ClassDiagramTool.Commands
             MainViewModel = mainViewModel;
         }
 
-
-        public void AddShape(MouseButtonEventArgs e)
+        public void AddShapes(MouseButtonEventArgs e)
         {
-            Canvas MainCanvas = e.Source as Canvas;
+            Canvas Canvas = e.Source as Canvas;
 
-            Point Position = Mouse.GetPosition(MainCanvas);
+            Point MousePos = Mouse.GetPosition(Canvas);
 
             ShapeViewModel ShapeViewModel = null;
 
             switch (SelectedShape)
             {
-                case EShape.Class       : ShapeViewModel = new ClassViewModel        () { CenterX = Position.X, CenterY = Position.Y };  break;
-                case EShape.Enumeration : ShapeViewModel = new EnumerationViewModel  () { CenterX = Position.X, CenterY = Position.Y };  break;
-                case EShape.Interface   : ShapeViewModel = new InterfaceViewModel    () { CenterX = Position.X, CenterY = Position.Y };  break;
+                case EShape.Class       : ShapeViewModel = new ClassViewModel        () { CenterX = MousePos.X, CenterY = MousePos.Y };  break;
+                case EShape.Enumeration : ShapeViewModel = new EnumerationViewModel  () { CenterX = MousePos.X, CenterY = MousePos.Y };  break;
+                case EShape.Interface   : ShapeViewModel = new InterfaceViewModel    () { CenterX = MousePos.X, CenterY = MousePos.Y };  break;
             }
 
-            if (ShapeViewModel == null) { Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape); return; }
+            if (ShapeViewModel == null) { Debug.WriteLine("OnAddShapeCommand, ShapeViewModel == null"); return; }
 
             UndoRedoController.Execute(new AddShapeCommand(ShapeViewModels, new List<ShapeViewModel>() { ShapeViewModel }));
         }
 
-        public void DeleteShape(MouseButtonEventArgs e)
+        public void DeleteShapes()
         {
             List<ShapeViewModel> SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
             UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
@@ -64,40 +65,46 @@ namespace ClassDiagramTool.Commands
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
-                if (SelectedObjectsController.IsSelected(e.Source as UserControl))
-                    SelectedObjectsController.Deselect(e.Source as UserControl);
+                if (SelectedObjectsController.IsSelected(e.Source as ShapeControl))
+                    SelectedObjectsController.Deselect(e.Source as ShapeControl);
                 else
-                    SelectedObjectsController.AddSelect(e.Source as UserControl);
+                    SelectedObjectsController.AddSelect(e.Source as ShapeControl);
             }
             else
-                SelectedObjectsController.Select(e.Source as UserControl);
+            {
+                SelectedObjectsController.Select(e.Source as ShapeControl);
+            }
         }
 
-        public void AddLine(MouseButtonEventArgs e)
+        public void AddLine(ShapeViewModel shapeViewModel, int shapePoint)
         {
-            UserControl UserControl = e.Source as UserControl;
-            if (UserControl == null) return;
+            //ShapeControl ShapeControl = e.Source as ShapeControl;
+            //
+            //if (ShapeControl == null) return;
+            //
+            //ShapeViewModel shapeViewModel = ShapeControl.DataContext as ShapeViewModel;
 
-            ShapeViewModel ShapeViewModel = UserControl.DataContext as ShapeViewModel;
-
-            if (ShapeViewModel == null) Debug.WriteLine("OnAddLineCommand, DataContext=" + (e.Source as UserControl).DataContext);
-            else if (From == null) From = ShapeViewModel;
-            else if (From != ShapeViewModel)
+            if (shapeViewModel == null) Debug.WriteLine("OnAddLineCommand, ShapeViewModel == null");
+            else if (From == null) { From = shapeViewModel; FromPoint = shapePoint; }
+            else if (From != shapeViewModel)
             {
                 LineViewModel LineViewModel = null;
+
                 switch (SelectedLine)
                 {
-                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, ShapeViewModel);   break;
-                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, ShapeViewModel);   break;
-                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, ShapeViewModel);   break;
-                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, ShapeViewModel);   break;
-                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, ShapeViewModel);   break;
-                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, ShapeViewModel);   break;
-                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, ShapeViewModel);   break;
+                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, FromPoint, shapeViewModel, shapePoint);   break;
                 }
-                if (LineViewModel == null) { Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine); return; }
+
+                if (LineViewModel == null) { Debug.WriteLine("OnAddLineCommand, LineViewModel == null"); return; }
 
                 UndoRedoController.Execute(new AddLineCommand(LineViewModels, LineViewModel));
+
                 From = null;
             }
         }

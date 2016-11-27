@@ -38,18 +38,22 @@ namespace ClassDiagramTool.ViewModel
         public RelayCommand UndoCommand => UndoRedoController.UndoCommand;
         public RelayCommand RedoCommand => UndoRedoController.RedoCommand;
         
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand     => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddShape   , e => e.Source is Canvas);
-        public RelayCommand<MouseButtonEventArgs> AddLineCommand      => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddLine    , e => e.Source is ShapeControl && IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.SelectShape, e => e.Source is ShapeControl);
-        public RelayCommand<MouseButtonEventArgs> DeleteShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.DeleteShape, e => SelectedObjectsController.Count > 0);
+        /* Object Commands */
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand     => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddShapes   , e => e.Source is Canvas);
+        //public RelayCommand<MouseButtonEventArgs> AddLineCommand      => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddLine     , e => e.Source is ShapeControl && IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.SelectShape , e => e.Source is ShapeControl);
+        public RelayCommand                       DeleteShapeCommand  => new RelayCommand                      (ObjectCommands.DeleteShapes,( )=> SelectedObjectsController.Count > 0);
         public RelayCommand                       IsAddingLineCommand => new RelayCommand                      (ObjectCommands.AddingLine );
 
-        public RelayCommand<MouseButtonEventArgs> SaveDiagramCommand => new RelayCommand<MouseButtonEventArgs>(DiagramCommands.Save);
-        public RelayCommand<MouseButtonEventArgs> LoadDiagramCommand => new RelayCommand<MouseButtonEventArgs>(DiagramCommands.Load);
+        /* Diagram Commands */
+        public RelayCommand NewDiagramCommand  => new RelayCommand(DiagramCommands.New );
+        public RelayCommand SaveDiagramCommand => new RelayCommand(DiagramCommands.Save);
+        public RelayCommand LoadDiagramCommand => new RelayCommand(DiagramCommands.Load);
 
-        public RelayCommand CutShapeCommand   => new RelayCommand(ClipboardCommands.Cut  , () => SelectedObjectsController.Count > 0);
-        public RelayCommand CopyShapeCommand  => new RelayCommand(ClipboardCommands.Copy , () => SelectedObjectsController.Count > 0);
-        public RelayCommand PasteShapeCommand => new RelayCommand(ClipboardCommands.Paste, () => Clipboard.ContainsData("Shapes"));
+        /* Clipboard Commands */
+        public RelayCommand CutShapeCommand    => new RelayCommand(ClipboardCommands.Cut  , () => SelectedObjectsController.Count > 0);
+        public RelayCommand CopyShapeCommand   => new RelayCommand(ClipboardCommands.Copy , () => SelectedObjectsController.Count > 0);
+        public RelayCommand PasteShapeCommand  => new RelayCommand(ClipboardCommands.Paste, () => Clipboard.ContainsData("Shapes"));
         #endregion
 
         public MainViewModel() : base()
@@ -58,8 +62,8 @@ namespace ClassDiagramTool.ViewModel
             LineViewModels  = new ObservableCollection<LineViewModel>();
 
             ClipboardCommands = new ClipboardCommands(this);
-            DiagramCommands = new DiagramCommands(this);
-            ObjectCommands = new ObjectCommands(this);
+            DiagramCommands   = new DiagramCommands(this);
+            ObjectCommands    = new ObjectCommands(this);
         }
     }
 

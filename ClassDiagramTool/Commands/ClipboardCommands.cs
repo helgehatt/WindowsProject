@@ -3,6 +3,7 @@ using ClassDiagramTool.Tools;
 using ClassDiagramTool.ViewModel;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,32 +28,19 @@ namespace ClassDiagramTool.Commands
 
         public void Cut()
         {
-            List<UserControl> SelectedShapes = SelectedObjectsController.SelectionList;
-                   
-            List<Shape> Shapes = new List<Shape>();
+            List<ShapeViewModel> SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
 
-            foreach (UserControl SelectedShape in SelectedShapes)
-            {
-                Shapes.Add((SelectedShape.DataContext as ShapeViewModel).Shape);                
-            }
+            List<Shape> Shapes = SelectedShapeViewModels.Select(o => o.Shape).ToList();
 
             Clipboard.Clear();
             Clipboard.SetData("Shapes", Shapes);
-            List<ShapeViewModel> SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
-            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
 
+            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
         }
 
         public void Copy()
         {
-            List<UserControl> SelectedShapes = SelectedObjectsController.SelectionList;
-
-            List<Shape> Shapes = new List<Shape>();
-
-            foreach (UserControl SelectedShape in SelectedShapes)
-            {
-                Shapes.Add((SelectedShape.DataContext as ShapeViewModel).Shape); 
-            }
+            List<Shape> Shapes = SelectedObjectsController.SelectionList.Select(o => (o.DataContext as ShapeViewModel).Shape).ToList();
 
             Clipboard.Clear();
             Clipboard.SetData("Shapes", Shapes);
@@ -72,6 +60,9 @@ namespace ClassDiagramTool.Commands
                     case EShape.Enumeration:    ShapeViewModel = new EnumerationViewModel(Shape); break;
                     case EShape.Interface:      ShapeViewModel = new InterfaceViewModel  (Shape); break;
                 }
+
+                if (ShapeViewModel == null) { Debug.WriteLine("Paste, ShapeViewModel == null"); continue; }
+
                 ShapeViewModels.Add(ShapeViewModel);
             }
         }

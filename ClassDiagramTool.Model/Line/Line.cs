@@ -1,8 +1,8 @@
-﻿
-
+﻿using System;
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class Line : ILine
     {
         public int FromNumber { get; set; }

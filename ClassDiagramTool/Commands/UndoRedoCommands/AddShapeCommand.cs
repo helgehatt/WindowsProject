@@ -17,7 +17,7 @@ namespace ClassDiagramTool.Commands
 
         public void Execute()
         {
-            foreach(ShapeViewModel ShapeViewModel in SelectedShapeViewModels)
+            foreach (ShapeViewModel ShapeViewModel in SelectedShapeViewModels)
             {
                 ShapeViewModels.Add(ShapeViewModel);
             }

@@ -12,26 +12,26 @@ using System.Windows.Media;
 
 namespace ClassDiagramTool.View.Adorners
 {
-    class ConnectionPointAdorner : Adorner
+    class AddLineAdorner : Adorner
     {
         VisualCollection VisualChildren;
         protected override int VisualChildrenCount { get { return VisualChildren.Count; } }
         protected override Visual GetVisualChild(int index) { return VisualChildren[index]; }
 
-        List<Thumb> ThumbList = new List<Thumb>();
+        List<Button> ButtonList = new List<Button>();
 
-        public ConnectionPointAdorner(UIElement adornedElement)
+        public AddLineAdorner(UIElement adornedElement)
             : base(adornedElement)
         {
             ShapeViewModel Shape = (AdornedElement as UserControl).DataContext as ShapeViewModel;
 
-            Style CustomThumbStyle = FindResource("ThumbStyle") as Style;
+            Style ConnectionPointStyle = FindResource("ConnectionPointStyle") as Style;
 
             VisualChildren = new VisualCollection(this);
 
             foreach (ConnectionPoint Point in Shape.Points)
             {
-                Thumb Thumb = new Thumb() { Style = CustomThumbStyle };
+                var Button = new Button() { Style = ConnectionPointStyle };
 
                 double start = 0;
 
@@ -53,32 +53,25 @@ namespace ClassDiagramTool.View.Adorners
                             Point.Percentile = Math.Min(Math.Max(start + e.VerticalChange / Shape.Height, 0.0), 1.0);
                             break;
                     }
-                    //Debug.WriteLine(Point.Percentile);
                 });
-                //NewThumb.MouseEnter += new MouseEventHandler((sender, e) => {
-                //    NewThumb.Resources["Hover"] = 1.0;
-                //});
-                //NewThumb.MouseLeave += new MouseEventHandler((sender, e) => {
-                //    NewThumb.Resources["Hover"] = 0.0;
-                //});
-                ThumbList.Add(Thumb);
-                VisualChildren.Add(Thumb);
+                ButtonList.Add(Button);
+                VisualChildren.Add(Button);
             }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
             ShapeViewModel Shape = (AdornedElement as UserControl).DataContext as ShapeViewModel;
-            
-            for (int i = 0; i < ThumbList.Count; i++)
+
+            for (int i = 0; i < ButtonList.Count; i++)
             {
                 ConnectionPoint Point = Shape.Points[i];
-                ThumbList[i].Arrange(
+                ButtonList[i].Arrange(
                     new Rect(
                         Point.X - Shape.X - Shape.Width / 2,
                         Point.Y - Shape.Y - Shape.Height / 2,
                         Shape.Width,
-                        Shape.Height ));
+                        Shape.Height));
             }
 
             return finalSize;

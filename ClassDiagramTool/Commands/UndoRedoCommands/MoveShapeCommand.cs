@@ -16,7 +16,7 @@ namespace ClassDiagramTool.Commands
         public MoveShapeCommand(ShapeViewModel viewModel, MouseButtonEventArgs e)
         {
             ViewModel = viewModel;
-            UserControl MovedElement = (UserControl) e.Source;
+            UserControl MovedElement = e.Source as UserControl;
 
             //Setup move command.
             SetupMoveShape(MovedElement, e);
@@ -56,7 +56,7 @@ namespace ClassDiagramTool.Commands
         {
             //element.Cursor = Cursors.Hand;
             ViewModel.Dragging = true;
-            Mouse.Capture((IInputElement)element);
+            Mouse.Capture(element as IInputElement);
             //Get current position.
             OriginalPosition = new Point(ViewModel.X, ViewModel.Y);
             FinalPosition = OriginalPosition;

@@ -5,8 +5,8 @@ namespace ClassDiagramTool.ViewModel
 {
     public class InterfaceRealizationViewModel : LineViewModel
     {
-        public InterfaceRealizationViewModel(ShapeViewModel from, ShapeViewModel to) 
-            : base(new Line() { Type = ELine.InterfaceRealization }, from, to)
+        public InterfaceRealizationViewModel(ShapeViewModel fromShape, int fromPoint, ShapeViewModel toShape, int toPoint) 
+            : base(new Line() { Type = ELine.Aggregation }, fromShape, fromPoint, toShape, toPoint)
         {
         }
     }

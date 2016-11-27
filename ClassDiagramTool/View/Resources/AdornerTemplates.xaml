@@ -3,23 +3,44 @@
                     xmlns:local="clr-namespace:ClassDiagramTool.View.Resources"
                     xmlns:s="clr-namespace:System;assembly=mscorlib">
     <!-- Custom Thumb Style (ConnectionPoint Thumb) -->
-    <s:Double x:Key="Hover">0.0</s:Double>
     <Style x:Key="ThumbStyle" TargetType="{x:Type Thumb}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Ellipse
-                        Width="10"
-                        Height="10"
-                        Stroke="Black"
-                        StrokeThickness="2.0">
-                        <Ellipse.Fill>
-                            <SolidColorBrush Color="AntiqueWhite" Opacity="{DynamicResource Hover}"/>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                    <Ellipse x:Name="Ellipse"
+                             Width="10"
+                             Height="10"
+                             Stroke="Navy"
+                             StrokeThickness="2"
+                             Fill="DimGray"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="AntiqueWhite"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     <!---->
+    
+    <Style x:Key="ConnectionPointStyle" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Ellipse x:Name="Ellipse"
+                             Width="10"
+                             Height="10"
+                             Stroke="Navy"
+                             StrokeThickness="2"
+                             Fill="DimGray"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Ellipse" Property="Fill" Value="AntiqueWhite"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

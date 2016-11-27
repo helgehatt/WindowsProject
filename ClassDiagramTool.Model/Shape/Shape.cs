@@ -5,6 +5,7 @@ using System.ComponentModel;
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class Shape : IShape
     {
         private static int number;

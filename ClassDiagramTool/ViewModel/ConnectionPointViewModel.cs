@@ -1,28 +1,38 @@
-﻿using System;
+﻿using ClassDiagramTool.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassDiagramTool.Model
+namespace ClassDiagramTool.ViewModel
 {
-    [Serializable]
-    public class ConnectionPoint : IConnectionPoint
+    public class ConnectionPointViewModel : IConnectionPoint
     {
-        public int Number { get; set; }
+        private ConnectionPoint ConnectionPoint { get; }
 
-        [NonSerialized]
-        private Shape shape;
+        private ShapeViewModel ShapeViewModel { get; }
 
-        public Shape Shape
+        public ConnectionPointViewModel(EConnectionPoint orientation, ShapeViewModel shapeViewModel)
+            : this(new ConnectionPoint() { Orientation = orientation}, shapeViewModel)
         {
-            get { return shape; }
-            set { shape = value; }
         }
 
-        public EConnectionPoint Orientation { get; set; }
-        public double Percentile { get; set; } = 0.5;
+        public ConnectionPointViewModel(ConnectionPoint connectionPoint, ShapeViewModel shapeViewModel)
+        {
+            ConnectionPoint = connectionPoint;
+            ShapeViewModel = shapeViewModel;
+        }
 
+        #region Wrapper
+        public int Number => ConnectionPoint.Number;
+
+        public Shape Shape => ShapeViewModel.Shape;
+
+        public EConnectionPoint Orientation => ConnectionPoint.Orientation;
+
+        public double Percentile => ConnectionPoint.Percentile;
+        
         public double X
         {
             get
@@ -50,5 +60,7 @@ namespace ClassDiagramTool.Model
                 }
             }
         }
+        #endregion
+
     }
 }
