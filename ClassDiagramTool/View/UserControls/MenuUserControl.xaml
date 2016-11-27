@@ -14,7 +14,7 @@
     </UserControl.Resources>
     
     <ToolBar ToolBarTray.IsLocked="True" Background="Transparent" Margin="20,0,-20,0">
-        <Button Command="{Binding IsAddingLineChange}">
+        <Button Command="{Binding NewDiagramCommand}">
             <Image Source="/ClassDiagramTool;component/Images/New.png"/>
         </Button>
         <Button Command="{Binding SaveDiagramCommand}">

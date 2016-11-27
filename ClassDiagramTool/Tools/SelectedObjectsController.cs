@@ -4,16 +4,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace ClassDiagramTool.ViewModel
+namespace ClassDiagramTool.Tools
 {
-    class SelectedObjectsCollection
+    class SelectedObjectsController
     {
-        private static readonly SelectedObjectsCollection Self = new SelectedObjectsCollection();
-        public static SelectedObjectsCollection Instance => Self;
+        private static readonly SelectedObjectsController Self = new SelectedObjectsController();
+        public static SelectedObjectsController Instance => Self;
 
         public readonly List<UserControl> SelectionList = new List<UserControl>();
 
-        private SelectedObjectsCollection():base() {}
+        private SelectedObjectsController() {}
 
         public void AddSelect(UserControl element)
         {

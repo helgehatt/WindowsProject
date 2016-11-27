@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClassDiagramTool.ViewModel.Shapes
+namespace ClassDiagramTool.ViewModel
 {
     class InterfaceViewModel : ShapeViewModel
     {

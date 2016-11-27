@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace ClassDiagramTool.ViewModel
+namespace ClassDiagramTool.Tools
 {
     public class EnumToBooleanConverter : IValueConverter
     {

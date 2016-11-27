@@ -1,16 +1,9 @@
 ﻿using ClassDiagramTool.Commands;
 using ClassDiagramTool.Model;
-using ClassDiagramTool.UndoRedo;
+using ClassDiagramTool.Tools;
 using ClassDiagramTool.View.ShapeControls;
-using ClassDiagramTool.View.UserControls;
-using ClassDiagramTool.ViewModel.Lines;
-using ClassDiagramTool.ViewModel.Shapes;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,224 +18,48 @@ namespace ClassDiagramTool.ViewModel
     class MainViewModel : BaseViewModel
     {
         #region Fields
-        private UndoRedoController UndoRedoController => UndoRedoController.Instance;
-        private ShapeViewModel From;
-        private Serializer Serializer => Serializer.Instance;
-        private SelectedObjectsCollection selectedObjects => SelectedObjectsCollection.Instance;
+        private SelectedObjectsController SelectedObjectsController => SelectedObjectsController.Instance;
+        private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
-        public static bool IsAddingLine = false; // Temporary
+        private ClipboardCommands ClipboardCommands;
+        private DiagramCommands   DiagramCommands;
+        private ObjectCommands    ObjectCommands;
+
+        public static bool IsAddingLine { get; set; }
 
         public EShape SelectedShape { get; set; }
         public ELine  SelectedLine  { get; set; }
         
-        public ObservableCollection<ShapeViewModel> Shapes { get; }
-        public ObservableCollection<LineViewModel>  Lines  { get; }
+        public ObservableCollection<ShapeViewModel> ShapeViewModels { get; }
+        public ObservableCollection<LineViewModel>  LineViewModels  { get; }
         #endregion
 
         #region Commands
-        public ICommand UndoCommand => UndoRedoController.UndoCommand;
-        public ICommand RedoCommand => UndoRedoController.RedoCommand;
+        public RelayCommand UndoCommand => UndoRedoController.UndoCommand;
+        public RelayCommand RedoCommand => UndoRedoController.RedoCommand;
         
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnAddShapeCommand, e => e.Source is Canvas);
-        public RelayCommand<MouseButtonEventArgs> DeleteShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnDeleteShapeCommand, e => selectedObjects.Count > 0);
-        public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(OnAddLineCommand, e => e.Source is ShapeControl && IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new SelectObjectCommand(e).Execute(), e => e.Source is ShapeControl);
-        public RelayCommand CutShapeCommand => new RelayCommand(OnCutShapeCommand, () => selectedObjects.Count > 0);
-        public RelayCommand CopyShapeCommand => new RelayCommand(OnCopyShapeCommand, () => selectedObjects.Count > 0);
-        public RelayCommand<MouseButtonEventArgs> PasteShapeCommand => new RelayCommand<MouseButtonEventArgs>(OnPasteShapeCommand, e => (Clipboard.ContainsData("ShapeList")));
-        public RelayCommand<MouseButtonEventArgs> SaveDiagramCommand => new RelayCommand<MouseButtonEventArgs>(OnSaveDiagramCommand);
-        public RelayCommand<MouseButtonEventArgs> LoadDiagramCommand => new RelayCommand<MouseButtonEventArgs>(OnLoadDiagramCommand);
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand     => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddShape   , e => e.Source is Canvas);
+        public RelayCommand<MouseButtonEventArgs> AddLineCommand      => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddLine    , e => e.Source is ShapeControl && IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.SelectShape, e => e.Source is ShapeControl);
+        public RelayCommand<MouseButtonEventArgs> DeleteShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.DeleteShape, e => SelectedObjectsController.Count > 0);
+        public RelayCommand                       IsAddingLineCommand => new RelayCommand                      (ObjectCommands.AddingLine );
 
-        public RelayCommand IsAddingLineChange => new RelayCommand(() => { IsAddingLine = !IsAddingLine; }); // Temporary
-        #endregion
+        public RelayCommand<MouseButtonEventArgs> SaveDiagramCommand => new RelayCommand<MouseButtonEventArgs>(DiagramCommands.Save);
+        public RelayCommand<MouseButtonEventArgs> LoadDiagramCommand => new RelayCommand<MouseButtonEventArgs>(DiagramCommands.Load);
 
-        #region CommandMethods
-
-
-        private void OnSaveDiagramCommand(MouseButtonEventArgs e)
-        {
-            Diagram diagram = new Diagram()
-            {
-                Shapes = new List<Shape>(Shapes.Select(o => o.Shape).ToList()),
-                Lines  = new List<Line> (Lines .Select(o => o.Line ).ToList())
-            };
-           
-            Serializer.AsyncSerializeToFile(diagram, Directory.GetCurrentDirectory()+"\\testSave.XML");
-        }
-
-        private void OnLoadDiagramCommand(MouseButtonEventArgs e)
-        {
-            Shapes.Clear();
-
-            Diagram diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
-
-            foreach (Shape shape in diagram.Shapes)
-            {               
-                ShapeViewModel Shape = null;
-
-                switch (shape.Type)
-                {
-                    case EShape.Class       : Shape = new ClassViewModel        (shape) ;  break;
-                    case EShape.Enumeration : Shape = new EnumerationViewModel  (shape) ;  break;
-                    case EShape.Interface   : Shape = new InterfaceViewModel    (shape) ;  break;
-                }
-
-                if (Shape == null) { Debug.WriteLine("OnLoadDiagramCommand, Shape == null, shape:" + shape); return; }
-
-                Shapes.Add(Shape);
-            }
-            
-            foreach (Line line in diagram.Lines)
-            {
-                LineViewModel Line = null;
-
-                ShapeViewModel From = GetShapeByNumber(line.FromNumber);
-                ShapeViewModel To   = GetShapeByNumber(line.ToNumber  );
-
-                if (From == null || To == null) { Debug.WriteLine("OnLoadDiagramCommand, From == null || To == null, FromNumber: "
-                                                                   + line.FromNumber + " ToNumber: " + line.ToNumber); return; }
-
-                switch (line.Type)
-                {
-                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, To);   break;
-                    case ELine.Association          : Line = new AssociationViewModel           (From, To);   break;
-                    case ELine.Composition          : Line = new CompositionViewModel           (From, To);   break;
-                    case ELine.Dependency           : Line = new DependencyViewModel            (From, To);   break;
-                    case ELine.DirectedAssociation  : Line = new DirectedAssociationViewModel   (From, To);   break;
-                    case ELine.Inheritance          : Line = new InheritanceViewModel           (From, To);   break;
-                    case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, To);   break;
-                }
-
-                if (Line == null) { Debug.WriteLine("OnLoadDiagramCommand, Line == null, line: " + line); return; }
-
-                Lines.Add(Line);
-            }
-        }
-
-        private ShapeViewModel GetShapeByNumber(int number)
-        {
-            foreach (ShapeViewModel shape in Shapes)
-            {
-                if (shape.Number == number) return shape;
-            }
-            return null;
-        }
-
-        private void OnCutShapeCommand()
-        {
-            List<UserControl> selectionList = new List<UserControl>();
-           
-            selectionList = selectedObjects.SelectionList;
-                   
-            List<Shape> shapeList = new List<Shape>();
-            foreach (UserControl shape in selectionList)
-            {
-                shapeList.Add((shape.DataContext as ShapeViewModel).Shape);
-                
-            }
-            Clipboard.Clear();
-            Clipboard.SetData("ShapeList", shapeList);
-            List<ShapeViewModel> list = selectedObjects.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
-            UndoRedoController.AddAndExecute(new DeleteObjectCommand(Shapes, list));
-
-        }
-
-        private void OnCopyShapeCommand()
-        {
-            List<UserControl> selectionList = new List<UserControl>();
-            selectionList = selectedObjects.SelectionList;
-            List<Shape> shapeList = new List<Shape>();
-            foreach(UserControl shape in selectionList)
-            {
-                shapeList.Add((shape.DataContext as ShapeViewModel).Shape); 
-            }
-            Clipboard.Clear();
-            Clipboard.SetData("ShapeList", shapeList);
-        }
-
-        private void OnPasteShapeCommand(MouseButtonEventArgs e)
-        {           
-            if (Clipboard.ContainsData("ShapeList"))
-            {               
-                List<Shape> shapeList = Clipboard.GetData("ShapeList") as List<Shape>;
-
-                foreach (Shape shape in shapeList)
-                {
-                    ShapeViewModel Shape = null;
-
-                    switch (shape.Type)
-                    {
-                        case EShape.Class:          Shape = new ClassViewModel      (shape); break;
-                        case EShape.Enumeration:    Shape = new EnumerationViewModel(shape); break;
-                        case EShape.Interface:      Shape = new InterfaceViewModel  (shape); break;
-                    }
-                    Shapes.Add(Shape);
-                }
-            }
-        }
-
-        private void OnAddShapeCommand(MouseButtonEventArgs e)
-        {
-            Canvas MainCanvas = e.Source as Canvas;
-
-            Point Position = Mouse.GetPosition(MainCanvas);
-
-            ShapeViewModel Shape = null;
-
-            switch (SelectedShape)
-            {
-                case EShape.Class       : Shape = new ClassViewModel        () { CenterX = Position.X, CenterY = Position.Y };  break;
-                case EShape.Enumeration : Shape = new EnumerationViewModel  () { CenterX = Position.X, CenterY = Position.Y };  break;
-                case EShape.Interface   : Shape = new InterfaceViewModel    () { CenterX = Position.X, CenterY = Position.Y };  break;
-            }
-            
-            if (Shape == null) { Debug.WriteLine("OnAddShapeCommand, Shape == null, EShape = " + SelectedShape); return; }
-            
-            UndoRedoController.AddAndExecute(new AddShapeCommand(Shapes, new List<ShapeViewModel>() { Shape }));
-        }
-
-        private void OnDeleteShapeCommand(MouseButtonEventArgs e)
-        {           
-            List<ShapeViewModel> selectionList = selectedObjects.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();           
-            UndoRedoController.AddAndExecute(new DeleteObjectCommand(Shapes, selectionList));           
-        }
-
-        
-        
-        private void OnAddLineCommand(MouseButtonEventArgs e)
-        {
-            UserControl UserControl = e.Source as UserControl;
-            if (UserControl == null) return;
-
-            ShapeViewModel Shape = UserControl.DataContext as ShapeViewModel;
-
-                 if (Shape == null) Debug.WriteLine("OnAddLineCommand, DataContext=" + (e.Source as UserControl).DataContext);
-            else if (From  == null) From = Shape;
-            else if (From  != Shape)
-            {
-                LineViewModel Line = null;
-                switch (SelectedLine)
-                {
-                    case ELine.Aggregation          : Line = new AggregationViewModel           (From, Shape);   break;
-                    case ELine.Association          : Line = new AssociationViewModel           (From, Shape);   break;
-                    case ELine.Composition          : Line = new CompositionViewModel           (From, Shape);   break;
-                    case ELine.Dependency           : Line = new DependencyViewModel            (From, Shape);   break;
-                    case ELine.DirectedAssociation  : Line = new DirectedAssociationViewModel   (From, Shape);   break;
-                    case ELine.Inheritance          : Line = new InheritanceViewModel           (From, Shape);   break;
-                    case ELine.InterfaceRealization : Line = new InterfaceRealizationViewModel  (From, Shape);   break;
-                }
-                if (Line == null) { Debug.WriteLine("OnAddLineCommand, Line == null, ELine = " + SelectedLine); return; }
-
-                UndoRedoController.AddAndExecute(new AddLineCommand(Lines, Line));
-                From = null;
-            }            
-        }
+        public RelayCommand CutShapeCommand   => new RelayCommand(ClipboardCommands.Cut  , () => SelectedObjectsController.Count > 0);
+        public RelayCommand CopyShapeCommand  => new RelayCommand(ClipboardCommands.Copy , () => SelectedObjectsController.Count > 0);
+        public RelayCommand PasteShapeCommand => new RelayCommand(ClipboardCommands.Paste, () => Clipboard.ContainsData("Shapes"));
         #endregion
 
         public MainViewModel() : base()
         {
-            Shapes = new ObservableCollection<ShapeViewModel>();
-            Lines  = new ObservableCollection<LineViewModel>();
+            ShapeViewModels = new ObservableCollection<ShapeViewModel>();
+            LineViewModels  = new ObservableCollection<LineViewModel>();
+
+            ClipboardCommands = new ClipboardCommands(this);
+            DiagramCommands = new DiagramCommands(this);
+            ObjectCommands = new ObjectCommands(this);
         }
     }
 

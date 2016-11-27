@@ -1,8 +1,8 @@
 ﻿using ClassDiagramTool.Model;
-using ClassDiagramTool.ViewModel.Shapes;
+using ClassDiagramTool.ViewModel;
 using System.Diagnostics;
 
-namespace ClassDiagramTool.ViewModel.Lines
+namespace ClassDiagramTool.ViewModel
 {
     public class DependencyViewModel : LineViewModel
     {

@@ -4,13 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
-             xmlns:vm="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:tools="clr-namespace:ClassDiagramTool.Tools"
              xmlns:model="clr-namespace:ClassDiagramTool.Model;assembly=ClassDiagramTool.Model"
              mc:Ignorable="d"
              d:DesignHeight="550" d:DesignWidth="240">
 
     <UserControl.Resources>
-        <vm:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+        <tools:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
+
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style TargetType="{x:Type Expander}">
+            <Setter Property="Foreground" Value="LightGray"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Template" Value="{StaticResource ExpandDownTemp}"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Margin" Value="5,0,10,0"/>
+        </Style>
 
         <Style TargetType="{x:Type RadioButton}">
             <Setter Property="Background" Value="Transparent"/>
@@ -38,28 +59,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-        <Style TargetType="{x:Type StackPanel}">
-            <Setter Property="Orientation" Value="Horizontal"/>
-        </Style>
-
-        <Style TargetType="{x:Type Image}">
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-
-        <Style TargetType="{x:Type Expander}">
-            <Setter Property="Foreground" Value="LightGray"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Template" Value="{StaticResource ExpandDownTemp}"/>
-        </Style>
-
-        <Style TargetType="{x:Type TextBlock}">
-            <Setter Property="Foreground" Value="LightGray"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Margin" Value="5,0,10,0"/>
         </Style>
     </UserControl.Resources>
 
@@ -92,6 +91,11 @@
 
             <Expander Header="Lines">
                 <StackPanel Style="{x:Null}">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                            <Setter Property="Command" Value="{Binding IsAddingLineCommand}"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Aggregation}}">
                         <StackPanel>
                             <Image Source="/ClassDiagramTool;component/Images/New.png"/>

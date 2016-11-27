@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
-using System.Windows.Media;
 using ClassDiagramTool.Model;
-using ClassDiagramTool.UndoRedo;
 using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
-using System.Diagnostics;
 using System.Windows.Controls;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using ClassDiagramTool.ViewModel.Lines;
+using ClassDiagramTool.Tools;
 
-namespace ClassDiagramTool.ViewModel.Shapes
+namespace ClassDiagramTool.ViewModel
 {
     public abstract class ShapeViewModel : BaseViewModel, IShape
     {
@@ -21,27 +15,47 @@ namespace ClassDiagramTool.ViewModel.Shapes
 
         private bool selected = false;
         private bool dragging = false;
+
+        public Shape Shape { get; }
+        public List<LineViewModel> LineViewModels { get; set; }
         #endregion
 
         #region Commands
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new MoveShape(this, e)), e => !MainViewModel.IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.AddAndExecute(new EditText(e)), e => e.Source is TextBox);
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new MoveShapeCommand(this, e)));
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand  => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new EditTextCommand(e)), e => e.Source is TextBox);
         #endregion
+
 
         protected ShapeViewModel(Shape shape)
         {
             Shape = shape;
 
+            // Update Shape references
             foreach (ConnectionPoint point in Points)
             {
                 point.Shape = Shape;
             }
 
-            Lines = new List<LineViewModel>();
+            LineViewModels = new List<LineViewModel>();
+        }
+
+        public bool Selected
+        {
+            get { return selected; }
+            set { selected = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Dragging
+        {
+            get { return dragging; }
+            set { dragging = value;
+                OnPropertyChanged();
+            }
         }
 
         #region Wrapper
-        public Shape Shape { get; }
 
         public int Number => Shape.Number;
 
@@ -49,7 +63,7 @@ namespace ClassDiagramTool.ViewModel.Shapes
             get { return Shape.X; }
             set { Shape.X = value;
                 OnPropertyChanged();
-                foreach (LineViewModel line in Lines)
+                foreach (LineViewModel line in LineViewModels)
                     line.CalculateLinePart();
             }
         }
@@ -103,23 +117,5 @@ namespace ClassDiagramTool.ViewModel.Shapes
             set { Shape.Points = value; }
         }
         #endregion
-
-        public List<LineViewModel> Lines { get; set; }
-
-        public bool Selected
-        {
-            get { return selected; }
-            set { selected = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool Dragging
-        {
-            get { return dragging; }
-            set { dragging = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }

@@ -1,18 +1,17 @@
-﻿using ClassDiagramTool.UndoRedo;
-using System;
+﻿using ClassDiagramTool.Tools;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace ClassDiagramTool.Commands
 {
-    class EditText : IUndoRedoCommand
+    class EditTextCommand : IUndoRedoCommand
     {
         private TextBox EditedTextBox;
         private string OriginalText;
         private string NewText;
 
-        public EditText(MouseButtonEventArgs e)
+        public EditTextCommand(MouseButtonEventArgs e)
         {
             EditedTextBox = (TextBox)e.Source;
             OriginalText = EditedTextBox.Text;
@@ -65,7 +64,7 @@ namespace ClassDiagramTool.Commands
             EditedTextBox.IsEnabled = false;
             EditedTextBox.IsEnabled = true;
             if (!OriginalText.Equals(NewText))
-                UndoRedoController.Instance.AddAndExecute(this);
+                UndoRedoController.Instance.Execute(this);
         }
     }
 }

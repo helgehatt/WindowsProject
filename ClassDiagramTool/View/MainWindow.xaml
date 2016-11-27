@@ -22,10 +22,8 @@
         <userControls:StatusBarUserControl DockPanel.Dock="Bottom"/>
 
         <userControls:SidePanelUserControl DockPanel.Dock="Left"/>
-        
-        <Rectangle Width="20" DockPanel.Dock="Right"/>
 
-        <ItemsControl ItemsSource="{Binding Lines}">
+        <ItemsControl ItemsSource="{Binding LineViewModels}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas/>
@@ -33,9 +31,10 @@
             </ItemsControl.ItemsPanel>
         </ItemsControl>
 
-        <ItemsControl ItemsSource="{Binding Shapes}"
+        <ItemsControl ItemsSource="{Binding ShapeViewModels}"
                       BorderBrush="Gray" 
-                      BorderThickness="1">
+                      BorderThickness="1"
+                      Margin="0,0,20,0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas Background="Transparent">
@@ -53,8 +52,7 @@
                                         <Image Source="/ClassDiagramTool;component/Images/New.png" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Command="{Binding CutShapeCommand}" 
-                                          Header="Cut">
+                                <MenuItem Command="{Binding CutShapeCommand}" Header="Cut">
                                     <MenuItem.Icon>
                                         <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
                                     </MenuItem.Icon>
