@@ -21,17 +21,17 @@ namespace ClassDiagramTool.ViewModel
         private SelectedObjectsController SelectedObjectsController => SelectedObjectsController.Instance;
         private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
-        private ClipboardCommands ClipboardCommands;
-        private DiagramCommands   DiagramCommands;
-        private ObjectCommands    ObjectCommands;
+        public static ClipboardCommands ClipboardCommands;
+        public static DiagramCommands   DiagramCommands;
+        public static ObjectCommands    ObjectCommands;
 
         public static bool IsAddingLine { get; set; }
 
         public EShape SelectedShape { get; set; }
         public ELine  SelectedLine  { get; set; }
         
-        public ObservableCollection<ShapeViewModel> ShapeViewModels { get; }
-        public ObservableCollection<LineViewModel>  LineViewModels  { get; }
+        public ObservableCollection<ShapeViewModel> ShapeViewModels { get; } = new ObservableCollection<ShapeViewModel>();
+        public ObservableCollection<LineViewModel>  LineViewModels  { get; } = new ObservableCollection<LineViewModel>();
         #endregion
 
         #region Commands
@@ -39,11 +39,14 @@ namespace ClassDiagramTool.ViewModel
         public RelayCommand RedoCommand => UndoRedoController.RedoCommand;
         
         /* Object Commands */
-        public RelayCommand<MouseButtonEventArgs> AddShapeCommand     => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddShapes   , e => e.Source is Canvas);
-        //public RelayCommand<MouseButtonEventArgs> AddLineCommand      => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddLine     , e => e.Source is ShapeControl && IsAddingLine);
-        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.SelectShape , e => e.Source is ShapeControl);
+        public RelayCommand<MouseButtonEventArgs> AddShapeCommand     => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddShapes   , e => e.Source is Canvas && !IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> SelectShapeCommand  => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.SelectShape , e => e.Source is ShapeControl && !IsAddingLine);
         public RelayCommand                       DeleteShapeCommand  => new RelayCommand                      (ObjectCommands.DeleteShapes,( )=> SelectedObjectsController.Count > 0);
-        public RelayCommand                       IsAddingLineCommand => new RelayCommand                      (ObjectCommands.AddingLine );
+
+        public RelayCommand<MouseButtonEventArgs> AddConnectionPointCommand => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddConnectionPoint, e => e.Source is ShapeControl && IsAddingLine);
+
+        public RelayCommand StartAddingLineCommand => new RelayCommand(ObjectCommands.StartAddingLine, () => !IsAddingLine);
+        public RelayCommand StopAddingLineCommand  => new RelayCommand(ObjectCommands.StopAddingLine , () =>  IsAddingLine);
 
         /* Diagram Commands */
         public RelayCommand NewDiagramCommand  => new RelayCommand(DiagramCommands.New );
@@ -53,14 +56,11 @@ namespace ClassDiagramTool.ViewModel
         /* Clipboard Commands */
         public RelayCommand CutShapeCommand    => new RelayCommand(ClipboardCommands.Cut  , () => SelectedObjectsController.Count > 0);
         public RelayCommand CopyShapeCommand   => new RelayCommand(ClipboardCommands.Copy , () => SelectedObjectsController.Count > 0);
-        public RelayCommand PasteShapeCommand  => new RelayCommand(ClipboardCommands.Paste, () => Clipboard.ContainsData("Shapes"));
+        public RelayCommand PasteShapeCommand  => new RelayCommand(ClipboardCommands.Paste, () => Clipboard.ContainsData("Shapes")   );
         #endregion
 
         public MainViewModel() : base()
         {
-            ShapeViewModels = new ObservableCollection<ShapeViewModel>();
-            LineViewModels  = new ObservableCollection<LineViewModel>();
-
             ClipboardCommands = new ClipboardCommands(this);
             DiagramCommands   = new DiagramCommands(this);
             ObjectCommands    = new ObjectCommands(this);

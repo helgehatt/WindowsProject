@@ -33,7 +33,7 @@ namespace ClassDiagramTool.View.Adorners
             {
                 Thumb Thumb = new Thumb() { Style = CustomThumbStyle };
 
-                double start = 0;
+                double start = 0;                
 
                 Thumb.DragStarted += new DragStartedEventHandler((sender, e) =>
                 {
@@ -73,12 +73,12 @@ namespace ClassDiagramTool.View.Adorners
             for (int i = 0; i < ThumbList.Count; i++)
             {
                 ConnectionPoint Point = Shape.Points[i];
-                ThumbList[i].Arrange(
-                    new Rect(
-                        Point.X - Shape.X - Shape.Width / 2,
-                        Point.Y - Shape.Y - Shape.Height / 2,
-                        Shape.Width,
-                        Shape.Height ));
+                //ThumbList[i].Arrange(
+                //    new Rect(
+                //        Point.X - Shape.X - Shape.Width / 2,
+                //        Point.Y - Shape.Y - Shape.Height / 2,
+                //        Shape.Width,
+                //        Shape.Height ));
             }
 
             return finalSize;

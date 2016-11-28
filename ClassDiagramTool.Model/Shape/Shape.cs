@@ -5,12 +5,11 @@ using System.ComponentModel;
 
 namespace ClassDiagramTool.Model
 {
-    [Serializable]
     public class Shape : IShape
     {
         private static int number;
 
-        public int Number { get; set; } = number++;
+        public int Number { get; } = number++;
 
         public double X { get; set; }
         public double Y { get; set; }

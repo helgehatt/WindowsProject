@@ -67,22 +67,28 @@ namespace ClassDiagramTool.Commands
 
             foreach (Line Line in Diagram.Lines)
             {
+                var FromShapeViewModel = GetShapeViewModelByNumber(Line.FromShape);
+                var ToShapeViewModel   = GetShapeViewModelByNumber(Line.ToShape  );
+
+                if (FromShapeViewModel == null || ToShapeViewModel == null)
+                { Debug.WriteLine("Load, FromShapeViewModel == null || ToShapeViewModel == null"); continue; }
+
+                var From = GetConnectionViewModelByNumber(FromShapeViewModel, Line.FromPoint);
+                var To   = GetConnectionViewModelByNumber(ToShapeViewModel  , Line.ToPoint  );
+
+                if (From == null || To == null) { Debug.WriteLine("Load, From == null || To == null"); continue; }
+
                 LineViewModel LineViewModel = null;
 
-                ShapeViewModel FromShapeViewModel = GetShapeViewModelByNumber(Line.FromNumber);
-                ShapeViewModel ToShapeViewModel   = GetShapeViewModelByNumber(Line.ToNumber  );
-
-                if (FromShapeViewModel == null || ToShapeViewModel == null) { Debug.WriteLine("Load, From == null || To == null"); continue; }
-                
                 switch (Line.Type)
                 {
-                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
-                    case ELine.Association          : LineViewModel = new AssociationViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
-                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
-                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (FromShapeViewModel, ToShapeViewModel);   break;
-                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (FromShapeViewModel, ToShapeViewModel);   break;
-                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (FromShapeViewModel, ToShapeViewModel);   break;
-                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (FromShapeViewModel, ToShapeViewModel);   break;
+                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, To);   break;
+                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, To);   break;
+                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, To);   break;
+                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, To);   break;
+                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, To);   break;
+                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, To);   break;
+                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, To);   break;
                 }
 
                 if (LineViewModel == null) { Debug.WriteLine("Load, LineViewModel == null"); continue; }
@@ -93,9 +99,18 @@ namespace ClassDiagramTool.Commands
 
         private ShapeViewModel GetShapeViewModelByNumber(int number)
         {
-            foreach (ShapeViewModel ShapeViewModel in ShapeViewModels)
+            foreach (var ShapeViewModel in ShapeViewModels)
             {
                 if (ShapeViewModel.Number == number) return ShapeViewModel;
+            }
+            return null;
+        }
+
+        private ConnectionPointViewModel GetConnectionViewModelByNumber(ShapeViewModel shapeViewModel, int number)
+        {
+            foreach (var ConnectionPointViewModel in shapeViewModel.ConnectionPointViewModels)
+            {
+                if (ConnectionPointViewModel.Number == number) return ConnectionPointViewModel;
             }
             return null;
         }

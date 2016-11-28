@@ -2,9 +2,9 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:ClassDiagramTool"
-             xmlns:vmshapes="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:viewModel="clr-namespace:ClassDiagramTool.ViewModel"
+             xmlns:userControls="clr-namespace:ClassDiagramTool.View.UserControls"
              xmlns:ucshapes="clr-namespace:ClassDiagramTool.View.ShapeControls"
-             xmlns:vmlines="clr-namespace:ClassDiagramTool.ViewModel"
              xmlns:uclines="clr-namespace:ClassDiagramTool.View.LineControls"
              StartupUri="View/MainWindow.xaml">
     <Application.Resources>
@@ -15,38 +15,42 @@
                 <ResourceDictionary Source="View\Resources\ExpanderTemplates.xaml"/>
                 <ResourceDictionary Source="View\Resources\AdornerTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
+            <DataTemplate DataType="{x:Type viewModel:ConnectionPointViewModel}">
+                <userControls:ConnectionPointUserControl/>
+            </DataTemplate>
+
             <!-- SHAPES -->
-            <DataTemplate DataType="{x:Type vmshapes:ClassViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:ClassViewModel}">
                 <ucshapes:ClassShapeControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmshapes:EnumerationViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:EnumerationViewModel}">
                 <ucshapes:EnumerationShapeControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmshapes:InterfaceViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:InterfaceViewModel}">
                 <ucshapes:InterfaceShapeControl/>
             </DataTemplate>
 
             <!-- LINES -->
-            <DataTemplate DataType="{x:Type vmlines:AggregationViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:AggregationViewModel}">
                 <uclines:AggregationLineControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmlines:AssociationViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:AssociationViewModel}">
                 <uclines:AssociationLineControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmlines:CompositionViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:CompositionViewModel}">
                 <uclines:CompositionLineControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmlines:DependencyViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:DependencyViewModel}">
                 <uclines:DependencyLineControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmlines:DirectedAssociationViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:DirectedAssociationViewModel}">
                 <uclines:DirectedAssociationLineControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmlines:InheritanceViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:InheritanceViewModel}">
                 <uclines:InheritanceLineControl/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vmlines:InterfaceRealizationViewModel}">
+            <DataTemplate DataType="{x:Type viewModel:InterfaceRealizationViewModel}">
                 <uclines:InterfaceRealizationLineControl/>
             </DataTemplate>
             

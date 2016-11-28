@@ -23,24 +23,4 @@
         </Setter>
     </Style>
     <!---->
-    
-    <Style x:Key="ConnectionPointStyle" TargetType="{x:Type Button}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Ellipse x:Name="Ellipse"
-                             Width="10"
-                             Height="10"
-                             Stroke="Navy"
-                             StrokeThickness="2"
-                             Fill="DimGray"/>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Ellipse" Property="Fill" Value="AntiqueWhite"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 </ResourceDictionary>

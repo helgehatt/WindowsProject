@@ -9,12 +9,9 @@ namespace ClassDiagramTool.Model
     public interface IConnectionPoint
     {
         int Number { get; }
-        Shape Shape { get; }
 
         EConnectionPoint Orientation { get; }
-        double Percentile { get; }
 
-        double X { get; }
-        double Y { get; }
+        double Percentile { get; }
     }
 }

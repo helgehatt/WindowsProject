@@ -15,6 +15,19 @@
         <viewModel:MainViewModel/>
     </Window.DataContext>
 
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding NewDiagramCommand}" Gesture="CTRL+N" />
+        <KeyBinding Command="{Binding OpenDiagramCommand}" Gesture="CTRL+O"/>
+        <KeyBinding Command="{Binding SaveDiagramCommand}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding UndoCommand}" Gesture="CTRL+Z"/>
+        <KeyBinding Command="{Binding RedoCommand}" Gesture="CTRL+Y"/>
+        <KeyBinding Command="{Binding CutShapeCommand}" Gesture="CTRL+X"/>
+        <KeyBinding Command="{Binding CopyShapeCommand}" Gesture="CTRL+C"/>
+        <KeyBinding Command="{Binding PasteShapeCommand}" Gesture="CTRL+V"/>
+        <KeyBinding Command="{Binding DeleteShapeCommand}" Gesture="Delete"/>
+        <KeyBinding Command="{Binding StopAddingLineCommand}" Gesture="Esc"/>
+    </Window.InputBindings>
+
     <DockPanel Background="DimGray">
 
         <userControls:MenuUserControl DockPanel.Dock="Top"/>
@@ -23,67 +36,96 @@
 
         <userControls:SidePanelUserControl DockPanel.Dock="Left"/>
 
-        <ItemsControl ItemsSource="{Binding LineViewModels}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <Border BorderBrush="Gray" BorderThickness="1" Margin="0,0,20,0">
+            <Canvas Background="Transparent">
 
-        <ItemsControl ItemsSource="{Binding ShapeViewModels}"
-                      BorderBrush="Gray" 
-                      BorderThickness="1"
-                      Margin="0,0,20,0">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas Background="Transparent">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseLeftButtonDown">
-                                <cmd:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
-                                <cmd:EventToCommand Command="{Binding AddLineCommand}" PassEventArgsToCommand="True"/>
-                                <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                        <Canvas.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Command="{Binding NewItemCommand}" Header="New item">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ClassDiagramTool;component/Images/New.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Command="{Binding CutShapeCommand}" Header="Cut">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Command="{Binding CopyShapeCommand}" Header="Copy">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Command="{Binding PasteShapeCommand}" Header="Paste">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem Command="{Binding DeleteShapeCommand}" Header="Delete">
-                                    <MenuItem.Icon>
-                                        <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </Canvas.ContextMenu>
-                    </Canvas>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <cmd:EventToCommand Command="{Binding AddShapeCommand}" PassEventArgsToCommand="True"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
+                <Canvas.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding NewItemCommand}" Header="New item">
+                            <MenuItem.Icon>
+                                <Image Source="/ClassDiagramTool;component/Images/New.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="{Binding CutShapeCommand}" Header="Cut">
+                            <MenuItem.Icon>
+                                <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="{Binding CopyShapeCommand}" Header="Copy">
+                            <MenuItem.Icon>
+                                <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="{Binding PasteShapeCommand}" Header="Paste">
+                            <MenuItem.Icon>
+                                <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                        <MenuItem Command="{Binding DeleteShapeCommand}" Header="Delete">
+                            <MenuItem.Icon>
+                                <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Canvas.ContextMenu>
+                
+                <ItemsControl ItemsSource="{Binding LineViewModels}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+
+                <ItemsControl ItemsSource="{Binding ShapeViewModels}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <cmd:EventToCommand Command="{Binding AddConnectionPointCommand}" PassEventArgsToCommand="True"/>
+                                        <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Canvas>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+
+                <ItemsControl ItemsSource="{Binding ShapeViewModels}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <ItemsControl ItemsSource="{Binding ConnectionPointViewModels}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Canvas.Left" Value="{Binding Left}"/>
+                                        <Setter Property="Canvas.Top" Value="{Binding Top}"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+                            </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+            </Canvas>
+        </Border>        
     </DockPanel>
     
 </Window>

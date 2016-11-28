@@ -21,8 +21,7 @@ namespace ClassDiagramTool.Commands
         private SelectedObjectsController SelectedObjectsController => SelectedObjectsController.Instance;
         private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
-        private ShapeViewModel From;
-        private int FromPoint;
+        private ConnectionPointViewModel From;
 
         private EShape SelectedShape => MainViewModel.SelectedShape;
         private ELine  SelectedLine  => MainViewModel.SelectedLine;
@@ -76,32 +75,32 @@ namespace ClassDiagramTool.Commands
             }
         }
 
-        public void AddLine(ShapeViewModel shapeViewModel, int shapePoint)
+        public void AddLine(MouseButtonEventArgs e)
         {
-            //ShapeControl ShapeControl = e.Source as ShapeControl;
-            //
-            //if (ShapeControl == null) return;
-            //
-            //ShapeViewModel shapeViewModel = ShapeControl.DataContext as ShapeViewModel;
+            var UserControl = e.Source as UserControl;
+            
+            if (UserControl == null) { Debug.WriteLine("AddLine, UserControl == null"); return; }
 
-            if (shapeViewModel == null) Debug.WriteLine("OnAddLineCommand, ShapeViewModel == null");
-            else if (From == null) { From = shapeViewModel; FromPoint = shapePoint; }
-            else if (From != shapeViewModel)
+            var ConnectionPointViewModel = UserControl.DataContext as ConnectionPointViewModel;
+
+            if (ConnectionPointViewModel == null) Debug.WriteLine("AddLine, ConnectionPointViewModel == null");
+            else if (From == null) From = ConnectionPointViewModel;
+            else if (From.ShapeViewModel != ConnectionPointViewModel.ShapeViewModel)
             {
                 LineViewModel LineViewModel = null;
 
                 switch (SelectedLine)
                 {
-                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
-                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
-                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
-                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, FromPoint, shapeViewModel, shapePoint);   break;
-                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, FromPoint, shapeViewModel, shapePoint);   break;
-                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, FromPoint, shapeViewModel, shapePoint);   break;
-                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, FromPoint, shapeViewModel, shapePoint);   break;
+                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, ConnectionPointViewModel);   break;
+                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, ConnectionPointViewModel);   break;
+                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, ConnectionPointViewModel);   break;
+                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, ConnectionPointViewModel);   break;
+                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, ConnectionPointViewModel);   break;
+                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, ConnectionPointViewModel);   break;
+                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, ConnectionPointViewModel);   break;
                 }
 
-                if (LineViewModel == null) { Debug.WriteLine("OnAddLineCommand, LineViewModel == null"); return; }
+                if (LineViewModel == null) { Debug.WriteLine("AddLine, LineViewModel == null"); return; }
 
                 UndoRedoController.Execute(new AddLineCommand(LineViewModels, LineViewModel));
 
@@ -109,12 +108,67 @@ namespace ClassDiagramTool.Commands
             }
         }
 
-        public void AddingLine()
+        public void AddConnectionPoint(MouseButtonEventArgs e)
         {
-            MainViewModel.IsAddingLine = !MainViewModel.IsAddingLine;
-            // Add ConnectionPointAdorners
+            if (!Keyboard.IsKeyDown(Key.LeftShift) && !Keyboard.IsKeyDown(Key.RightShift)) return;
+
+            var ShapeControl = e.Source as ShapeControl;
+
+            if (ShapeControl == null) { Debug.WriteLine("AddConnectionPoint, ShapeControl == null"); return; }
+
+            var ShapeViewModel = ShapeControl.DataContext as ShapeViewModel;
+
+            if (ShapeViewModel == null) { Debug.WriteLine("AddConnectionPoint, ShapeViewModel == null"); return; }
+
+            Point MousePos = e.GetPosition(ShapeControl);
+
+            ConnectionPoint ConnectionPoint = null;
+
+                 if (MousePos.Y <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.North };
+            else if (MousePos.X <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.West  };
+            else if (ShapeViewModel.Height - MousePos.Y <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.South };
+            else if (ShapeViewModel.Width  - MousePos.X <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.East  };
+
+            if (ConnectionPoint == null) { Debug.WriteLine("AddConnectionPoint, ConnectionPoint == null"); return; }
+
+            switch(ConnectionPoint.Orientation)
+            {
+                case EConnectionPoint.North:
+                case EConnectionPoint.South:
+                    ConnectionPoint.Percentile = MousePos.X / ShapeViewModel.Width;
+                    break;
+                case EConnectionPoint.East :
+                case EConnectionPoint.West:
+                    ConnectionPoint.Percentile = MousePos.Y / ShapeViewModel.Height;
+                    break;
+            }
+
+            UndoRedoController.Execute(new AddConnectionPointCommand(ShapeViewModel, ConnectionPoint));
+        }
+
+        public void StartAddingLine()
+        {
+            MainViewModel.IsAddingLine = true;
+
+            foreach (var ShapeViewModel in ShapeViewModels)
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    ConnectionPointViewModel.NotifyVisibility();
+
+            SelectedObjectsController.DeselectAll();
+            // Disable selection etc.
             // Blur canvas
-            // Disable on esc, right-click, etc
+
+            // Stop on esc, right-click, etc
+        }
+
+        public void StopAddingLine()
+        {
+            MainViewModel.IsAddingLine = false;
+
+            foreach (var ShapeViewModel in ShapeViewModels)
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    ConnectionPointViewModel.NotifyVisibility();
+
         }
     }
 }
