@@ -45,8 +45,8 @@ namespace ClassDiagramTool.ViewModel
 
         public RelayCommand<MouseButtonEventArgs> AddConnectionPointCommand => new RelayCommand<MouseButtonEventArgs>(ObjectCommands.AddConnectionPoint, e => e.Source is ShapeControl && IsAddingLine);
 
-        public RelayCommand StartAddingLineCommand => new RelayCommand(ObjectCommands.StartAddingLine, () => !IsAddingLine);
-        public RelayCommand StopAddingLineCommand  => new RelayCommand(ObjectCommands.StopAddingLine , () =>  IsAddingLine);
+        public RelayCommand StartAddingLineCommand => new RelayCommand(ObjectCommands.StartAddingLine);
+        public RelayCommand StopAddingLineCommand  => new RelayCommand(ObjectCommands.StopAddingLine );
 
         /* Diagram Commands */
         public RelayCommand NewDiagramCommand  => new RelayCommand(DiagramCommands.New );

@@ -148,6 +148,8 @@ namespace ClassDiagramTool.Commands
 
         public void StartAddingLine()
         {
+            if (MainViewModel.IsAddingLine) return;
+
             MainViewModel.IsAddingLine = true;
 
             foreach (var ShapeViewModel in ShapeViewModels)
@@ -163,7 +165,10 @@ namespace ClassDiagramTool.Commands
 
         public void StopAddingLine()
         {
+            if (!MainViewModel.IsAddingLine) return;
+
             MainViewModel.IsAddingLine = false;
+            From = null;
 
             foreach (var ShapeViewModel in ShapeViewModels)
                 foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
