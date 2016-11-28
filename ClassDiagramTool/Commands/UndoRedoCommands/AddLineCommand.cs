@@ -12,7 +12,7 @@ namespace ClassDiagramTool.Commands
         public AddLineCommand(ObservableCollection<LineViewModel> lineViewModels, LineViewModel lineViewModel)
         {
             LineViewModels = lineViewModels;
-            LineViewModel = lineViewModel;
+            LineViewModel  = lineViewModel;
         }
 
         public void Execute()

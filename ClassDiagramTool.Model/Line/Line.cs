@@ -2,6 +2,7 @@
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class Line : ILine
     {
         public int FromShape { get; set; }

@@ -2,6 +2,7 @@
 using ClassDiagramTool.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,27 +11,23 @@ namespace ClassDiagramTool.Commands
 {
     class AddConnectionPointCommand : IUndoRedoCommand
     {
-        private ShapeViewModel ShapeViewModel;
-        private ConnectionPoint ConnectionPoint;
+        private ObservableCollection<ConnectionPointViewModel> ConnectionPointViewModels;
         private ConnectionPointViewModel ConnectionPointViewModel;
 
-        public AddConnectionPointCommand(ShapeViewModel shapeViewModel, ConnectionPoint connectionPoint)
+        public AddConnectionPointCommand(ObservableCollection<ConnectionPointViewModel> connectionPointViewModels, ConnectionPointViewModel connectionPointViewModel)
         {
-            ShapeViewModel = shapeViewModel;
-            ConnectionPoint = connectionPoint;
-            ConnectionPointViewModel = new ConnectionPointViewModel(connectionPoint, shapeViewModel);
+            ConnectionPointViewModels = connectionPointViewModels;
+            ConnectionPointViewModel  = connectionPointViewModel;
         }
 
         public void Execute()
         {
-            ShapeViewModel.Points.Add(ConnectionPoint);
-            ShapeViewModel.ConnectionPointViewModels.Add(ConnectionPointViewModel);
+            ConnectionPointViewModels.Add(ConnectionPointViewModel);
         }
 
         public void UnExecute()
         {
-            ShapeViewModel.Points.Remove(ConnectionPoint);
-            ShapeViewModel.ConnectionPointViewModels.Remove(ConnectionPointViewModel);
+            ConnectionPointViewModels.Remove(ConnectionPointViewModel);
         }
     }
 }

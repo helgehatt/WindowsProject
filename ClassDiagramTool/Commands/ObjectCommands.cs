@@ -51,6 +51,11 @@ namespace ClassDiagramTool.Commands
 
             if (ShapeViewModel == null) { Debug.WriteLine("OnAddShapeCommand, ShapeViewModel == null"); return; }
 
+            new ConnectionPointViewModel(EConnectionPoint.North, ShapeViewModel);
+            new ConnectionPointViewModel(EConnectionPoint.South, ShapeViewModel);
+            new ConnectionPointViewModel(EConnectionPoint.East , ShapeViewModel);
+            new ConnectionPointViewModel(EConnectionPoint.West , ShapeViewModel);
+
             UndoRedoController.Execute(new AddShapeCommand(ShapeViewModels, new List<ShapeViewModel>() { ShapeViewModel }));
         }
 
@@ -122,28 +127,28 @@ namespace ClassDiagramTool.Commands
 
             Point MousePos = e.GetPosition(ShapeControl);
 
-            ConnectionPoint ConnectionPoint = null;
+            ConnectionPointViewModel ConnectionPointViewModel = null;
 
-                 if (MousePos.Y <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.North };
-            else if (MousePos.X <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.West  };
-            else if (ShapeViewModel.Height - MousePos.Y <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.South };
-            else if (ShapeViewModel.Width  - MousePos.X <= 5) ConnectionPoint = new ConnectionPoint() { Orientation = EConnectionPoint.East  };
+                 if (MousePos.Y <= 5) ConnectionPointViewModel = new ConnectionPointViewModel(EConnectionPoint.North, ShapeViewModel);
+            else if (MousePos.X <= 5) ConnectionPointViewModel = new ConnectionPointViewModel(EConnectionPoint.West , ShapeViewModel);
+            else if (ShapeViewModel.Height - MousePos.Y <= 5) ConnectionPointViewModel = new ConnectionPointViewModel(EConnectionPoint.South, ShapeViewModel);
+            else if (ShapeViewModel.Width  - MousePos.X <= 5) ConnectionPointViewModel = new ConnectionPointViewModel(EConnectionPoint.East , ShapeViewModel);
 
-            if (ConnectionPoint == null) { Debug.WriteLine("AddConnectionPoint, ConnectionPoint == null"); return; }
+            if (ConnectionPointViewModel == null) { Debug.WriteLine("AddConnectionPoint, ConnectionPointViewModel == null"); return; }
 
-            switch(ConnectionPoint.Orientation)
+            switch(ConnectionPointViewModel.Orientation)
             {
                 case EConnectionPoint.North:
                 case EConnectionPoint.South:
-                    ConnectionPoint.Percentile = MousePos.X / ShapeViewModel.Width;
+                    ConnectionPointViewModel.Percentile = MousePos.X / ShapeViewModel.Width;
                     break;
                 case EConnectionPoint.East :
                 case EConnectionPoint.West:
-                    ConnectionPoint.Percentile = MousePos.Y / ShapeViewModel.Height;
+                    ConnectionPointViewModel.Percentile = MousePos.Y / ShapeViewModel.Height;
                     break;
             }
 
-            UndoRedoController.Execute(new AddConnectionPointCommand(ShapeViewModel, ConnectionPoint));
+            UndoRedoController.Execute(new AddConnectionPointCommand(ShapeViewModel.ConnectionPointViewModels, ConnectionPointViewModel));
         }
 
         public void StartAddingLine()
@@ -157,10 +162,8 @@ namespace ClassDiagramTool.Commands
                     ConnectionPointViewModel.NotifyVisibility();
 
             SelectedObjectsController.DeselectAll();
-            // Disable selection etc.
-            // Blur canvas
 
-            // Stop on esc, right-click, etc
+            // Blur canvas
         }
 
         public void StopAddingLine()

@@ -34,11 +34,17 @@ namespace ClassDiagramTool.Commands
 
         public void Save()
         {
+
             Diagram Diagram = new Diagram()
             {
                 Shapes = new List<Shape>(ShapeViewModels.Select(o => o.Shape).ToList()),
-                Lines  = new List<Line> (LineViewModels .Select(o => o.Line ).ToList())
+                Lines = new List<Line>(LineViewModels.Select(o => o.Line).ToList()),
+                ConnectionPoints = new List<ConnectionPoint>()
             };
+
+            foreach (var ShapeViewModel in ShapeViewModels)
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    Diagram.ConnectionPoints.Add(ConnectionPointViewModel.ConnectionPoint);
 
             Serializer.AsyncSerializeToFile(Diagram, Directory.GetCurrentDirectory() + "\\testSave.XML");
         }
@@ -49,7 +55,7 @@ namespace ClassDiagramTool.Commands
 
             Diagram Diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
 
-            foreach (Shape Shape in Diagram.Shapes)
+            foreach (var Shape in Diagram.Shapes)
             {
                 ShapeViewModel ShapeViewModel = null;
                 
@@ -65,7 +71,16 @@ namespace ClassDiagramTool.Commands
                 ShapeViewModels.Add(ShapeViewModel);
             }
 
-            foreach (Line Line in Diagram.Lines)
+            foreach (var ConnectionPoint in Diagram.ConnectionPoints)
+            {
+                var OnShapeViewModel = GetShapeViewModelByNumber(ConnectionPoint.OnShape);
+
+                if (OnShapeViewModel == null) { Debug.WriteLine("Load, OnShapeViewModel == null"); continue; }
+
+                new ConnectionPointViewModel(ConnectionPoint, OnShapeViewModel);
+            }
+
+            foreach (var Line in Diagram.Lines)
             {
                 var FromShapeViewModel = GetShapeViewModelByNumber(Line.FromShape);
                 var ToShapeViewModel   = GetShapeViewModelByNumber(Line.ToShape  );

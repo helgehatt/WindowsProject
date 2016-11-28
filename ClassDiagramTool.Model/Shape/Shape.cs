@@ -5,11 +5,12 @@ using System.ComponentModel;
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class Shape : IShape
     {
         private static int number;
 
-        public int Number { get; } = number++;
+        public int Number { get; set; } = number++;
 
         public double X { get; set; }
         public double Y { get; set; }
@@ -25,16 +26,9 @@ namespace ClassDiagramTool.Model
             new TextItem() { Value = "text1" },
             new TextItem() { Value = "text2" }
         };
-
-        public List<ConnectionPoint> Points { get; set; } = new List<ConnectionPoint>()
-        {
-            new ConnectionPoint() { Orientation = EConnectionPoint.North },
-            new ConnectionPoint() { Orientation = EConnectionPoint.South },
-            new ConnectionPoint() { Orientation = EConnectionPoint.East  },
-            new ConnectionPoint() { Orientation = EConnectionPoint.West  }
-        };
     }
 
+    [Serializable]
     public class TextItem
     {
         public string Value { get; set; }

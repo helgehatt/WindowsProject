@@ -5,7 +5,7 @@ namespace ClassDiagramTool.ViewModel
     public class CompositionViewModel : LineViewModel
     {
         public CompositionViewModel(ConnectionPointViewModel from, ConnectionPointViewModel to) 
-            : base(new Line() { Type = ELine.Aggregation }, from, to)
+            : base(new Line() { Type = ELine.Composition }, from, to)
         {
         }
     }
