@@ -26,7 +26,13 @@ namespace ClassDiagramTool.Commands
             MainViewModel = mainViewModel;
         }
 
-        public void Save(MouseButtonEventArgs e)
+        public void New()
+        {
+            ShapeViewModels.Clear();
+            LineViewModels.Clear();
+        }
+
+        public void Save()
         {
             Diagram Diagram = new Diagram()
             {
@@ -37,9 +43,9 @@ namespace ClassDiagramTool.Commands
             Serializer.AsyncSerializeToFile(Diagram, Directory.GetCurrentDirectory() + "\\testSave.XML");
         }
 
-        public void Load(MouseButtonEventArgs e)
+        public void Load()
         {
-            ShapeViewModels.Clear();
+            New();
 
             Diagram Diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
 
@@ -54,21 +60,26 @@ namespace ClassDiagramTool.Commands
                     case EShape.Interface   : ShapeViewModel = new InterfaceViewModel    (Shape) ;  break;
                 }
 
-                if (ShapeViewModel == null) { Debug.WriteLine("Load, Shape == null, shape:" + Shape); return; }
+                if (ShapeViewModel == null) { Debug.WriteLine("Load, ShapeViewModel == null"); continue; }
 
                 ShapeViewModels.Add(ShapeViewModel);
             }
 
             foreach (Line Line in Diagram.Lines)
             {
+                var FromShapeViewModel = GetShapeViewModelByNumber(Line.FromShape);
+                var ToShapeViewModel   = GetShapeViewModelByNumber(Line.ToShape  );
+
+                if (FromShapeViewModel == null || ToShapeViewModel == null)
+                { Debug.WriteLine("Load, FromShapeViewModel == null || ToShapeViewModel == null"); continue; }
+
+                var From = GetConnectionViewModelByNumber(FromShapeViewModel, Line.FromPoint);
+                var To   = GetConnectionViewModelByNumber(ToShapeViewModel  , Line.ToPoint  );
+
+                if (From == null || To == null) { Debug.WriteLine("Load, From == null || To == null"); continue; }
+
                 LineViewModel LineViewModel = null;
 
-                ShapeViewModel From = GetShapeViewModelByNumber(Line.FromNumber);
-                ShapeViewModel To   = GetShapeViewModelByNumber(Line.ToNumber  );
-
-                if (From == null || To == null) { Debug.WriteLine("Load, From == null || To == null, FromNumber: "
-                                                        + Line.FromNumber + " ToNumber: " + Line.ToNumber); return; }
-                
                 switch (Line.Type)
                 {
                     case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, To);   break;
@@ -80,7 +91,7 @@ namespace ClassDiagramTool.Commands
                     case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, To);   break;
                 }
 
-                if (LineViewModel == null) { Debug.WriteLine("Load, Line == null, line: " + Line); return; }
+                if (LineViewModel == null) { Debug.WriteLine("Load, LineViewModel == null"); continue; }
 
                 LineViewModels.Add(LineViewModel);
             }
@@ -88,9 +99,18 @@ namespace ClassDiagramTool.Commands
 
         private ShapeViewModel GetShapeViewModelByNumber(int number)
         {
-            foreach (ShapeViewModel ShapeViewModel in ShapeViewModels)
+            foreach (var ShapeViewModel in ShapeViewModels)
             {
                 if (ShapeViewModel.Number == number) return ShapeViewModel;
+            }
+            return null;
+        }
+
+        private ConnectionPointViewModel GetConnectionViewModelByNumber(ShapeViewModel shapeViewModel, int number)
+        {
+            foreach (var ConnectionPointViewModel in shapeViewModel.ConnectionPointViewModels)
+            {
+                if (ConnectionPointViewModel.Number == number) return ConnectionPointViewModel;
             }
             return null;
         }

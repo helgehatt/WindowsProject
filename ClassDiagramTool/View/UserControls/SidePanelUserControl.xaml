@@ -93,7 +93,7 @@
                 <StackPanel Style="{x:Null}">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
-                            <Setter Property="Command" Value="{Binding IsAddingLineCommand}"/>
+                            <Setter Property="Command" Value="{Binding StartAddingLineCommand}"/>
                         </Style>
                     </StackPanel.Resources>
                     <RadioButton IsChecked="{Binding Path=SelectedLine, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:ELine.Aggregation}}">

@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.CommandWpf;
 using ClassDiagramTool.Commands;
 using System.Windows.Controls;
 using ClassDiagramTool.Tools;
+using System.Collections.ObjectModel;
 
 namespace ClassDiagramTool.ViewModel
 {
@@ -12,17 +13,18 @@ namespace ClassDiagramTool.ViewModel
     {
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
+        
+        public Shape Shape { get; }
 
         private bool selected = false;
         private bool dragging = false;
 
-        public Shape Shape { get; }
-        public List<LineViewModel> LineViewModels { get; set; }
+        public ObservableCollection<ConnectionPointViewModel> ConnectionPointViewModels { get; set; } = new ObservableCollection<ConnectionPointViewModel>();
         #endregion
 
         #region Commands
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new MoveShapeCommand(this, e)));
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand  => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new EditTextCommand(e)), e => e.Source is TextBox);
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new MoveShapeCommand(this, e)), e => !MainViewModel.IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand  => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new EditTextCommand(e)), e => e.Source is TextBox && !MainViewModel.IsAddingLine);
         #endregion
 
 
@@ -31,12 +33,10 @@ namespace ClassDiagramTool.ViewModel
             Shape = shape;
 
             // Update Shape references
-            foreach (ConnectionPoint point in Points)
+            foreach (ConnectionPoint Point in Points)
             {
-                point.Shape = Shape;
+                ConnectionPointViewModels.Add(new ConnectionPointViewModel(Point, this));
             }
-
-            LineViewModels = new List<LineViewModel>();
         }
 
         public bool Selected
@@ -56,15 +56,19 @@ namespace ClassDiagramTool.ViewModel
         }
 
         #region Wrapper
-
         public int Number => Shape.Number;
 
         public double X {
             get { return Shape.X; }
             set { Shape.X = value;
                 OnPropertyChanged();
-                foreach (LineViewModel line in LineViewModels)
-                    line.CalculateLinePart();
+                
+                foreach (var ConnectionPointViewModel in ConnectionPointViewModels)
+                {
+                    ConnectionPointViewModel.Update();
+                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
+                        LineViewModel.CalculateLinePart();
+                }
             }
         }
 

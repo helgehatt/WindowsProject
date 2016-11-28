@@ -13,7 +13,7 @@ namespace ClassDiagramTool.Commands
 
         public EditTextCommand(MouseButtonEventArgs e)
         {
-            EditedTextBox = (TextBox)e.Source;
+            EditedTextBox = e.Source as TextBox;
             OriginalText = EditedTextBox.Text;
 
             KeyEventHandler enter = null;

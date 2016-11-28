@@ -78,17 +78,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\UndoRedoCommands\AddConnectionPointCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddShapeCommand.cs" />
     <Compile Include="Commands\ClipboardCommands.cs" />
     <Compile Include="Commands\UndoRedoCommands\DeleteShapeCommand.cs" />
     <Compile Include="Commands\DiagramCommands.cs" />
     <Compile Include="Commands\UndoRedoCommands\EditTextCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\MoveConnectionPointCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\MoveShapeCommand.cs" />
     <Compile Include="Commands\ObjectCommands.cs" />
     <Compile Include="Tools\SerializationController.cs" />
     <Compile Include="Tools\SelectedObjectsController.cs" />
     <Compile Include="Tools\EnumToBooleanConverter.cs" />
+    <Compile Include="ViewModel\ConnectionPointViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel\CompositionViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel\DependencyViewModel.cs" />
     <Compile Include="ViewModel\LineViewModel\DirectedAssociationViewModel.cs" />
@@ -122,6 +125,9 @@
     </Compile>
     <Compile Include="View\LineControls\InterfaceRealizationLineControl.xaml.cs">
       <DependentUpon>InterfaceRealizationLineControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserControls\ConnectionPointUserControl.xaml.cs">
+      <DependentUpon>ConnectionPointUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserControls\LineUserControl.xaml.cs">
       <DependentUpon>LineUserControl.xaml</DependentUpon>
@@ -200,6 +206,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Resources\StyleDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserControls\ConnectionPointUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -18,7 +18,7 @@ namespace ClassDiagramTool.View.Adorners
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            drawingContext.DrawRectangle(new SolidColorBrush(Colors.Transparent), new Pen(new SolidColorBrush(Colors.Navy), 2.0), new Rect(this.AdornedElement.DesiredSize));
+            drawingContext.DrawRectangle(new SolidColorBrush(Colors.Transparent), new Pen(new SolidColorBrush(Colors.Navy), 2.0), new Rect(AdornedElement.DesiredSize));
         }
     }
 }

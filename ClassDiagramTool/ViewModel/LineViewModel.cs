@@ -11,28 +11,27 @@ namespace ClassDiagramTool.ViewModel
 {
     public abstract class LineViewModel : BaseViewModel, ILine
     {
+        #region Fields
         private const int OFFSET = 20;
         private const int ARROW = 5;
 
-        private ShapeViewModel From { get; }
-        private ShapeViewModel To { get; }
-
-        private ConnectionPoint FP => From.Points[FromPoint];
-        private ConnectionPoint TP => To.Points[ToPoint];
+        public ConnectionPointViewModel From { get; set; }
+        public ConnectionPointViewModel To { get; set; }
 
         public Line Line { get; }
 
         public List<LinePart> LineParts { get; set; }
 
-        public List<Point> StartLineCap => CalculatePoints(FP);
-        public List<Point> EndLineCap   => CalculatePoints(TP);
+        public List<Point> StartLineCap => CalculateLineCapPoints(From);
+        public List<Point> EndLineCap   => CalculateLineCapPoints(To);
+        #endregion
 
         #region Wrapper
-        public int FromNumber => From.Number;
-        public int ToNumber => To.Number;
+        public int FromShape => From.Shape.Number;
+        public int ToShape   => To  .Shape.Number;
 
-        public int FromPoint => 0;
-        public int ToPoint => 0;
+        public int FromPoint => From.Number;
+        public int ToPoint   => To  .Number;
 
         public ELine Type => Line.Type;
 
@@ -42,24 +41,24 @@ namespace ClassDiagramTool.ViewModel
         }
         #endregion
 
-        protected LineViewModel(Line line, ShapeViewModel from, ShapeViewModel to)
+        public LineViewModel(Line line, ConnectionPointViewModel from, ConnectionPointViewModel to)
         {
             from.LineViewModels.Add(this);
             to  .LineViewModels.Add(this);
-            
-            Line = line;
+
             From = from;
-            To = to;
+            To   = to;
 
             CalculateLinePart();
         }
 
+        #region Calculations
         public void CalculateLinePart()
         {
             LineParts = new List<LinePart>();
 
-            CalculateLinePart(FP.Orientation, FP.X, FP.Y, TP.Orientation, TP.X, TP.Y, true);
-
+            CalculateLinePart(From.Orientation, From.X, From.Y, To.Orientation, To.X, To.Y, true);
+            
             OnPropertyChanged(nameof(LineParts));
             OnPropertyChanged(nameof(StartLineCap));
             OnPropertyChanged(nameof(EndLineCap));
@@ -117,7 +116,7 @@ namespace ClassDiagramTool.ViewModel
             CalculateLinePart(from, nextX, nextY, to, X2, Y2, false);
         }
 
-        private List<Point> CalculatePoints(ConnectionPoint p)
+        private List<Point> CalculateLineCapPoints(ConnectionPointViewModel p)
         {
             List<Point> Points = new List<Point>();
 
@@ -151,6 +150,7 @@ namespace ClassDiagramTool.ViewModel
 
             return Points;
         }
+        #endregion
     }
 
     public class LinePart

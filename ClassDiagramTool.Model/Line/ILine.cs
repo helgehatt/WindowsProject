@@ -6,8 +6,8 @@ namespace ClassDiagramTool.Model
     
     public interface ILine
     {
-        int FromNumber { get; }
-        int ToNumber { get; }
+        int FromShape { get; }
+        int ToShape { get; }
 
         int FromPoint { get; }
         int ToPoint { get; }

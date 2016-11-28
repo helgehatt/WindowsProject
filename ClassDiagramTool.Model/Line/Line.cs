@@ -1,12 +1,11 @@
-﻿
-
+﻿using System;
 
 namespace ClassDiagramTool.Model
 {
     public class Line : ILine
     {
-        public int FromNumber { get; set; }
-        public int ToNumber { get; set; }
+        public int FromShape { get; set; }
+        public int ToShape { get; set; }
 
         public int FromPoint { get; set; }
         public int ToPoint { get; set; }

@@ -22,7 +22,6 @@
         </Style>
 
         <Style TargetType="{x:Type Border}">
-            <Setter Property="Margin" Value="-1"/> <!-- Lines were one off -->
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Width" Value="{Binding Width}"/>
