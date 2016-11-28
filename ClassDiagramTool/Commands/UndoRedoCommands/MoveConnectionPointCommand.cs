@@ -75,12 +75,12 @@ namespace ClassDiagramTool.Commands.UndoRedoCommands
                 case EConnectionPoint.North:
                 case EConnectionPoint.South:
                     double HorizontalChange = e.GetPosition((e.Source as UserControl).Parent as ShapeControl).X - OriginalPosition.X;
-                    FinalPercentile = Math.Min(Math.Max(OriginalPercentile + HorizontalChange / ConnectionPointViewModel.Shape.Width, 0.0), 1.0);
+                    FinalPercentile = Math.Min(Math.Max(OriginalPercentile + HorizontalChange / ConnectionPointViewModel.ShapeViewModel.Width, 0.0), 1.0);
                     break;
                 case EConnectionPoint.East:
                 case EConnectionPoint.West:
                     double VerticalChange = e.GetPosition((e.Source as UserControl).Parent as ShapeControl).Y - OriginalPosition.Y;
-                    FinalPercentile = Math.Min(Math.Max(OriginalPercentile + VerticalChange / ConnectionPointViewModel.Shape.Height, 0.0), 1.0);
+                    FinalPercentile = Math.Min(Math.Max(OriginalPercentile + VerticalChange / ConnectionPointViewModel.ShapeViewModel.Height, 0.0), 1.0);
                     break;
             }
             ConnectionPointViewModel.Percentile = FinalPercentile;

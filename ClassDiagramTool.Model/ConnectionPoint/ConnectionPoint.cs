@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace ClassDiagramTool.Model
 {
+    [Serializable]
     public class ConnectionPoint : IConnectionPoint
     {
         private static int number;
 
-        public int Number { get; } = number++;
+        public int Number { get; set; } = number++;
+
+        public int OnShape { get; set; }
 
         public EConnectionPoint Orientation { get; set; }
 

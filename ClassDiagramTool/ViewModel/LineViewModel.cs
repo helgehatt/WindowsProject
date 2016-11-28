@@ -26,12 +26,47 @@ namespace ClassDiagramTool.ViewModel
         public List<Point> EndLineCap   => CalculateLineCapPoints(To);
         #endregion
 
-        #region Wrapper
-        public int FromShape => From.Shape.Number;
-        public int ToShape   => To  .Shape.Number;
+        public LineViewModel(Line line, ConnectionPointViewModel from, ConnectionPointViewModel to)
+        {
+            Line = line;
+            From = from;
+            To   = to;
 
-        public int FromPoint => From.Number;
-        public int ToPoint   => To  .Number;
+            From.LineViewModels.Add(this);
+            To.LineViewModels.Add(this);
+
+            FromShape = From.ShapeViewModel.Number;
+            ToShape   = To.ShapeViewModel.Number;
+
+            FromPoint = From.Number;
+            ToPoint   = To.Number;
+
+            CalculateLinePart();
+        }
+
+        #region Wrapper
+        public int FromShape
+        {
+            get { return Line.FromShape; }
+            set { Line.FromShape = value; }
+        }
+
+        public int ToShape
+        {
+            get { return Line.ToShape; }
+            set { Line.ToShape = value; }
+        }
+
+        public int FromPoint
+        {
+            get { return Line.FromPoint; }
+            set { Line.FromPoint = value; }
+        }
+        public int ToPoint
+        {
+            get { return Line.ToPoint; }
+            set { Line.ToPoint = value; }
+        }
 
         public ELine Type => Line.Type;
 
@@ -40,17 +75,6 @@ namespace ClassDiagramTool.ViewModel
             set { Line.Label = value; }
         }
         #endregion
-
-        public LineViewModel(Line line, ConnectionPointViewModel from, ConnectionPointViewModel to)
-        {
-            from.LineViewModels.Add(this);
-            to  .LineViewModels.Add(this);
-
-            From = from;
-            To   = to;
-
-            CalculateLinePart();
-        }
 
         #region Calculations
         public void CalculateLinePart()

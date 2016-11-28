@@ -20,7 +20,5 @@ namespace ClassDiagramTool.Model
 
         string Title { get; }
         List<TextItem> Text { get; }
-
-        List<ConnectionPoint> Points { get; }
     }
 }

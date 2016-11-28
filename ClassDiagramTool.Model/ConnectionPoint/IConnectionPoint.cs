@@ -10,6 +10,8 @@ namespace ClassDiagramTool.Model
     {
         int Number { get; }
 
+        int OnShape { get; }
+
         EConnectionPoint Orientation { get; }
 
         double Percentile { get; }

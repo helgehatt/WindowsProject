@@ -8,5 +8,6 @@ namespace ClassDiagramTool.Model
     {
         public List<Shape> Shapes { get; set; }
         public List<Line> Lines { get; set; }
+        public List<ConnectionPoint> ConnectionPoints { get; set; }
     }
 }

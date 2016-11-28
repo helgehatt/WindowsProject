@@ -17,29 +17,45 @@ namespace ClassDiagramTool.ViewModel
         #region Fields
         private UndoRedoController UndoRedoController => UndoRedoController.Instance;
 
-        public ConnectionPoint ConnectionPoint { get; }
-        
-        public ShapeViewModel ShapeViewModel { get; }
-
         public List<LineViewModel> LineViewModels { get; set; } = new List<LineViewModel>();
         
         public string Visibility => MainViewModel.IsAddingLine ? "Visible" : "Hidden";
         public void NotifyVisibility() { OnPropertyChanged(nameof(Visibility)); }
         #endregion
 
-        public RelayCommand<MouseButtonEventArgs> MoveConnectionPointCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new MoveConnectionPointCommand(this, e)));
+        //public RelayCommand<MouseButtonEventArgs> MoveConnectionPointCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new MoveConnectionPointCommand(this, e)));
         public RelayCommand<MouseButtonEventArgs> AddLineCommand => new RelayCommand<MouseButtonEventArgs>(MainViewModel.ObjectCommands.AddLine, e => e.Source is UserControl && MainViewModel.IsAddingLine);
+
+        public ConnectionPointViewModel(EConnectionPoint orientation, ShapeViewModel shapeViewModel)
+            : this(new ConnectionPoint() { Orientation = orientation}, shapeViewModel)
+        {
+        }
 
         public ConnectionPointViewModel(ConnectionPoint connectionPoint, ShapeViewModel shapeViewModel)
         {
             ConnectionPoint = connectionPoint;
             ShapeViewModel = shapeViewModel;
+
+            ShapeViewModel.ConnectionPointViewModels.Add(this);
+
+            OnShape = ShapeViewModel.Number;
         }
 
         #region Wrapper
-        public int Number => ConnectionPoint.Number;
+        public ConnectionPoint ConnectionPoint { get; }
+        public ShapeViewModel ShapeViewModel { get; set; }
 
-        public Shape Shape => ShapeViewModel.Shape;
+        public int Number
+        {
+            get { return ConnectionPoint.Number; }
+            set { ConnectionPoint.Number = value; }
+        }
+
+        public int OnShape
+        {
+            get { return ConnectionPoint.OnShape; }
+            set { ConnectionPoint.OnShape = value; }
+        }
 
         public EConnectionPoint Orientation => ConnectionPoint.Orientation;
 
@@ -54,10 +70,10 @@ namespace ClassDiagramTool.ViewModel
             {
                 switch (Orientation)
                 {
-                    case EConnectionPoint.North: return Shape.X + Shape.Width * Percentile;
-                    case EConnectionPoint.South: return Shape.X + Shape.Width * Percentile;
-                    case EConnectionPoint.East : return Shape.X + Shape.Width             ;
-                    default                    : return Shape.X + 0                       ;
+                    case EConnectionPoint.North: return ShapeViewModel.X + ShapeViewModel.Width * Percentile;
+                    case EConnectionPoint.South: return ShapeViewModel.X + ShapeViewModel.Width * Percentile;
+                    case EConnectionPoint.East : return ShapeViewModel.X + ShapeViewModel.Width             ;
+                    default                    : return ShapeViewModel.X + 0                       ;
                 }
             }
         }
@@ -68,10 +84,10 @@ namespace ClassDiagramTool.ViewModel
             {
                 switch (Orientation)
                 {
-                    case EConnectionPoint.South: return Shape.Y + Shape.Height             ;
-                    case EConnectionPoint.East : return Shape.Y + Shape.Height * Percentile;
-                    case EConnectionPoint.West : return Shape.Y + Shape.Height * Percentile;
-                    default                    : return Shape.Y + 0                        ;
+                    case EConnectionPoint.South: return ShapeViewModel.Y + ShapeViewModel.Height             ;
+                    case EConnectionPoint.East : return ShapeViewModel.Y + ShapeViewModel.Height * Percentile;
+                    case EConnectionPoint.West : return ShapeViewModel.Y + ShapeViewModel.Height * Percentile;
+                    default                    : return ShapeViewModel.Y + 0                        ;
                 }
             }
         }
@@ -80,7 +96,7 @@ namespace ClassDiagramTool.ViewModel
         public double Left => X - 6;
         public double Top  => Y - 6;
 
-        public void Update()
+        public void NotifyPosition()
         {
             OnPropertyChanged(nameof(Left));
             OnPropertyChanged(nameof(Top));
