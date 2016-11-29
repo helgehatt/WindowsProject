@@ -38,13 +38,7 @@ namespace ClassDiagramTool.Commands
 
             SelectedObjectsController.DeselectAll();
 
-            // Remove all lines the selected shapes were connected to
-            foreach (var ShapeViewModel in SelectedShapeViewModels)
-                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
-                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
-                        LineViewModels.Remove(LineViewModel);
-
-            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
+            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, LineViewModels, SelectedShapeViewModels));
         }
 
         public void Copy()
