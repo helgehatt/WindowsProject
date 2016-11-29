@@ -9,30 +9,27 @@ using System.Windows.Interactivity;
 
 namespace ClassDiagramTool.Commands
 {
-    class MoveShape : IUndoRedoCommand
+    class MoveShapeCommand : IUndoRedoCommand
     {
         private ShapeViewModel ViewModel;
         private Point OriginalPosition;
         private Point FinalPosition;
         private Point CursorOffset;
 
-        public MoveShape(ShapeViewModel viewModel, MouseButtonEventArgs e)
+        public MoveShapeCommand(ShapeViewModel viewModel, MouseButtonEventArgs e)
         {
             ViewModel = viewModel;
             UserControl MovedElement = (UserControl) e.Source;
 
             //Setup move command.
-            SetupMoveShape(MovedElement, e);
+            Setup(MovedElement, e);
 
             //Construct and add event handlers to moving element.
-            MouseEventHandler MouseMove = new MouseEventHandler(
-                (object sender, MouseEventArgs e1) => {
-                    UpdateMoveShape(e1);
-                });
+            MouseEventHandler MouseMove = new MouseEventHandler(Update);
             MouseButtonEventHandler MouseUp = null;
             MouseUp = new MouseButtonEventHandler( //This delegate ends the move command and removes event handlers from element.
                 (object sender, MouseButtonEventArgs e2) => {
-                    FinalizeMoveShape(e2);
+                    Completed(e2);
                     MovedElement.MouseMove -= MouseMove;
                     MovedElement.MouseLeftButtonUp -= MouseUp;
                 });
@@ -56,7 +53,7 @@ namespace ClassDiagramTool.Commands
             ViewModel.Y = OriginalPosition.Y;
         }
 
-        private void SetupMoveShape(UserControl element, MouseButtonEventArgs e)
+        private void Setup(UserControl element, MouseButtonEventArgs e)
         {
             //element.Cursor = Cursors.Hand;
             ViewModel.Dragging = true;
@@ -69,7 +66,7 @@ namespace ClassDiagramTool.Commands
             CursorOffset = new Point(OriginalPosition.X - CursorPos.X, OriginalPosition.Y - CursorPos.Y);
         }
 
-        private void FinalizeMoveShape(MouseButtonEventArgs e)
+        private void Completed(MouseButtonEventArgs e)
         {
             Mouse.Capture(null);
             //((UserControl)e.Source).Cursor = Cursors.Arrow;
@@ -78,7 +75,7 @@ namespace ClassDiagramTool.Commands
                 UndoRedoController.Instance.AddAndExecute(this);
         }
 
-        private void UpdateMoveShape(MouseEventArgs e)
+        private void Update(object sender, MouseEventArgs e)
         {
             //Get new position.
             Point MoveToPosition = e.GetPosition((e.Source as UserControl).Parent as Canvas);

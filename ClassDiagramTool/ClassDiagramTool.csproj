@@ -81,8 +81,8 @@
     <Compile Include="Commands\AddLineCommand.cs" />
     <Compile Include="Commands\AddShapeCommand.cs" />
     <Compile Include="Commands\DeleteObjectCommand.cs" />
-    <Compile Include="Commands\EditText.cs" />
-    <Compile Include="Commands\MoveShape.cs" />
+    <Compile Include="Commands\EditTextCommand.cs" />
+    <Compile Include="Commands\MoveShapeCommand.cs" />
     <Compile Include="Commands\SelectObjectCommand.cs" />
     <Compile Include="Commands\Serializer.cs" />
     <Compile Include="ViewModel\SelectedObjectsCollection.cs" />

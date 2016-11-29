@@ -52,6 +52,7 @@
         <ControlTemplate TargetType="UserControl">
 
             <Border>
+                
 
                 <Grid>
                     

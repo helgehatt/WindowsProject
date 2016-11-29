@@ -6,13 +6,13 @@ using System.Windows.Input;
 
 namespace ClassDiagramTool.Commands
 {
-    class EditText : IUndoRedoCommand
+    class EditTextCommand : IUndoRedoCommand
     {
         private TextBox EditedTextBox;
         private string OriginalText;
         private string NewText;
 
-        public EditText(MouseButtonEventArgs e)
+        public EditTextCommand(MouseButtonEventArgs e)
         {
             EditedTextBox = (TextBox)e.Source;
             OriginalText = EditedTextBox.Text;
