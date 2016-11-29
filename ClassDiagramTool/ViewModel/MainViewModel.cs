@@ -26,6 +26,7 @@ namespace ClassDiagramTool.ViewModel
         public static ObjectCommands    ObjectCommands;
 
         public static bool IsAddingLine { get; set; }
+        public static string StatusText { get; set; } = "Ready";
 
         public EShape SelectedShape { get; set; }
         public ELine  SelectedLine  { get; set; }

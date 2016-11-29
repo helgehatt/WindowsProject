@@ -53,15 +53,13 @@
 
             <Border>
 
-                <Grid>
-                    
+                <Grid Background="Transparent">                    
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                 
+                    </Grid.RowDefinitions>                 
 
-                    <Label Content="{Binding Type}" 
+                    <Label Content="{Binding Type}"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Top" 
                            Margin="0,-5,0,0" 

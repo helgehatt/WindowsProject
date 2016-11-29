@@ -62,6 +62,15 @@ namespace ClassDiagramTool.Commands
         public void DeleteShapes()
         {
             List<ShapeViewModel> SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
+
+            SelectedObjectsController.DeselectAll();
+
+            // Remove all lines the selected shapes were connected to
+            foreach (var ShapeViewModel in SelectedShapeViewModels)
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
+                        LineViewModels.Remove(LineViewModel);
+
             UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
         }
 

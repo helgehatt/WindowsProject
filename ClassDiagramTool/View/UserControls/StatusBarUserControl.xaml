@@ -6,38 +6,8 @@
              xmlns:local="clr-namespace:ClassDiagramTool.View.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="800">
-    <UserControl.Resources>
-    </UserControl.Resources>
-    
-    <StatusBar Background="Transparent">
-        <StatusBar.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="20"/>
-                    </Grid.ColumnDefinitions>
-                </Grid>
-            </ItemsPanelTemplate>
-        </StatusBar.ItemsPanel>
-        <StatusBarItem Grid.Column="1">
-            <TextBlock Text="Ready"/>
-        </StatusBarItem>
-        <StatusBarItem Grid.Column="2">
-            <TextBlock Text="-"/>
-        </StatusBarItem>
-        <StatusBarItem Grid.Column="3">
-            <Slider Width="100"/>
-        </StatusBarItem>
-        <StatusBarItem Grid.Column="4">
-            <TextBlock Text="+"/>
-        </StatusBarItem>
-    </StatusBar>
+
+    <Grid Height="20" VerticalAlignment="Center" Margin="20,0,0,0">
+        <TextBlock Text="{Binding StatusText}"/>
+    </Grid>
 </UserControl>

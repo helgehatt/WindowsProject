@@ -20,6 +20,7 @@ namespace ClassDiagramTool.Commands
         private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
         public ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
+        public ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
 
         public ClipboardCommands(MainViewModel mainViewModel)
         {
@@ -34,6 +35,14 @@ namespace ClassDiagramTool.Commands
 
             Clipboard.Clear();
             Clipboard.SetData("Shapes", Shapes);
+
+            SelectedObjectsController.DeselectAll();
+
+            // Remove all lines the selected shapes were connected to
+            foreach (var ShapeViewModel in SelectedShapeViewModels)
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
+                        LineViewModels.Remove(LineViewModel);
 
             UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
         }
