@@ -19,8 +19,8 @@ namespace ClassDiagramTool.Commands
         private SelectedObjectsController SelectedObjectsController => SelectedObjectsController.Instance;
         private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
-        public ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
-        public ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
+        private ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
+        private ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
 
         public ClipboardCommands(MainViewModel mainViewModel)
         {
