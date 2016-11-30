@@ -1,5 +1,6 @@
-﻿using ClassDiagramTool.UndoRedo;
-using ClassDiagramTool.ViewModel.Shapes;
+﻿
+using ClassDiagramTool.Tools;
+using ClassDiagramTool.ViewModel;
 
 namespace ClassDiagramTool.Commands
 {
@@ -25,7 +26,7 @@ namespace ClassDiagramTool.Commands
             NewWidth = Shape.Width;
             NewHeight = Shape.Height;
             if (OriginalX != NewX || OriginalY != NewY || OriginalWidth != NewWidth || OriginalHeight != NewHeight)
-                UndoRedoController.Instance.AddAndExecute(this);
+                UndoRedoController.Instance.Execute(this);
         }
 
         public void Execute()

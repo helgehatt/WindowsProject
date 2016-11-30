@@ -23,6 +23,8 @@ namespace ClassDiagramTool.Commands
 
         private ConnectionPointViewModel From;
 
+        private bool IsAddingLine = false;
+
         private EShape SelectedShape => MainViewModel.SelectedShape;
         private ELine  SelectedLine  => MainViewModel.SelectedLine;
 
@@ -36,6 +38,8 @@ namespace ClassDiagramTool.Commands
 
         public void AddShapes(MouseButtonEventArgs e)
         {
+            if (IsAddingLine) return;
+
             Canvas Canvas = e.Source as Canvas;
 
             Point MousePos = Mouse.GetPosition(Canvas);
@@ -62,11 +66,16 @@ namespace ClassDiagramTool.Commands
         public void DeleteShapes()
         {
             List<ShapeViewModel> SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
-            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
+
+            SelectedObjectsController.DeselectAll();
+
+            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, LineViewModels, SelectedShapeViewModels));
         }
 
         public void SelectShape(MouseButtonEventArgs e)
         {
+            if (IsAddingLine) return;
+
             if (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift))
             {
                 if (SelectedObjectsController.IsSelected(e.Source as ShapeControl))
@@ -82,6 +91,8 @@ namespace ClassDiagramTool.Commands
 
         public void AddLine(MouseButtonEventArgs e)
         {
+            if (!IsAddingLine) return;
+
             var UserControl = e.Source as UserControl;
             
             if (UserControl == null) { Debug.WriteLine("AddLine, UserControl == null"); return; }
@@ -115,6 +126,8 @@ namespace ClassDiagramTool.Commands
 
         public void AddConnectionPoint(MouseButtonEventArgs e)
         {
+            if (!IsAddingLine) return;
+
             if (!Keyboard.IsKeyDown(Key.LeftShift) && !Keyboard.IsKeyDown(Key.RightShift)) return;
 
             var ShapeControl = e.Source as ShapeControl;
@@ -148,35 +161,40 @@ namespace ClassDiagramTool.Commands
                     break;
             }
 
+            ConnectionPointViewModel.Visibility = "Visible";
+
             UndoRedoController.Execute(new AddConnectionPointCommand(ShapeViewModel.ConnectionPointViewModels, ConnectionPointViewModel));
         }
 
         public void StartAddingLine()
         {
-            if (MainViewModel.IsAddingLine) return;
+            if (IsAddingLine) return;
 
-            MainViewModel.IsAddingLine = true;
+            IsAddingLine = true;
 
             foreach (var ShapeViewModel in ShapeViewModels)
                 foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
-                    ConnectionPointViewModel.NotifyVisibility();
+                    ConnectionPointViewModel.Visibility = "Visible";
 
             SelectedObjectsController.DeselectAll();
 
-            // Blur canvas
+            MainViewModel.StatusText = "Connect mode";
+            MainViewModel.BlurredCanvas = true;
         }
 
         public void StopAddingLine()
         {
-            if (!MainViewModel.IsAddingLine) return;
+            if (!IsAddingLine) return;
 
-            MainViewModel.IsAddingLine = false;
+            IsAddingLine = false;
             From = null;
 
             foreach (var ShapeViewModel in ShapeViewModels)
                 foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
-                    ConnectionPointViewModel.NotifyVisibility();
+                    ConnectionPointViewModel.Visibility = "Hidden";
 
+            MainViewModel.StatusText = "Ready";
+            MainViewModel.BlurredCanvas = false;
         }
     }
 }

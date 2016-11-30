@@ -19,8 +19,11 @@
                                  Height="11"
                                  Stroke="Black"
                                  StrokeThickness="2"
-                                 Fill="DimGray"
-                                 Visibility="{Binding Visibility}"/>
+                                 Visibility="{Binding Visibility}">
+                            <Ellipse.Fill>
+                                <SolidColorBrush Color="#505050"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="Ellipse" Property="Fill" Value="AntiqueWhite"/>
@@ -31,12 +34,6 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseLeftButtonDown">
-            <cmd:EventToCommand Command="{Binding AddLineCommand}" PassEventArgsToCommand="True"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <UserControl/>
     

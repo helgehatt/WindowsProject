@@ -7,11 +7,13 @@ namespace ClassDiagramTool.Commands
     class DeleteShapeCommand : IUndoRedoCommand
     {
         private ObservableCollection<ShapeViewModel> ShapeViewModels;
+        private ObservableCollection<LineViewModel>  LineViewModels;
         private List<ShapeViewModel> SelectedShapeViewModels;
 
-        public DeleteShapeCommand(ObservableCollection<ShapeViewModel> shapeViewModels, List<ShapeViewModel> selectedShapeViewModels)
+        public DeleteShapeCommand(ObservableCollection<ShapeViewModel> shapeViewModels, ObservableCollection<LineViewModel> lineViewModels, List<ShapeViewModel> selectedShapeViewModels)
         {
             ShapeViewModels = shapeViewModels;
+            LineViewModels  = lineViewModels;
             SelectedShapeViewModels = selectedShapeViewModels;
         }
 
@@ -20,6 +22,10 @@ namespace ClassDiagramTool.Commands
             foreach (ShapeViewModel ShapeViewModel in SelectedShapeViewModels)
             {
                 ShapeViewModels.Remove(ShapeViewModel);
+                
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
+                        LineViewModels.Remove(LineViewModel);
             }
 
         }
@@ -29,6 +35,10 @@ namespace ClassDiagramTool.Commands
             foreach (ShapeViewModel ShapeViewModel in SelectedShapeViewModels)
             {
                 ShapeViewModels.Add(ShapeViewModel);
+
+                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
+                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
+                        LineViewModels.Add(LineViewModel);
             }
         }
     }
