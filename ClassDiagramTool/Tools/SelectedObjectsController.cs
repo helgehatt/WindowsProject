@@ -17,17 +17,14 @@ namespace ClassDiagramTool.Tools
 
         public void AddSelect(UserControl element)
         {
-            //(element.DataContext as ShapeViewModel).Selected = true;
             SelectionList.Add(element);
             AdornerLayer.GetAdornerLayer(element).Add(new ResizeAdorner(element));
             AdornerLayer.GetAdornerLayer(element).Add(new SelectionAdorner(element));
-            //AdornerLayer.GetAdornerLayer(element).Add(new ConnectionPointAdorner(element));
         }
 
         public void Select(UserControl element)
         {
             SelectionList.ForEach((current) => {
-                //(current.DataContext as ShapeViewModel).Selected = false;
                 RemoveAdorner(current);
             });
             SelectionList.Clear();
@@ -36,7 +33,6 @@ namespace ClassDiagramTool.Tools
 
         public void Deselect(UserControl element)
         {
-            //(element.DataContext as ShapeViewModel).Selected = false;
             SelectionList.Remove(element);
             RemoveAdorner(element);
         }
@@ -59,7 +55,7 @@ namespace ClassDiagramTool.Tools
                 {
                     foreach (Adorner adorner in AdornerLayer.GetAdornerLayer(element).GetAdorners(element))
                     {
-                        if (adorner is SelectionAdorner || adorner is ResizeAdorner || adorner is ConnectionPointAdorner)
+                        if (adorner is SelectionAdorner || adorner is ResizeAdorner)
                             AdornerLayer.GetAdornerLayer(element).Remove(adorner);
                     }
                 }

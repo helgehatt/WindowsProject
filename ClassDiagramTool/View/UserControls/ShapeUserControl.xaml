@@ -57,6 +57,7 @@
         <ControlTemplate TargetType="{x:Type UserControl}">
 
             <Border>
+                
 
                 <Grid Background="Transparent">                    
                     <Grid.RowDefinitions>
