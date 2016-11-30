@@ -50,10 +50,10 @@
                                 <Setter Property="Background" Value="Gray"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Background" Value="DimGray"/>
+                                <Setter TargetName="border" Property="Background" Value="DarkGray"/>
                             </Trigger>
                             <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="Gray"/>
+                                <Setter Property="Background" Value="Gray"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -68,6 +68,11 @@
             
             <Expander Header="Shapes" IsExpanded="True">
                 <StackPanel Style="{x:Null}">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">
+                            <Setter Property="Command" Value="{Binding StopAddingLineCommand}"/>
+                        </Style>
+                    </StackPanel.Resources>
                     <RadioButton IsChecked="{Binding Path=SelectedShape, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static model:EShape.Class}}">
                         <StackPanel>
                             <Image Source="/ClassDiagramTool;component/Images/New.png"/>
@@ -89,7 +94,7 @@
                 </StackPanel>
             </Expander>
 
-            <Expander Header="Lines">
+            <Expander Header="Lines" IsExpanded="True">
                 <StackPanel Style="{x:Null}">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type RadioButton}" BasedOn="{StaticResource {x:Type RadioButton}}">

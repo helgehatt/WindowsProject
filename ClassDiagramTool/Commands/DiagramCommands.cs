@@ -18,8 +18,8 @@ namespace ClassDiagramTool.Commands
 
         private SerializationController Serializer => SerializationController.Instance;
 
-        public ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
-        public ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
+        private ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
+        private ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
 
         public DiagramCommands(MainViewModel mainViewModel)
         {
@@ -34,7 +34,6 @@ namespace ClassDiagramTool.Commands
 
         public void Save()
         {
-
             Diagram Diagram = new Diagram()
             {
                 Shapes = new List<Shape>(ShapeViewModels.Select(o => o.Shape).ToList()),

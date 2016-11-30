@@ -41,6 +41,8 @@ namespace ClassDiagramTool.Tools
         {
             foreach (var element in SelectionList)
                 RemoveAdorner(element);
+
+            SelectionList.Clear();
         }
 
         void RemoveAdorner(UIElement element)

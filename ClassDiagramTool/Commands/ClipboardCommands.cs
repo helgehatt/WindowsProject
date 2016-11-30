@@ -19,7 +19,8 @@ namespace ClassDiagramTool.Commands
         private SelectedObjectsController SelectedObjectsController => SelectedObjectsController.Instance;
         private UndoRedoController        UndoRedoController        => UndoRedoController.Instance;
 
-        public ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
+        private ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
+        private ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
 
         public ClipboardCommands(MainViewModel mainViewModel)
         {
@@ -35,7 +36,9 @@ namespace ClassDiagramTool.Commands
             Clipboard.Clear();
             Clipboard.SetData("Shapes", Shapes);
 
-            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, SelectedShapeViewModels));
+            SelectedObjectsController.DeselectAll();
+
+            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, LineViewModels, SelectedShapeViewModels));
         }
 
         public void Copy()
