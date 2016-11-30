@@ -1,5 +1,5 @@
 ﻿using ClassDiagramTool.Commands;
-using ClassDiagramTool.ViewModel.Shapes;
+using ClassDiagramTool.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
