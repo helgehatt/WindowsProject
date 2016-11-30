@@ -1,4 +1,5 @@
 ﻿using ClassDiagramTool.View.Adorners;
+using ClassDiagramTool.ViewModel.Adorners;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
