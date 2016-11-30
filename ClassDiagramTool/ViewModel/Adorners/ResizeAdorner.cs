@@ -1,6 +1,4 @@
-﻿using ClassDiagramTool.Commands;
-using ClassDiagramTool.ViewModel.Shapes;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -8,7 +6,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace ClassDiagramTool.View.Adorners
+namespace ClassDiagramTool.ViewModel.Adorners
 {
     class ResizeAdorner : Adorner
     {
