@@ -78,7 +78,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\UndoRedoCommands\ResizeShapeCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddConnectionPointCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddShapeCommand.cs" />
