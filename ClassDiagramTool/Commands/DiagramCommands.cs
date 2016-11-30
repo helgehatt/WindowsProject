@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace ClassDiagramTool.Commands
@@ -32,8 +33,25 @@ namespace ClassDiagramTool.Commands
             LineViewModels.Clear();
         }
 
-        public void Save()
+        public string SaveInitialDirectory = Directory.GetCurrentDirectory();
+        public string SavePath = null;
+
+        public void Save() => Save(false);
+        public void Save(bool saveAs)
         {
+            if (saveAs || SavePath == null)
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "XML Files (.xml)|*.xml|All Files (*.*)|*.*";
+                dialog.FilterIndex = 1;
+                dialog.DefaultExt = "xml";
+                dialog.InitialDirectory = SaveInitialDirectory;
+                DialogResult result = dialog.ShowDialog();
+
+                if (result != DialogResult.OK) return;
+                SavePath = dialog.FileName;
+            }
+
             Diagram Diagram = new Diagram()
             {
                 Shapes = new List<Shape>(ShapeViewModels.Select(o => o.Shape).ToList()),
@@ -45,14 +63,26 @@ namespace ClassDiagramTool.Commands
                 foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
                     Diagram.ConnectionPoints.Add(ConnectionPointViewModel.ConnectionPoint);
 
-            Serializer.AsyncSerializeToFile(Diagram, Directory.GetCurrentDirectory() + "\\testSave.XML");
+            Serializer.AsyncSerializeToFile(Diagram, SavePath);
         }
+
+        public string LoadInitialDirectory = Directory.GetCurrentDirectory();
 
         public void Load()
         {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "XML Files (.xml)|*.xml|All Files (*.*)|*.*";
+            dialog.FilterIndex = 1;
+            dialog.Multiselect = false;
+            dialog.InitialDirectory = Directory.GetCurrentDirectory();
+            DialogResult result = dialog.ShowDialog();
+
+            if (result != DialogResult.OK) return;
+            string Path = dialog.FileName;
+
             New();
 
-            Diagram Diagram = Serializer.DeserializeFromFile(Directory.GetCurrentDirectory() + "\\testSave.XML");
+            Diagram Diagram = Serializer.DeserializeFromFile(Path);
 
             foreach (var Shape in Diagram.Shapes)
             {
