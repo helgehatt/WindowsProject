@@ -21,7 +21,7 @@ namespace ClassDiagramTool.ViewModel
         #endregion
 
         #region Commands
-        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new MoveShapeCommand(this, e)), e => !MainViewModel.IsAddingLine);
+        public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShapeCommand(this, e), e => !MainViewModel.IsAddingLine);
         public RelayCommand<MouseButtonEventArgs> EditTextCommand  => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new EditTextCommand(e)), e => e.Source is TextBox && !MainViewModel.IsAddingLine);
         #endregion
 

@@ -1,4 +1,5 @@
-﻿using ClassDiagramTool.ViewModel;
+﻿using ClassDiagramTool.Commands;
+using ClassDiagramTool.ViewModel.Shapes;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,9 +65,12 @@ namespace ClassDiagramTool.View.Adorners
 
             double OldWidth = element.Width;
             double NewWidth = Math.Max(element.Width + e.HorizontalChange, hitThumb.DesiredSize.Width);
-            double OldX = element.X;
-            element.X = OldX - (OldWidth - NewWidth);
-            element.Width = Math.Max(element.Width - e.HorizontalChange, hitThumb.DesiredSize.Width);
+            if (element.Width - e.HorizontalChange > hitThumb.DesiredSize.Width)
+            {
+                double OldX = element.X;
+                element.X = OldX - (OldWidth - NewWidth);
+                element.Width = Math.Max(element.Width - e.HorizontalChange, hitThumb.DesiredSize.Width);
+            }
         }
 
         private void HandleBottom(object sender, DragDeltaEventArgs e)
@@ -84,12 +88,15 @@ namespace ClassDiagramTool.View.Adorners
 
             double OldHeight = element.Height;
             double NewHeight = Math.Max(e.VerticalChange + element.Height, hitThumb.DesiredSize.Height);
-            double OldY = element.Y;
-            element.Y = OldY - (OldHeight - NewHeight);
-            element.Height = Math.Max(element.Height - e.VerticalChange, hitThumb.DesiredSize.Height);
+            if (element.Height - e.VerticalChange > hitThumb.DesiredSize.Height)
+            {
+                double OldY = element.Y;
+                element.Y = OldY - (OldHeight - NewHeight);
+                element.Height = Math.Max(element.Height - e.VerticalChange, hitThumb.DesiredSize.Height);
+            }
         }
 
-        void HandleBottomRight(object sender, DragDeltaEventArgs e)
+        private void HandleBottomRight(object sender, DragDeltaEventArgs e)
         {
             ShapeViewModel element = (this.AdornedElement as UserControl).DataContext as ShapeViewModel;
             Thumb hitThumb = sender as Thumb;
@@ -97,8 +104,8 @@ namespace ClassDiagramTool.View.Adorners
             element.Width = Math.Max(element.Width + e.HorizontalChange, hitThumb.DesiredSize.Width);
             element.Height = Math.Max(e.VerticalChange + element.Height, hitThumb.DesiredSize.Height);
         }
-        
-        void HandleTopRight(object sender, DragDeltaEventArgs e)
+
+        private void HandleTopRight(object sender, DragDeltaEventArgs e)
         {
             ShapeViewModel element = (this.AdornedElement as UserControl).DataContext as ShapeViewModel;
             Thumb hitThumb = sender as Thumb;
@@ -107,39 +114,51 @@ namespace ClassDiagramTool.View.Adorners
 
             double OldHeight = element.Height;
             double NewHeight = Math.Max(e.VerticalChange + element.Height, hitThumb.DesiredSize.Height);
-            double OldY = element.Y;
-            element.Y = OldY - (OldHeight - NewHeight);
-            element.Height = Math.Max(element.Height - e.VerticalChange, hitThumb.DesiredSize.Height);
+            if (element.Height - e.VerticalChange > hitThumb.DesiredSize.Height)
+            {
+                double OldY = element.Y;
+                element.Y = OldY - (OldHeight - NewHeight);
+                element.Height = Math.Max(element.Height - e.VerticalChange, hitThumb.DesiredSize.Height);
+            }
         }
-        
-        void HandleTopLeft(object sender, DragDeltaEventArgs e)
+
+        private void HandleTopLeft(object sender, DragDeltaEventArgs e)
         {
             ShapeViewModel element = (this.AdornedElement as UserControl).DataContext as ShapeViewModel;
             Thumb hitThumb = sender as Thumb;
             
             double OldWidth = element.Width;
             double NewWidth = Math.Max(element.Width + e.HorizontalChange, hitThumb.DesiredSize.Width);
-            double OldX = element.X;
-            element.X = OldX - (OldWidth - NewWidth);
-            element.Width = Math.Max(element.Width - e.HorizontalChange, hitThumb.DesiredSize.Width);
+            if (element.Width - e.HorizontalChange > hitThumb.DesiredSize.Width)
+            {
+                double OldX = element.X;
+                element.X = OldX - (OldWidth - NewWidth);
+                element.Width = Math.Max(element.Width - e.HorizontalChange, hitThumb.DesiredSize.Width);
+            }
 
             double OldHeight = element.Height;
             double NewHeight = Math.Max(e.VerticalChange + element.Height, hitThumb.DesiredSize.Height);
-            double OldY = element.Y;
-            element.Y = OldY - (OldHeight - NewHeight);
-            element.Height = Math.Max(element.Height - e.VerticalChange, hitThumb.DesiredSize.Height);
+            if (element.Height - e.VerticalChange > hitThumb.DesiredSize.Height)
+            {
+                double OldY = element.Y;
+                element.Y = OldY - (OldHeight - NewHeight);
+                element.Height = Math.Max(element.Height - e.VerticalChange, hitThumb.DesiredSize.Height);
+            }
         }
-        
-        void HandleBottomLeft(object sender, DragDeltaEventArgs e)
+
+        private void HandleBottomLeft(object sender, DragDeltaEventArgs e)
         {
             ShapeViewModel element = (this.AdornedElement as UserControl).DataContext as ShapeViewModel;
             Thumb hitThumb = sender as Thumb;
 
             double OldWidth = element.Width;
             double NewWidth = Math.Max(element.Width + e.HorizontalChange, hitThumb.DesiredSize.Width);
-            double OldX = element.X;
-            element.X = OldX - (OldWidth - NewWidth);
-            element.Width = Math.Max(element.Width - e.HorizontalChange, hitThumb.DesiredSize.Width);
+            if (element.Width - e.HorizontalChange > hitThumb.DesiredSize.Width)
+            {
+                double OldX = element.X;
+                element.X = OldX - (OldWidth - NewWidth);
+                element.Width = Math.Max(element.Width - e.HorizontalChange, hitThumb.DesiredSize.Width);
+            }
 
             element.Height = Math.Max(e.VerticalChange + element.Height, hitThumb.DesiredSize.Height);
         }
@@ -174,6 +193,10 @@ namespace ClassDiagramTool.View.Adorners
             thumb.Height = 10;
             thumb.Width = 10;
             thumb.Opacity = 0.00;
+
+            ResizeShapeCommand command = null;
+            thumb.DragStarted += new DragStartedEventHandler((sender, e) => command = new ResizeShapeCommand((this.AdornedElement as UserControl).DataContext as ShapeViewModel));
+            thumb.DragCompleted += new DragCompletedEventHandler((sender, e) => command.FinalizeResize());
 
             visualChildren.Add(thumb);
         }
