@@ -83,6 +83,7 @@
     <Compile Include="Commands\DeleteObjectCommand.cs" />
     <Compile Include="Commands\EditTextCommand.cs" />
     <Compile Include="Commands\MoveShapeCommand.cs" />
+    <Compile Include="Commands\ResizeShapeCommand.cs" />
     <Compile Include="Commands\SelectObjectCommand.cs" />
     <Compile Include="Commands\Serializer.cs" />
     <Compile Include="ViewModel\SelectedObjectsCollection.cs" />
@@ -96,7 +97,7 @@
     <Compile Include="ViewModel\Shapes\EnumerationViewModel.cs" />
     <Compile Include="ViewModel\Shapes\InterfaceViewModel.cs" />
     <Compile Include="View\Adorners\ConnectionPointAdorner.cs" />
-    <Compile Include="View\Adorners\ResizeAdorner.cs" />
+    <Compile Include="ViewModel\Adorners\ResizeAdorner.cs" />
     <Compile Include="View\Adorners\SelectionAdorner.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <SubType>Code</SubType>

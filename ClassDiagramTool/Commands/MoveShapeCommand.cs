@@ -80,6 +80,8 @@ namespace ClassDiagramTool.Commands
             //Get new position.
             Point MoveToPosition = e.GetPosition((e.Source as UserControl).Parent as Canvas);
             MoveToPosition.Offset(CursorOffset.X, CursorOffset.Y);
+            if (MoveToPosition.X < 0) MoveToPosition.X = 0;
+            if (MoveToPosition.Y < 0) MoveToPosition.Y = 0;
             ViewModel.X = MoveToPosition.X;
             ViewModel.Y = MoveToPosition.Y;
             FinalPosition = new Point(MoveToPosition.X, MoveToPosition.Y);
