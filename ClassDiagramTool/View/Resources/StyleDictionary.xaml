@@ -3,9 +3,9 @@
                     xmlns:local="clr-namespace:ClassDiagramTool.View.Resources">
 
     <!-- GENERAL -->    
-    <Style TargetType="{x:Type TextBlock}">
+    <!--<Style TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="LightGray"/>
-    </Style>
+    </Style>-->
 
     <Style TargetType="{x:Type UserControl}">
         <Setter Property="Background" Value="DimGray"/>
