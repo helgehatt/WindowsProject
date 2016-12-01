@@ -20,6 +20,9 @@
         <Button Command="{Binding SaveDiagramCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Save.png"/>
         </Button>
+        <Button Command="{Binding SaveAsDiagramCommand}">
+            <Image Source="/ClassDiagramTool;component/Images/Save.png"/>
+        </Button>
         <Button Command="{Binding LoadDiagramCommand}">
             <Image Source="/ClassDiagramTool;component/Images/Open.png"/>
         </Button>

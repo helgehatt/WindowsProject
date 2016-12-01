@@ -70,6 +70,7 @@ namespace ClassDiagramTool.ViewModel
         /* Diagram Commands */
         public RelayCommand NewDiagramCommand  => new RelayCommand(DiagramCommands.New );
         public RelayCommand SaveDiagramCommand => new RelayCommand(DiagramCommands.Save);
+        public RelayCommand SaveAsDiagramCommand => new RelayCommand(() => {DiagramCommands.Save(true);});
         public RelayCommand LoadDiagramCommand => new RelayCommand(DiagramCommands.Load);
 
         /* Clipboard Commands */

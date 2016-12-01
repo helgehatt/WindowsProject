@@ -29,6 +29,12 @@ namespace ClassDiagramTool.Commands
 
         public void New()
         {
+            DialogResult result = MessageBox.Show("Do you want to save your current project?", "WindowsProject",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.None);
+            if (result == DialogResult.Yes)
+                Save();
+            else if (result == DialogResult.Cancel) return;
+
             ShapeViewModels.Clear();
             LineViewModels.Clear();
         }
@@ -70,6 +76,12 @@ namespace ClassDiagramTool.Commands
 
         public void Load()
         {
+            DialogResult resultSave = MessageBox.Show("Do you want to save your current project?", "WindowsProject",
+                MessageBoxButtons.YesNoCancel, MessageBoxIcon.None);
+            if (resultSave == DialogResult.Yes)
+                Save();
+            else if (resultSave == DialogResult.Cancel) return;
+
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "XML Files (.xml)|*.xml|All Files (*.*)|*.*";
             dialog.FilterIndex = 1;
@@ -80,7 +92,8 @@ namespace ClassDiagramTool.Commands
             if (result != DialogResult.OK) return;
             string Path = dialog.FileName;
 
-            New();
+            ShapeViewModels.Clear();
+            LineViewModels.Clear();
 
             Diagram Diagram = Serializer.DeserializeFromFile(Path);
 
