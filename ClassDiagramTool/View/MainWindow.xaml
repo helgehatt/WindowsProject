@@ -20,6 +20,7 @@
         <KeyBinding Command="{Binding NewDiagramCommand}" Gesture="CTRL+N" />
         <KeyBinding Command="{Binding LoadDiagramCommand}" Gesture="CTRL+O"/>
         <KeyBinding Command="{Binding SaveDiagramCommand}" Gesture="CTRL+S"/>
+        <KeyBinding Command="{Binding SaveAsDiagramCommand}" Gesture="CTRL+ALT+S"/>
         <KeyBinding Command="{Binding UndoCommand}" Gesture="CTRL+Z"/>
         <KeyBinding Command="{Binding RedoCommand}" Gesture="CTRL+Y"/>
         <KeyBinding Command="{Binding CutShapeCommand}" Gesture="CTRL+X"/>
