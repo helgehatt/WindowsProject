@@ -65,27 +65,27 @@
                     <ContextMenu>
                         <MenuItem Command="{Binding NewItemCommand}" Header="New item">
                             <MenuItem.Icon>
-                                <Image Source="/ClassDiagramTool;component/Images/New.png" />
+                                <Image Source="/ClassDiagramTool;component/Images/New.png" Height="20" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Command="{Binding CutShapeCommand}" Header="Cut">
                             <MenuItem.Icon>
-                                <Image Source="/ClassDiagramTool;component/Images/Cut.png" />
+                                <Image Source="/ClassDiagramTool;component/Images/Cut.png" Height="20" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Command="{Binding CopyShapeCommand}" Header="Copy">
                             <MenuItem.Icon>
-                                <Image Source="/ClassDiagramTool;component/Images/Copy.png" />
+                                <Image Source="/ClassDiagramTool;component/Images/Copy.png" Height="20" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Command="{Binding PasteShapeCommand}" Header="Paste">
                             <MenuItem.Icon>
-                                <Image Source="/ClassDiagramTool;component/Images/Paste.png" />
+                                <Image Source="/ClassDiagramTool;component/Images/Paste.png" Height="20" />
                             </MenuItem.Icon>
                         </MenuItem>
                         <MenuItem Command="{Binding DeleteShapeCommand}" Header="Delete">
                             <MenuItem.Icon>
-                                <Image Source="/ClassDiagramTool;component/Images/Delete.png" />
+                                <Image Source="/ClassDiagramTool;component/Images/Delete.png" Height="20" />
                             </MenuItem.Icon>
                         </MenuItem>
                     </ContextMenu>
@@ -106,6 +106,9 @@
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="MouseLeftButtonDown">
                                         <cmd:EventToCommand Command="{Binding AddConnectionPointCommand}" PassEventArgsToCommand="True"/>
+                                        <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseRightButtonDown">
                                         <cmd:EventToCommand Command="{Binding SelectShapeCommand}" PassEventArgsToCommand="True"/>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
