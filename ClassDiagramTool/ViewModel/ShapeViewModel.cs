@@ -83,6 +83,7 @@ namespace ClassDiagramTool.ViewModel
             {
                 Shape.Y = value;
                 OnPropertyChanged();
+                NotifyViewModels();
             }
         }
 
