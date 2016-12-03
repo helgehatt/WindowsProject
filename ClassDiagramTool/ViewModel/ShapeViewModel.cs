@@ -30,6 +30,15 @@ namespace ClassDiagramTool.ViewModel
             Shape = shape;
         }
 
+        public ConnectionPointViewModel GetConnectionViewModelByNumber(int number)
+        {
+            foreach (var ConnectionPointViewModel in ConnectionPointViewModels)
+            {
+                if (ConnectionPointViewModel.Number == number) return ConnectionPointViewModel;
+            }
+            return null;
+        }
+
         public bool Selected
         {
             get { return selected; }

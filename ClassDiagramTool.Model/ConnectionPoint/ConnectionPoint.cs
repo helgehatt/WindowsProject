@@ -9,7 +9,7 @@ namespace ClassDiagramTool.Model
     [Serializable]
     public class ConnectionPoint : IConnectionPoint
     {
-        private static int number;
+        public static int number;
 
         public int Number { get; set; } = number++;
 

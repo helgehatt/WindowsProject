@@ -8,7 +8,7 @@ namespace ClassDiagramTool.Model
     [Serializable]
     public class Shape : IShape
     {
-        private static int number;
+        public static int number;
 
         public int Number { get; set; } = number++;
 
