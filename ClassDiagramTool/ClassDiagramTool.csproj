@@ -78,11 +78,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\UndoRedoCommands\AddCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddConnectionPointCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\AddLineCommand.cs" />
-    <Compile Include="Commands\UndoRedoCommands\AddShapeCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\AddShapesCommand.cs" />
     <Compile Include="Commands\ClipboardCommands.cs" />
-    <Compile Include="Commands\UndoRedoCommands\DeleteShapeCommand.cs" />
+    <Compile Include="Commands\UndoRedoCommands\DeleteCommand.cs" />
     <Compile Include="Commands\DiagramCommands.cs" />
     <Compile Include="Commands\UndoRedoCommands\EditTextCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\MoveConnectionPointCommand.cs" />

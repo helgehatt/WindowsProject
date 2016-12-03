@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace ClassDiagramTool.Commands
 {
-    class DeleteShapeCommand : IUndoRedoCommand
+    class DeleteCommand : IUndoRedoCommand
     {
         private ObservableCollection<ShapeViewModel> ShapeViewModels;
         private ObservableCollection<LineViewModel>  LineViewModels;
         private List<ShapeViewModel> SelectedShapeViewModels;
 
-        public DeleteShapeCommand(ObservableCollection<ShapeViewModel> shapeViewModels, ObservableCollection<LineViewModel> lineViewModels, List<ShapeViewModel> selectedShapeViewModels)
+        public DeleteCommand(ObservableCollection<ShapeViewModel> shapeViewModels, ObservableCollection<LineViewModel> lineViewModels, List<ShapeViewModel> selectedShapeViewModels)
         {
             ShapeViewModels = shapeViewModels;
             LineViewModels  = lineViewModels;

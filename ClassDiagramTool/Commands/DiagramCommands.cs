@@ -60,14 +60,10 @@ namespace ClassDiagramTool.Commands
 
             Diagram Diagram = new Diagram()
             {
-                Shapes = new List<Shape>(ShapeViewModels.Select(o => o.Shape).ToList()),
-                Lines = new List<Line>(LineViewModels.Select(o => o.Line).ToList()),
-                ConnectionPoints = new List<ConnectionPoint>()
+                Shapes           = new List<Shape>(ShapeViewModels.Select(o => o.Shape).ToList()),
+                Lines            = new List<Line>(LineViewModels.Select(o => o.Line).ToList()),
+                ConnectionPoints = new List<ConnectionPoint>(ShapeViewModels.SelectMany(o => o.ConnectionPointViewModels.Select(p => p.ConnectionPoint)).ToList())
             };
-
-            foreach (var ShapeViewModel in ShapeViewModels)
-                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
-                    Diagram.ConnectionPoints.Add(ConnectionPointViewModel.ConnectionPoint);
 
             Serializer.AsyncSerializeToFile(Diagram, SavePath);
         }
@@ -97,79 +93,17 @@ namespace ClassDiagramTool.Commands
 
             Diagram Diagram = Serializer.DeserializeFromFile(Path);
 
-            foreach (var Shape in Diagram.Shapes)
-            {
-                ShapeViewModel ShapeViewModel = null;
-                
-                switch (Shape.Type)
-                {
-                    case EShape.Class       : ShapeViewModel = new ClassViewModel        (Shape) ;  break;
-                    case EShape.Enumeration : ShapeViewModel = new EnumerationViewModel  (Shape) ;  break;
-                    case EShape.Interface   : ShapeViewModel = new InterfaceViewModel    (Shape) ;  break;
-                }
+            var AddedShapeViewModels = MainViewModel.ReconstructShapes(Diagram.Shapes);
 
-                if (ShapeViewModel == null) { Debug.WriteLine("Load, ShapeViewModel == null"); continue; }
+            MainViewModel.ReconstructConnectionPoints(Diagram.ConnectionPoints, AddedShapeViewModels);
 
+            var AddedLineViewModels = MainViewModel.ReconstructLines(Diagram.Lines, AddedShapeViewModels);
+            
+            foreach (var ShapeViewModel in AddedShapeViewModels)
                 ShapeViewModels.Add(ShapeViewModel);
-            }
 
-            foreach (var ConnectionPoint in Diagram.ConnectionPoints)
-            {
-                var OnShapeViewModel = GetShapeViewModelByNumber(ConnectionPoint.OnShape);
-
-                if (OnShapeViewModel == null) { Debug.WriteLine("Load, OnShapeViewModel == null"); continue; }
-
-                new ConnectionPointViewModel(ConnectionPoint, OnShapeViewModel);
-            }
-
-            foreach (var Line in Diagram.Lines)
-            {
-                var FromShapeViewModel = GetShapeViewModelByNumber(Line.FromShape);
-                var ToShapeViewModel   = GetShapeViewModelByNumber(Line.ToShape  );
-
-                if (FromShapeViewModel == null || ToShapeViewModel == null)
-                { Debug.WriteLine("Load, FromShapeViewModel == null || ToShapeViewModel == null"); continue; }
-
-                var From = GetConnectionViewModelByNumber(FromShapeViewModel, Line.FromPoint);
-                var To   = GetConnectionViewModelByNumber(ToShapeViewModel  , Line.ToPoint  );
-
-                if (From == null || To == null) { Debug.WriteLine("Load, From == null || To == null"); continue; }
-
-                LineViewModel LineViewModel = null;
-
-                switch (Line.Type)
-                {
-                    case ELine.Aggregation          : LineViewModel = new AggregationViewModel           (From, To);   break;
-                    case ELine.Association          : LineViewModel = new AssociationViewModel           (From, To);   break;
-                    case ELine.Composition          : LineViewModel = new CompositionViewModel           (From, To);   break;
-                    case ELine.Dependency           : LineViewModel = new DependencyViewModel            (From, To);   break;
-                    case ELine.DirectedAssociation  : LineViewModel = new DirectedAssociationViewModel   (From, To);   break;
-                    case ELine.Inheritance          : LineViewModel = new InheritanceViewModel           (From, To);   break;
-                    case ELine.InterfaceRealization : LineViewModel = new InterfaceRealizationViewModel  (From, To);   break;
-                }
-
-                if (LineViewModel == null) { Debug.WriteLine("Load, LineViewModel == null"); continue; }
-
+            foreach (var LineViewModel in AddedLineViewModels)
                 LineViewModels.Add(LineViewModel);
-            }
-        }
-
-        private ShapeViewModel GetShapeViewModelByNumber(int number)
-        {
-            foreach (var ShapeViewModel in ShapeViewModels)
-            {
-                if (ShapeViewModel.Number == number) return ShapeViewModel;
-            }
-            return null;
-        }
-
-        private ConnectionPointViewModel GetConnectionViewModelByNumber(ShapeViewModel shapeViewModel, int number)
-        {
-            foreach (var ConnectionPointViewModel in shapeViewModel.ConnectionPointViewModels)
-            {
-                if (ConnectionPointViewModel.Number == number) return ConnectionPointViewModel;
-            }
-            return null;
         }
     }
 }

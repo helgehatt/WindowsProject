@@ -60,16 +60,16 @@ namespace ClassDiagramTool.Commands
             new ConnectionPointViewModel(EConnectionPoint.East , ShapeViewModel);
             new ConnectionPointViewModel(EConnectionPoint.West , ShapeViewModel);
 
-            UndoRedoController.Execute(new AddShapeCommand(ShapeViewModels, new List<ShapeViewModel>() { ShapeViewModel }));
+            UndoRedoController.Execute(new AddShapesCommand(ShapeViewModels, new List<ShapeViewModel>() { ShapeViewModel }));
         }
 
         public void DeleteShapes()
         {
-            List<ShapeViewModel> SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
+            var SelectedShapeViewModels = SelectedObjectsController.SelectionList.Select(o => o.DataContext as ShapeViewModel).ToList();
 
             SelectedObjectsController.DeselectAll();
 
-            UndoRedoController.Execute(new DeleteShapeCommand(ShapeViewModels, LineViewModels, SelectedShapeViewModels));
+            UndoRedoController.Execute(new DeleteCommand(ShapeViewModels, LineViewModels, SelectedShapeViewModels));
         }
 
         public void SelectShape(MouseButtonEventArgs e)
@@ -178,7 +178,7 @@ namespace ClassDiagramTool.Commands
 
             SelectedObjectsController.DeselectAll();
 
-            MainViewModel.StatusText = "Connect mode";
+            MainViewModel.StatusText = "Connect Mode";
             MainViewModel.BlurredCanvas = true;
         }
 
