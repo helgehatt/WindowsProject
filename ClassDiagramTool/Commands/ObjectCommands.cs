@@ -6,8 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -195,6 +193,15 @@ namespace ClassDiagramTool.Commands
 
             MainViewModel.StatusText = "Ready";
             MainViewModel.BlurredCanvas = false;
+        }
+
+        public void NewTextItem()
+        {
+            if (SelectedObjectsController.Count > 0)
+            {
+                UndoRedoController.Execute(new NewTextItemCommand(SelectedObjectsController.Get(SelectedObjectsController.Count - 1).DataContext as ShapeViewModel));
+            }
+            
         }
     }
 }

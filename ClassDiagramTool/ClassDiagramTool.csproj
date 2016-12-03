@@ -89,6 +89,7 @@
     <Compile Include="Commands\UndoRedoCommands\MoveConnectionPointCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\MoveShapeCommand.cs" />
     <Compile Include="Commands\ObjectCommands.cs" />
+    <Compile Include="Commands\UndoRedoCommands\NewTextItemCommand.cs" />
     <Compile Include="Commands\UndoRedoCommands\ResizeShapeCommand.cs" />
     <Compile Include="Tools\SerializationController.cs" />
     <Compile Include="Tools\SelectedObjectsController.cs" />

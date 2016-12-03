@@ -22,7 +22,7 @@ namespace ClassDiagramTool.ViewModel
 
         #region Commands
         public RelayCommand<MouseButtonEventArgs> MoveShapeCommand => new RelayCommand<MouseButtonEventArgs>((e) => new MoveShapeCommand(this, e));
-        public RelayCommand<MouseButtonEventArgs> EditTextCommand  => new RelayCommand<MouseButtonEventArgs>((e) => UndoRedoController.Execute(new EditTextCommand(e)), e => e.Source is TextBox);
+        public RelayCommand<MouseButtonEventArgs> EditTextCommand  => new RelayCommand<MouseButtonEventArgs>((e) => new EditTextCommand(e), e => e.Source is TextBox);
         #endregion
 
         public ShapeViewModel(Shape shape)
@@ -136,7 +136,7 @@ namespace ClassDiagramTool.ViewModel
             set { Shape.Title = value; }
         }
         
-        public List<TextItem> Text
+        public ObservableCollection<TextItem> Text
         {
             get { return Shape.Text; }
             set { Shape.Text = value; }

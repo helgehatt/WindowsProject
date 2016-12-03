@@ -19,6 +19,6 @@ namespace ClassDiagramTool.Model
         EShape Type { get; }
 
         string Title { get; }
-        List<TextItem> Text { get; }
+        ObservableCollection<TextItem> Text { get; }
     }
 }

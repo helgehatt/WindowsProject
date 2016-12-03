@@ -21,7 +21,7 @@ namespace ClassDiagramTool.Model
         public EShape Type { get; set; }
 
         public string Title { get; set; } = "Title";
-        public List<TextItem> Text { get; set; } = new List<TextItem>()
+        public ObservableCollection<TextItem> Text { get; set; } = new ObservableCollection<TextItem>()
         {
             new TextItem() { Value = "text1" },
             new TextItem() { Value = "text2" }
