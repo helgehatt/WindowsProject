@@ -123,7 +123,14 @@ namespace ClassDiagramTool.ViewModel
                         switch (to)
                         {
                             case EConnectionPoint.North:
-                                nextY = Math.Min(Y1, Y2);
+                                if (    (Y2 > From.ShapeViewModel.Y - OFFSET) 
+                                    && ((X1 < From.ShapeViewModel.X && X2 > From.ShapeViewModel.X + From.ShapeViewModel.Width)
+                                    ||  (X1 > From.ShapeViewModel.X + From.ShapeViewModel.Width && X2 < From.ShapeViewModel.X)))
+                                        nextY = Math.Min(From.ShapeViewModel.Y - OFFSET, Y2);
+                                else if (Y2 < Y1 && X1 > To.ShapeViewModel.X - OFFSET && X1 < To.ShapeViewModel.X + To.ShapeViewModel.Width + OFFSET)
+                                        nextY = Math.Min(Y1, (Y1 + To.ShapeViewModel.Y + To.ShapeViewModel.Height + OFFSET) / 2);
+                                else
+                                    nextY = Math.Min(Y1, Y2);
                                 break;
                             case EConnectionPoint.South:
                                 if (From.ShapeViewModel.Y - OFFSET > To.ShapeViewModel.Y + To.ShapeViewModel.Height + OFFSET)
@@ -132,6 +139,9 @@ namespace ClassDiagramTool.ViewModel
                                     nextY = Math.Min(From.ShapeViewModel.Y - OFFSET, Y2);
                                 break;
                             case EConnectionPoint.East:
+                                //     if (X2 < X1 && Y2 > From.ShapeViewModel.Y - OFFSET)
+                                //                  nextY = Math.Min(From.ShapeViewModel.Y - OFFSET, Y2);                                
+                                //else 
                                      if (X2 < X1) nextY = Math.Min(Y1, Y2);
                                 else if (Y1 < Y2) nextY = Math.Min(Y1, To.ShapeViewModel.Y - OFFSET);
                                 else if (From.ShapeViewModel.Y - OFFSET < To.ShapeViewModel.Y + To.ShapeViewModel.Height + OFFSET)
@@ -139,6 +149,9 @@ namespace ClassDiagramTool.ViewModel
                                 else              nextY = (From.ShapeViewModel.Y + To.ShapeViewModel.Y + To.ShapeViewModel.Height) / 2;
                                 break;
                             case EConnectionPoint.West:
+                                //     if (X1 < X2 && Y2 > From.ShapeViewModel.Y - OFFSET)
+                                //                  nextY = Math.Min(From.ShapeViewModel.Y - OFFSET, Y2);                                
+                                //else 
                                      if (X1 < X2) nextY = Math.Min(Y1, Y2);
                                 else if (Y1 < Y2) nextY = Math.Min(Y1, To.ShapeViewModel.Y - OFFSET);
                                 else if (From.ShapeViewModel.Y - OFFSET < To.ShapeViewModel.Y + To.ShapeViewModel.Height + OFFSET)
@@ -158,7 +171,13 @@ namespace ClassDiagramTool.ViewModel
                                     nextY = Math.Max(From.ShapeViewModel.Y + From.ShapeViewModel.Height + OFFSET, Y2);
                                 break;
                             case EConnectionPoint.South:
-                                nextY = Math.Max(Y1, Y2);
+                                if (    (Y2 < From.ShapeViewModel.Y + From.ShapeViewModel.Height + OFFSET) 
+                                    && ((X1 < From.ShapeViewModel.X && X2 > From.ShapeViewModel.X + From.ShapeViewModel.Width)
+                                    ||  (X1 > From.ShapeViewModel.X + From.ShapeViewModel.Width && X2 < From.ShapeViewModel.X)))
+                                        nextY = Math.Max(From.ShapeViewModel.Y + From.ShapeViewModel.Height + OFFSET, Y2);
+                                else if (Y2 > Y1 && X1 > To.ShapeViewModel.X - OFFSET && X1 < To.ShapeViewModel.X + To.ShapeViewModel.Width + OFFSET)
+                                        nextY = Math.Max(Y1, (Y1 + To.ShapeViewModel.Y - OFFSET) / 2);
+                                else    nextY = Math.Max(Y1, Y2);
                                 break;
                             case EConnectionPoint.East:
                                      if (X2 < X1) nextY = Math.Max(Y1, Y2);
@@ -195,7 +214,13 @@ namespace ClassDiagramTool.ViewModel
                                 else              nextX = (From.ShapeViewModel.X + From.ShapeViewModel.Width + To.ShapeViewModel.X) / 2;
                                 break;
                             case EConnectionPoint.East:
-                                nextX = Math.Max(X1, X2);
+                                if (    (X2 < From.ShapeViewModel.X + From.ShapeViewModel.Width + OFFSET) 
+                                    && ((Y1 < From.ShapeViewModel.Y && Y2 > From.ShapeViewModel.Y + From.ShapeViewModel.Height)
+                                    ||  (Y1 > From.ShapeViewModel.Y + From.ShapeViewModel.Height && Y2 < From.ShapeViewModel.Y)))
+                                        nextX = Math.Max(From.ShapeViewModel.X + From.ShapeViewModel.Width + OFFSET, X2);
+                                else if (X2 > X1 && Y1 > To.ShapeViewModel.Y - OFFSET && Y1 < To.ShapeViewModel.Y + To.ShapeViewModel.Height + OFFSET)
+                                        nextX = Math.Max(X1, (X1 + To.ShapeViewModel.X - OFFSET) / 2);
+                                else    nextX = Math.Max(X1, X2);
                                 break;
                             case EConnectionPoint.West:
                                 if (From.ShapeViewModel.X + From.ShapeViewModel.Width + OFFSET < To.ShapeViewModel.X - OFFSET)
@@ -230,7 +255,13 @@ namespace ClassDiagramTool.ViewModel
                                     nextX = Math.Min(From.ShapeViewModel.X - OFFSET, X2);
                                 break;
                             case EConnectionPoint.West:
-                                nextX = Math.Min(X1, X2);
+                                if (    (X2 > From.ShapeViewModel.X - OFFSET) 
+                                    && ((Y1 < From.ShapeViewModel.Y && Y2 > From.ShapeViewModel.Y + From.ShapeViewModel.Height)
+                                    ||  (Y1 > From.ShapeViewModel.Y + From.ShapeViewModel.Height && Y2 < From.ShapeViewModel.Y)))
+                                        nextX = Math.Min(From.ShapeViewModel.X - OFFSET, X2);
+                                else if (X2 < X1 && Y1 > To.ShapeViewModel.Y - OFFSET && Y1 < To.ShapeViewModel.Y + To.ShapeViewModel.Height + OFFSET)
+                                        nextX = Math.Min(X1, (X1 + To.ShapeViewModel.X + To.ShapeViewModel.Width + OFFSET) /2);
+                                else    nextX = Math.Min(X1, X2);
                                 break;
                         }
                         break;
@@ -250,6 +281,8 @@ namespace ClassDiagramTool.ViewModel
                         break;
                 }
             }
+
+            Debug.WriteLine(from + " " + to + " " + X1 + " " + Y1);
                  
             LineParts.Add(new LinePart() { X1 = X1, Y1 = Y1, X2 = nextX, Y2 = nextY });
 
