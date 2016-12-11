@@ -17,8 +17,6 @@ namespace ClassDiagramTool.Commands
     {
         private MainViewModel MainViewModel;
 
-        private SerializationController Serializer => SerializationController.Instance;
-
         private ObservableCollection<ShapeViewModel> ShapeViewModels => MainViewModel.ShapeViewModels;
         private ObservableCollection<LineViewModel>  LineViewModels  => MainViewModel.LineViewModels;
 
@@ -65,7 +63,7 @@ namespace ClassDiagramTool.Commands
                 ConnectionPoints = new List<ConnectionPoint>(ShapeViewModels.SelectMany(o => o.ConnectionPointViewModels.Select(p => p.ConnectionPoint)).ToList())
             };
 
-            Serializer.AsyncSerializeToFile(Diagram, SavePath);
+            SerializationController.AsyncSerializeToFile(Diagram, SavePath);
         }
 
         public string LoadInitialDirectory = Directory.GetCurrentDirectory();
@@ -91,7 +89,7 @@ namespace ClassDiagramTool.Commands
             ShapeViewModels.Clear();
             LineViewModels.Clear();
 
-            Diagram Diagram = Serializer.DeserializeFromFile(Path);
+            Diagram Diagram = SerializationController.DeserializeFromFile(Path);
 
             var AddedShapeViewModels = MainViewModel.ReconstructShapes(Diagram.Shapes);
 

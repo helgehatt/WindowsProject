@@ -10,16 +10,12 @@ namespace ClassDiagramTool.Tools
 {
     public class SerializationController
     {
-        public static SerializationController Instance { get; } = new SerializationController();
-
-        private SerializationController() { }
-
-        public async void AsyncSerializeToFile(Diagram diagram, string path)
+        public static async void AsyncSerializeToFile(Diagram diagram, string path)
         {
             await Task.Run(() => SerializeToFile(diagram, path));
         }
 
-        private void SerializeToFile(Diagram diagram, string path)
+        private static void SerializeToFile(Diagram diagram, string path)
         {
             using (var stream = new FileStream(path, FileMode.Create))
             {
@@ -28,13 +24,12 @@ namespace ClassDiagramTool.Tools
             }
         }
 
-
-        public Task<Diagram> AsyncDeserializeFromFile(string path)
+        public static Task<Diagram> AsyncDeserializeFromFile(string path)
         {
             return Task.Run(() => DeserializeFromFile(path));
         }
 
-        public Diagram DeserializeFromFile(string path)
+        public static Diagram DeserializeFromFile(string path)
         {
             using (var stream = new FileStream(path, FileMode.Open))
             {
@@ -44,9 +39,6 @@ namespace ClassDiagramTool.Tools
 
                 return diagram;
             }
-        }
-
-        
+        }        
     }
-
 }
