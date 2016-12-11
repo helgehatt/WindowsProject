@@ -1,6 +1,7 @@
 ﻿using ClassDiagramTool.ViewModel;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassDiagramTool.Commands
 {
@@ -9,6 +10,7 @@ namespace ClassDiagramTool.Commands
         private ObservableCollection<ShapeViewModel> ShapeViewModels;
         private ObservableCollection<LineViewModel>  LineViewModels;
         private List<ShapeViewModel> SelectedShapeViewModels;
+        private List<LineViewModel> SelectedLineViewModels;
 
         public DeleteCommand(ObservableCollection<ShapeViewModel> shapeViewModels, ObservableCollection<LineViewModel> lineViewModels, List<ShapeViewModel> selectedShapeViewModels)
         {
@@ -19,13 +21,18 @@ namespace ClassDiagramTool.Commands
 
         public void Execute()
         {
+            SelectedLineViewModels = SelectedShapeViewModels.SelectMany(p => p.ConnectionPointViewModels.SelectMany(l => l.LineViewModels)).ToList();
+
             foreach (ShapeViewModel ShapeViewModel in SelectedShapeViewModels)
             {
                 ShapeViewModels.Remove(ShapeViewModel);
-                
-                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
-                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
-                        LineViewModels.Remove(LineViewModel);
+            }
+
+            foreach (LineViewModel LineViewModel in SelectedLineViewModels)
+            {
+                LineViewModels.Remove(LineViewModel);
+                LineViewModel.From.LineViewModels.Remove(LineViewModel);
+                LineViewModel.To  .LineViewModels.Remove(LineViewModel);
             }
 
         }
@@ -35,10 +42,13 @@ namespace ClassDiagramTool.Commands
             foreach (ShapeViewModel ShapeViewModel in SelectedShapeViewModels)
             {
                 ShapeViewModels.Add(ShapeViewModel);
+            }
 
-                foreach (var ConnectionPointViewModel in ShapeViewModel.ConnectionPointViewModels)
-                    foreach (var LineViewModel in ConnectionPointViewModel.LineViewModels)
-                        LineViewModels.Add(LineViewModel);
+            foreach (LineViewModel LineViewModel in SelectedLineViewModels)
+            {
+                LineViewModels.Add(LineViewModel);
+                LineViewModel.From.LineViewModels.Add(LineViewModel);
+                LineViewModel.To  .LineViewModels.Add(LineViewModel);
             }
         }
     }
