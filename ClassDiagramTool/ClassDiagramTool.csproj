@@ -102,7 +102,6 @@
     <Compile Include="ViewModel\LineViewModel\AggregationViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel\EnumerationViewModel.cs" />
     <Compile Include="ViewModel\ShapeViewModel\InterfaceViewModel.cs" />
-    <Compile Include="View\Adorners\ConnectionPointAdorner.cs" />
     <Compile Include="ViewModel\Adorners\ResizeAdorner.cs" />
     <Compile Include="View\Adorners\SelectionAdorner.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
@@ -172,10 +171,6 @@
       <DependentUpon>StatusBarUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="View\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Resources\AdornerTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
